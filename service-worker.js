@@ -1,4 +1,4 @@
-const CACHE_NAME = 'asark-v2';
+const CACHE_NAME = 'asark-v3';
 const APP_SHELL = [
   './', './index.html', './architecture.html', './ai-technology.html', './interiors.html',
   './lifestyle.html', './blog.html', './affiliate.html', './about.html', './visual.html',

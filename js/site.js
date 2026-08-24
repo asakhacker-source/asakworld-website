@@ -83,3 +83,30 @@ document.querySelectorAll('.visual-card, .card[data-project-link], .card:has(img
     }
   });
 });
+
+const affiliateTopic = (() => {
+  const page = `${window.location.pathname} ${document.title}`.toLowerCase();
+  if (page.includes('affiliate.html')) return null;
+  if (page.includes('yacht') || page.includes('shore')) return { title: 'For life by the water', products: [['Explore marine binoculars', 'marine binoculars'], ['Explore travel cameras', 'compact travel camera']] };
+  if (page.includes('fashion') || page.includes('elegance') || page.includes('classic')) return { title: 'For considered style', products: [['Explore leather watches', 'minimalist leather watch'], ['Explore garment care', 'garment steamer']] };
+  if (page.includes('kitchen') || page.includes('dining')) return { title: 'For the kitchen ritual', products: [['Explore chef knives', 'chef knife set'], ['Explore pendant lighting', 'modern pendant light']] };
+  if (page.includes('technology') || page.includes('intelligent')) return { title: 'For an intelligent home', products: [['Explore smart-home hubs', 'smart home hub'], ['Explore smart lighting', 'smart LED light bulb']] };
+  if (page.includes('interior') || page.includes('living') || page.includes('material') || page.includes('quiet luxury')) return { title: 'For a considered interior', products: [['Explore ambient lighting', 'dimmable LED floor lamp'], ['Explore home fragrances', 'luxury reed diffuser']] };
+  if (page.includes('lifestyle') || page.includes('timeless')) return { title: 'For daily rituals', products: [['Explore coffee rituals', 'manual coffee grinder'], ['Explore design objects', 'modern desk organizer']] };
+  if (page.includes('architecture') || page.includes('estate') || page.includes('villa') || page.includes('glass and stone') || page.includes('minimal')) return { title: 'For architectural living', products: [['Explore architectural books', 'architecture coffee table book'], ['Explore outdoor lighting', 'modern outdoor wall light']] };
+  return { title: 'For considered living', products: [['Explore design books', 'interior design coffee table book'], ['Explore ambient lighting', 'dimmable LED table lamp']] };
+})();
+
+if (affiliateTopic && document.querySelector('main')) {
+  const recommendations = document.createElement('aside');
+  recommendations.className = 'page-affiliate';
+  recommendations.setAttribute('aria-label', 'Related Amazon recommendations');
+  const links = affiliateTopic.products.map(([label, query]) => {
+    const url = new URL('https://www.amazon.in/s');
+    url.searchParams.set('k', query);
+    url.searchParams.set('tag', 'asark-21');
+    return `<a href="${url.href}" target="_blank" rel="sponsored noopener noreferrer">${label} <span aria-hidden="true">↗</span></a>`;
+  }).join('');
+  recommendations.innerHTML = `<p class="eyebrow">ASARK recommends</p><h2>${affiliateTopic.title}</h2><p class="page-affiliate-disclosure">As an Amazon Associate I earn from qualifying purchases.</p><div class="page-affiliate-links">${links}</div>`;
+  document.querySelector('.site-footer')?.before(recommendations);
+}
