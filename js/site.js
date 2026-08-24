@@ -30,7 +30,13 @@ window.addEventListener('appinstalled', () => {
 });
 
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('/service-worker.js'));
+  window.addEventListener('load', () => {
+    const manifest = document.querySelector('link[rel="manifest"]');
+    const serviceWorkerUrl = manifest
+      ? new URL('service-worker.js', manifest.href)
+      : new URL('service-worker.js', window.location.href);
+    navigator.serviceWorker.register(serviceWorkerUrl);
+  });
 }
 
 document.querySelectorAll('.site-footer').forEach((footer) => {

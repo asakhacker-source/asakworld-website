@@ -1,11 +1,11 @@
-const CACHE_NAME = 'asark-v1';
+const CACHE_NAME = 'asark-v2';
 const APP_SHELL = [
-  '/', '/index.html', '/architecture.html', '/ai-technology.html', '/interiors.html',
-  '/lifestyle.html', '/blog.html', '/affiliate.html', '/about.html', '/visual.html',
-  '/css/style.css', '/js/site.js', '/manifest.webmanifest', '/assets/asark-mark.svg',
-  '/assets/ai-technology-ambient-intelligence.png',
-  '/assets/interiors/ai-interior-collection.png', '/assets/interiors/ai-living-room.png',
-  '/assets/lifestyle/ai-lifestyle-collection.png'
+  './', './index.html', './architecture.html', './ai-technology.html', './interiors.html',
+  './lifestyle.html', './blog.html', './affiliate.html', './about.html', './visual.html',
+  './css/style.css', './js/site.js', './manifest.webmanifest', './assets/asark-mark.svg',
+  './assets/icon-192.png', './assets/icon-512.png', './assets/ai-technology-ambient-intelligence.png',
+  './assets/interiors/ai-interior-collection.png', './assets/interiors/ai-living-room.png',
+  './assets/lifestyle/ai-lifestyle-collection.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -19,7 +19,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   if (event.request.mode === 'navigate') {
-    event.respondWith(fetch(event.request).catch(() => caches.match(event.request).then((response) => response || caches.match('/index.html'))));
+    event.respondWith(fetch(event.request).catch(() => caches.match(event.request).then((response) => response || caches.match('./index.html'))));
     return;
   }
   event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request).then((response) => {
