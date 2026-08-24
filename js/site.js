@@ -111,3 +111,20 @@ if (affiliateTopic && document.querySelector('main')) {
   recommendations.innerHTML = `<p class="eyebrow">ASARK recommends</p><h2>${affiliateTopic.title}</h2><p class="page-affiliate-disclosure">As an Amazon Associate I earn from qualifying purchases.</p><div class="page-affiliate-links">${links}</div>`;
   document.querySelector('.site-footer')?.before(recommendations);
 }
+
+const filters = document.querySelectorAll('[data-filter]');
+const visualCards = document.querySelectorAll('.visual-card');
+filters.forEach((button) => button.addEventListener('click', () => {
+  const filter = button.dataset.filter;
+  filters.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+  visualCards.forEach((card) => { card.hidden = filter !== 'all' && card.dataset.category !== filter; });
+}));
+
+const shareButton = document.querySelector('#share-button');
+if (navigator.share && shareButton) {
+  shareButton.addEventListener('click', () => navigator.share({ title: document.title, url: window.location.href }));
+}
+const saveButton = document.querySelector('#save-button');
+if (saveButton) {
+  saveButton.addEventListener('click', () => { saveButton.textContent = 'Saved'; saveButton.disabled = true; });
+}
