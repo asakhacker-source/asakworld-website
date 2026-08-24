@@ -69,8 +69,9 @@ document.querySelectorAll('a[href$="design.html"]').forEach((link) => {
   link.textContent = 'AI Technology';
 });
 
-document.querySelectorAll('.visual-card, .card[data-project-link], .card:has(img)').forEach((card) => {
+document.querySelectorAll('.visual-card, .card[data-project-link], .card').forEach((card) => {
   const image = card.querySelector('img');
+  if (!card.matches('.visual-card') && !card.dataset.projectLink && !image) return;
   const imageKey = image ? Object.keys(imageProjects).find((key) => image.src.includes(key)) : null;
   const destination = card.dataset.projectLink || (imageKey && imageProjects[imageKey]) || 'visual.html';
   card.tabIndex = 0;
