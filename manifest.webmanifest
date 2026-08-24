@@ -1,0 +1,16 @@
+{
+  "name": "ASARK — The Art of Future Luxury",
+  "short_name": "ASARK",
+  "description": "AI-generated architecture, design, interiors and future luxury.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0a0a09",
+  "theme_color": "#0a0a09",
+  "icons": [{
+    "src": "/assets/asark-mark.svg",
+    "sizes": "any",
+    "type": "image/svg+xml",
+    "purpose": "any maskable"
+  }]
+}
