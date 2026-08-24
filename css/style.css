@@ -225,3 +225,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
   .about-story, .about-explores { grid-template-columns: 1fr; width: min(100% - 32px, 1400px); }.about-story { padding: 75px 0; }.about-explores { padding: 75px 0; }.about-explores > div { grid-template-columns: 1fr; gap: 28px; }.about-explores article + article { border-top: 1px solid var(--line); border-left: 0; padding-top: 28px; padding-left: 0; }
   .about-standards { width: 100%; padding: 65px 28px; }
 }
+
+.affiliate-disclosure { margin: -25px 0 30px; padding: 14px 16px; border: 1px solid rgba(217,173,50,.5); color: var(--muted); font-size: 12px; line-height: 1.65; }
+.affiliate-link { display: inline-flex; gap: 8px; margin-top: 20px; color: var(--gold); font-size: 10px; font-weight: 700; letter-spacing: 1.35px; text-decoration: none; text-transform: uppercase; }
+.affiliate-link:hover { color: #f5f1e8; }
