@@ -21,7 +21,8 @@ const aiImageFiles = [
   'Gemini_Generated_Image_lc0e35lc0e35lc0e.png',
   'Gemini_Generated_Image_ld8r28ld8r28ld8r.png',
   'Gemini_Generated_Image_o0n0yjo0n0yjo0n0.png',
-  'Gemini_Generated_Image_w1zouxw1zouxw1zo.png', 'modern house.png'
+  'Gemini_Generated_Image_w1zouxw1zouxw1zo.png', 'modern house.png',
+  'our-best-look-ever-yet-at-tony-starks-mansion-from-the-book-v0-mq5lg6zmpg1g1.webp'
 ];
 const homeUrl = new URL(document.querySelector('.logo')?.getAttribute('href') || 'index.html', window.location.href);
 const aiImageUrl = (index) => new URL(`ai images/${aiImageFiles[index % aiImageFiles.length]}`, homeUrl).href;
@@ -171,6 +172,21 @@ const imageProjects = {
   '1615529162924': 'projects/dining-and-kitchen.html'
 };
 
+const projectDestinations = {
+  'Contemporary Estate': 'projects/contemporary-estate.html',
+  'Quiet Luxury': 'projects/quiet-luxury.html',
+  'Glass and Stone': 'projects/glass-and-stone.html',
+  'Modern Elegance': 'projects/modern-elegance.html',
+  'The New Classic': 'projects/new-classic.html',
+  'Timeless Style': 'projects/timeless-style.html',
+  'Beyond the Shore': 'projects/beyond-the-shore.html',
+  'Private Villa': 'projects/private-villa.html',
+  'Minimal Estate': 'projects/minimal-estate.html',
+  'Material Stories': 'projects/material-stories.html',
+  'Living Spaces': 'projects/living-spaces.html',
+  'Dining and Kitchen': 'projects/dining-and-kitchen.html'
+};
+
 document.querySelectorAll('a[href$="design.html"]').forEach((link) => {
   link.textContent = 'AI Technology';
 });
@@ -180,7 +196,8 @@ document.querySelectorAll('.visual-card, .card[data-project-link], .card').forEa
   if (!card.matches('.visual-card') && !card.dataset.projectLink && !image) return;
   const imageSource = image?.dataset.originalImage || image?.src || '';
   const imageKey = image ? Object.keys(imageProjects).find((key) => imageSource.includes(key)) : null;
-  const destination = card.dataset.projectLink || (imageKey && imageProjects[imageKey]) || 'visual.html';
+  const cardTitle = card.querySelector('h3')?.textContent.trim() || '';
+  const destination = card.dataset.projectLink || projectDestinations[cardTitle] || (imageKey && imageProjects[imageKey]) || 'visual.html';
   card.tabIndex = 0;
   card.setAttribute('role', 'link');
   card.addEventListener('click', (event) => {

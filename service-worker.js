@@ -1,4 +1,4 @@
-const CACHE_NAME = 'asark-app-v8';
+const CACHE_NAME = 'asark-app-v9';
 const OFFLINE_URL = './offline.html';
 const APP_SHELL = [
   './', './index.html', './architecture.html', './ai-technology.html', './interiors.html',
@@ -13,9 +13,7 @@ const APP_SHELL = [
   './projects/private-villa.html', './projects/quiet-luxury.html',
   './projects/timeless-style.html', './css/style.css', './js/site.js',
   './manifest.webmanifest', './assets/asark-mark.svg', './assets/icon-192.png',
-  './assets/icon-512.png', './assets/ai-technology-ambient-intelligence.png',
-  './assets/interiors/ai-interior-collection.png', './assets/interiors/ai-living-room.png',
-  './assets/lifestyle/ai-lifestyle-collection.png'
+  './assets/icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -31,15 +29,6 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
-  if (url.hostname === 'images.unsplash.com') {
-    event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request)
-      .then((response) => {
-        const copy = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-        return response;
-      })));
-    return;
-  }
   if (url.origin !== self.location.origin) return;
 
   if (event.request.mode === 'navigate') {
