@@ -1,9 +1,19 @@
-const CACHE_NAME = 'asark-v7';
+const CACHE_NAME = 'asark-app-v8';
+const OFFLINE_URL = './offline.html';
 const APP_SHELL = [
   './', './index.html', './architecture.html', './ai-technology.html', './interiors.html',
   './lifestyle.html', './blog.html', './affiliate.html', './about.html', './visual.html',
-  './css/style.css', './js/site.js', './manifest.webmanifest', './assets/asark-mark.svg',
-  './assets/icon-192.png', './assets/icon-512.png', './assets/ai-technology-ambient-intelligence.png',
+  './login.html', './signup.html',
+  './offline.html', './guides/intelligent-home-foundation.html', './guides/ambient-lighting.html',
+  './guides/coffee-ritual.html', './projects/beyond-the-shore.html',
+  './projects/contemporary-estate.html', './projects/dining-and-kitchen.html',
+  './projects/glass-and-stone.html', './projects/living-spaces.html',
+  './projects/material-stories.html', './projects/minimal-estate.html',
+  './projects/modern-elegance.html', './projects/new-classic.html',
+  './projects/private-villa.html', './projects/quiet-luxury.html',
+  './projects/timeless-style.html', './css/style.css', './js/site.js',
+  './manifest.webmanifest', './assets/asark-mark.svg', './assets/icon-192.png',
+  './assets/icon-512.png', './assets/ai-technology-ambient-intelligence.png',
   './assets/interiors/ai-interior-collection.png', './assets/interiors/ai-living-room.png',
   './assets/lifestyle/ai-lifestyle-collection.png'
 ];
@@ -13,24 +23,42 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
-  event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)))).then(() => self.clients.claim()));
+  event.waitUntil(caches.keys()
+    .then((keys) => Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))))
+    .then(() => self.clients.claim()));
 });
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
-  if (event.request.mode === 'navigate') {
-    event.respondWith(fetch(event.request).then((response) => {
-      const copy = response.clone();
-      caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-      return response;
-    }).catch(() => caches.match(event.request).then((response) => response || caches.match('./index.html'))));
+  const url = new URL(event.request.url);
+  if (url.hostname === 'images.unsplash.com') {
+    event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request)
+      .then((response) => {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        return response;
+      })));
     return;
   }
-  event.respondWith(fetch(event.request).then((response) => {
-    if (new URL(event.request.url).origin === self.location.origin) {
-      const copy = response.clone();
-      caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-    }
-    return response;
-  }).catch(() => caches.match(event.request)));
+  if (url.origin !== self.location.origin) return;
+
+  if (event.request.mode === 'navigate') {
+    event.respondWith(fetch(event.request)
+      .then((response) => {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        return response;
+      })
+      .catch(() => caches.match(event.request).then((cached) => cached || caches.match(OFFLINE_URL))));
+    return;
+  }
+
+  event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request)
+    .then((response) => {
+      if (response.ok) {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+      }
+      return response;
+    })));
 });

@@ -1,31 +1,15 @@
 {
   "name": "ASARK — The Art of Future Luxury",
   "short_name": "ASARK",
-  "description": "AI-generated architecture, design, interiors and future luxury.",
-  "id": "./",
-  "start_url": "./",
-  "scope": "./",
+  "description": "ASARK explores design, architecture, interiors and future luxury.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#0a0a09",
   "theme_color": "#0a0a09",
   "icons": [
-    {
-      "src": "assets/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "assets/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "assets/asark-mark.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ]
 }

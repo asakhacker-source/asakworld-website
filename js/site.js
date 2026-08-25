@@ -1,7 +1,43 @@
 const menuToggle = document.querySelector('.menu-toggle');
 const siteNav = document.querySelector('.site-nav');
 
+const headerSearch = document.createElement('form');
+headerSearch.className = 'header-search';
+headerSearch.setAttribute('role', 'search');
+headerSearch.innerHTML = '<label><span class="sr-only">Search ASARK</span><input type="search" name="q" placeholder="Search" autocomplete="off"></label><button type="submit" aria-label="Search ASARK">⌕</button>';
+siteNav?.append(headerSearch);
+
+const accountActions = document.createElement('div');
+accountActions.className = 'account-actions';
+const headerHomeUrl = new URL(document.querySelector('.logo')?.getAttribute('href') || 'index.html', window.location.href);
+const loginUrl = new URL('login.html', headerHomeUrl).href;
+const signupUrl = new URL('signup.html', headerHomeUrl).href;
+accountActions.innerHTML = `<a href="${loginUrl}">Log in</a><a class="account-signup" href="${signupUrl}">Sign up</a>`;
+siteNav?.append(accountActions);
+
+headerSearch.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const query = headerSearch.elements.q.value.trim();
+  if (!query) return;
+  const homeLink = document.querySelector('.logo')?.getAttribute('href') || 'index.html';
+  const homeUrl = new URL(homeLink, window.location.href);
+  if (window.location.pathname === homeUrl.pathname) {
+    document.querySelector('#discover')?.scrollIntoView({ behavior: 'smooth' });
+    const collectionSearch = document.querySelector('#visual-search');
+    if (collectionSearch) {
+      collectionSearch.value = query;
+      collectionSearch.dispatchEvent(new Event('input', { bubbles: true }));
+      collectionSearch.focus({ preventScroll: true });
+    }
+    return;
+  }
+  homeUrl.searchParams.set('q', query);
+  homeUrl.hash = 'discover';
+  window.location.href = homeUrl.href;
+});
+
 let deferredInstallPrompt;
+let isInstalled = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 const installButton = document.createElement('button');
 installButton.className = 'app-install';
 installButton.type = 'button';
@@ -10,24 +46,53 @@ installButton.textContent = 'Install app';
 installButton.setAttribute('aria-label', 'Install ASARK app');
 document.querySelector('.site-header')?.append(installButton);
 
+const isIosSafari = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+const setInstallButton = () => {
+  if (isInstalled) {
+    installButton.hidden = true;
+    return;
+  }
+  if (deferredInstallPrompt) {
+    installButton.textContent = 'Install app';
+    installButton.setAttribute('aria-label', 'Install ASARK app');
+    installButton.hidden = false;
+    return;
+  }
+  if (isIosSafari) {
+    installButton.textContent = 'Add to Home Screen';
+    installButton.setAttribute('aria-label', 'Add ASARK to your iPhone or iPad home screen');
+    installButton.hidden = false;
+    return;
+  }
+  installButton.hidden = true;
+};
+
 window.addEventListener('beforeinstallprompt', (event) => {
   event.preventDefault();
   deferredInstallPrompt = event;
-  installButton.hidden = false;
+  setInstallButton();
 });
 
 installButton.addEventListener('click', async () => {
-  if (!deferredInstallPrompt) return;
-  deferredInstallPrompt.prompt();
-  await deferredInstallPrompt.userChoice;
-  deferredInstallPrompt = undefined;
-  installButton.hidden = true;
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = undefined;
+    setInstallButton();
+    return;
+  }
+  if (isIosSafari) {
+    window.alert('To install ASARK, tap Share and choose Add to Home Screen.');
+  }
 });
 
 window.addEventListener('appinstalled', () => {
+  isInstalled = true;
   deferredInstallPrompt = undefined;
-  installButton.hidden = true;
+  setInstallButton();
 });
+
+setInstallButton();
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -35,7 +100,7 @@ if ('serviceWorker' in navigator) {
     const serviceWorkerUrl = manifest
       ? new URL('service-worker.js', manifest.href)
       : new URL('service-worker.js', window.location.href);
-    navigator.serviceWorker.register(serviceWorkerUrl);
+    navigator.serviceWorker.register(serviceWorkerUrl).catch(() => {});
   });
 }
 
@@ -113,11 +178,81 @@ if (recommendedProducts && document.querySelector('main')) {
 }
 const filters = document.querySelectorAll('[data-filter]');
 const visualCards = document.querySelectorAll('.visual-card');
+const visualSearch = document.querySelector('#visual-search');
+const collectionStatus = document.querySelector('#collection-status');
+const feedButtons = document.querySelectorAll('[data-feed]');
+let activeVisualFilter = 'all';
+let activeFeed = 'explore';
+
+const getSavedKey = (card) => {
+  const title = card?.querySelector('h3')?.textContent.trim() || 'concept';
+  return `asark-saved-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+};
+
+const isCardSaved = (card) => {
+  try { return localStorage.getItem(getSavedKey(card)) === 'true'; } catch { return false; }
+};
+
+const updateSavedState = (button, saved) => {
+  button.classList.toggle('is-saved', saved);
+  button.setAttribute('aria-pressed', String(saved));
+  button.textContent = saved ? 'Saved' : 'Save';
+};
+
+const applyVisualFilters = () => {
+  const query = visualSearch ? visualSearch.value.trim().toLowerCase() : '';
+  let visibleCount = 0;
+  visualCards.forEach((card) => {
+    const title = card.querySelector('h3')?.textContent.toLowerCase() || '';
+    const category = card.dataset.category || '';
+    const matchesCategory = activeVisualFilter === 'all' || category === activeVisualFilter;
+    const matchesSearch = !query || title.includes(query) || category.includes(query);
+    const matchesFeed = activeFeed === 'explore' || isCardSaved(card);
+    const isVisible = matchesCategory && matchesSearch && matchesFeed;
+    card.hidden = !isVisible;
+    if (isVisible) visibleCount += 1;
+  });
+  if (collectionStatus) {
+    const singular = activeFeed === 'saved' ? 'saved idea' : 'idea to explore';
+    const plural = activeFeed === 'saved' ? 'saved ideas' : 'ideas to explore';
+    collectionStatus.textContent = visibleCount === 1 ? `1 ${singular}` : `${visibleCount} ${plural}`;
+  }
+};
+
 filters.forEach((button) => button.addEventListener('click', () => {
-  const filter = button.dataset.filter;
+  activeVisualFilter = button.dataset.filter || 'all';
   filters.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-  visualCards.forEach((card) => { card.hidden = filter !== 'all' && card.dataset.category !== filter; });
+  applyVisualFilters();
 }));
+
+visualSearch?.addEventListener('input', applyVisualFilters);
+
+feedButtons.forEach((button) => button.addEventListener('click', () => {
+  activeFeed = button.dataset.feed || 'explore';
+  feedButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+  applyVisualFilters();
+}));
+
+const sharedSearchQuery = new URLSearchParams(window.location.search).get('q');
+if (visualSearch && sharedSearchQuery) {
+  visualSearch.value = sharedSearchQuery;
+  applyVisualFilters();
+}
+
+document.querySelectorAll('.visual-save').forEach((button) => {
+  const card = button.closest('.visual-card');
+  const key = getSavedKey(card);
+  let saved = false;
+  try { saved = localStorage.getItem(key) === 'true'; } catch {}
+  updateSavedState(button, saved);
+  button.addEventListener('click', (event) => {
+    event.stopPropagation();
+    saved = !saved;
+    try { localStorage.setItem(key, String(saved)); } catch {}
+    updateSavedState(button, saved);
+    if (activeFeed === 'saved') applyVisualFilters();
+  });
+});
 
 const shareButton = document.querySelector('#share-button');
 if (navigator.share && shareButton) {
@@ -126,4 +261,29 @@ if (navigator.share && shareButton) {
 const saveButton = document.querySelector('#save-button');
 if (saveButton) {
   saveButton.addEventListener('click', () => { saveButton.textContent = 'Saved'; saveButton.disabled = true; });
+}
+
+document.querySelectorAll('[data-account-form]').forEach((form) => {
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const message = form.querySelector('.account-form-message');
+    if (message) message.textContent = 'Account sign-in will be available when ASARK connects a secure authentication service.';
+  });
+});
+
+const motionQuery = window.matchMedia('(prefers-reduced-motion: no-preference)');
+if (motionQuery.matches && 'IntersectionObserver' in window) {
+  const revealTargets = document.querySelectorAll('.content-section, .discover-section, .visual-card, .blog-card, .curated-card, .interior-card, .lifestyle-card, .affiliate-product-card');
+  revealTargets.forEach((element, index) => {
+    element.classList.add('motion-reveal');
+    element.style.setProperty('--reveal-delay', `${Math.min(index % 6, 5) * 70}ms`);
+  });
+  const observer = new IntersectionObserver((entries, activeObserver) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-revealed');
+      activeObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.12 });
+  revealTargets.forEach((element) => observer.observe(element));
 }
