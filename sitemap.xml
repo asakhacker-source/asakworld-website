@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.asark.publicvm.com/about.html</loc><lastmod>2026-08-25</lastmod></url>
-  <url><loc>https://www.asark.publicvm.com/affiliate.html</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://www.asark.publicvm.com/ai-technology.html</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://www.asark.publicvm.com/architecture.html</loc><lastmod>2026-08-25</lastmod></url>
-  <url><loc>https://www.asark.publicvm.com/blog.html</loc><lastmod>2026-08-25</lastmod></url>
+  <url>
+    <loc>https://www.asark.publicvm.com/space.html</loc>
+  </url>
   <url><loc>https://www.asark.publicvm.com/</loc><lastmod>2026-08-25</lastmod></url>
-  <url><loc>https://www.asark.publicvm.com/interiors.html</loc><lastmod>2026-08-25</lastmod></url>
-  <url><loc>https://www.asark.publicvm.com/lifestyle.html</loc><lastmod>2026-08-25</lastmod></url>
+  <url><loc>https://www.asark.publicvm.com/semiconductor.html</loc><lastmod>2026-08-25</lastmod></url>
+  <url><loc>https://www.asark.publicvm.com/hacker-setup.html</loc><lastmod>2026-08-25</lastmod></url>
+  <url><loc>https://www.asark.publicvm.com/market-technology.html</loc><lastmod>2026-08-25</lastmod></url>
+  <url><loc>https://www.asark.publicvm.com/animation-technology.html</loc><lastmod>2026-08-25</lastmod></url>
+  <url><loc>https://www.asark.publicvm.com/ancient.html</loc><lastmod>2026-08-25</lastmod></url>
+  <url><loc>https://www.asark.publicvm.com/vehicle-technology.html</loc><lastmod>2026-08-25</lastmod></url>
+  <url><loc>https://www.asark.publicvm.com/blogs.html</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://www.asark.publicvm.com/guides/intelligent-home-foundation.html</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://www.asark.publicvm.com/guides/ambient-lighting.html</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://www.asark.publicvm.com/guides/coffee-ritual.html</loc><lastmod>2026-08-25</lastmod></url>

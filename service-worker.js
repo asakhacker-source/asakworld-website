@@ -1,8 +1,8 @@
-const CACHE_NAME = 'asark-app-v9';
+const CACHE_NAME = 'asark-app-v23';
 const OFFLINE_URL = './offline.html';
 const APP_SHELL = [
-  './', './index.html', './architecture.html', './ai-technology.html', './interiors.html',
-  './lifestyle.html', './blog.html', './affiliate.html', './about.html', './visual.html',
+  './', './index.html', './architecture.html', './ai-technology.html', './semiconductor.html',
+  './hacker-setup.html', './market-technology.html', './animation-technology.html', './ancient.html', './vehicle-technology.html', './blogs.html', './about.html', './visual.html',
   './login.html', './signup.html',
   './offline.html', './guides/intelligent-home-foundation.html', './guides/ambient-lighting.html',
   './guides/coffee-ritual.html', './projects/beyond-the-shore.html',

@@ -1,6 +1,25 @@
 const menuToggle = document.querySelector('.menu-toggle');
 const siteNav = document.querySelector('.site-nav');
 
+const primarySections = [
+  ['index.html', 'Home'], ['index.html#about', 'About'], ['space.html', 'Space'], ['architecture.html', 'Architecture'], ['ai-technology.html', 'AI Technology'],
+  ['semiconductor.html', 'Semiconductor'], ['hacker-setup.html', 'Hacker Setup'], ['market-technology.html', 'Market Technology'],
+  ['animation-technology.html', 'Animation Technology'], ['ancient.html', 'Ancient World'], ['vehicle-technology.html', 'Vehicle Technology'],
+  ['blogs.html', 'Blogs']
+];
+const activePage = window.location.pathname.split('/').pop() || 'index.html';
+const activeNavHref = activePage === 'index.html' && window.location.hash === '#about'
+  ? 'index.html#about'
+  : activePage;
+if (siteNav) {
+  const navigationLinks = primarySections.map(([href, label]) =>
+    `<a href="${href}"${href === activeNavHref ? ' aria-current="page"' : ''}>${label}</a>`
+  );
+  const primaryLinks = navigationLinks.slice(0, -2).join('');
+  const secondaryLinks = navigationLinks.slice(-2).join('');
+  siteNav.innerHTML = `<div class="nav-links nav-links-primary">${primaryLinks}</div><div class="nav-links nav-links-secondary">${secondaryLinks}</div>`;
+}
+
 // Keep every visible editorial image on ASARK within the supplied AI image collection.
 const aiImageFiles = [
   'Gemini_Generated_Image_(1).png', 'Gemini_Generated_Image_(2).png',
@@ -25,7 +44,7 @@ const aiImageFiles = [
   'our-best-look-ever-yet-at-tony-starks-mansion-from-the-book-v0-mq5lg6zmpg1g1.webp'
 ];
 const homeUrl = new URL(document.querySelector('.logo')?.getAttribute('href') || 'index.html', window.location.href);
-const aiImageUrl = (index) => new URL(`ai images/${aiImageFiles[index % aiImageFiles.length]}`, homeUrl).href;
+const aiImageUrl = (index) => new URL(`ai images/HOME/ARCHETECTURE/${aiImageFiles[index % aiImageFiles.length]}`, homeUrl).href;
 
 document.querySelectorAll('img').forEach((image, index) => {
   if (image.closest('.site-header') || image.src.includes('asark-mark')) return;
@@ -63,19 +82,9 @@ headerSearch.addEventListener('submit', (event) => {
   if (!query) return;
   const homeLink = document.querySelector('.logo')?.getAttribute('href') || 'index.html';
   const homeUrl = new URL(homeLink, window.location.href);
-  if (window.location.pathname === homeUrl.pathname) {
-    document.querySelector('#discover')?.scrollIntoView({ behavior: 'smooth' });
-    const collectionSearch = document.querySelector('#visual-search');
-    if (collectionSearch) {
-      collectionSearch.value = query;
-      collectionSearch.dispatchEvent(new Event('input', { bubbles: true }));
-      collectionSearch.focus({ preventScroll: true });
-    }
-    return;
-  }
-  homeUrl.searchParams.set('q', query);
-  homeUrl.hash = 'discover';
-  window.location.href = homeUrl.href;
+  const blogsUrl = new URL('blogs.html', homeUrl);
+  blogsUrl.searchParams.set('q', query);
+  window.location.href = blogsUrl.href;
 });
 
 let deferredInstallPrompt;
@@ -214,12 +223,10 @@ document.querySelectorAll('.visual-card, .card[data-project-link], .card').forEa
 
 const editorialRecommendations = {
   'architecture.html': [['Architecture books', 'architecture coffee table books'], ['Outdoor lighting', 'architectural outdoor lighting'], ['Architectural model tools', 'architectural model making tools']],
-  'interiors.html': [['Ambient lighting', 'ambient home lighting'], ['Home fragrance', 'luxury home fragrance'], ['Decorative objects', 'modern decorative objects'], ['Bedding', 'premium bedding'], ['Furniture', 'designer furniture']],
-  'ai-technology.html': [['Smart-home hubs', 'smart home hub'], ['Smart lighting', 'smart lighting'], ['Projectors', 'home projector'], ['Sensors', 'smart home sensors']],
-  'lifestyle.html': [['Coffee equipment', 'premium coffee equipment'], ['Travel equipment', 'premium travel equipment'], ['Watches', 'minimalist watches'], ['Everyday objects', 'design everyday objects']]
+  'ai-technology.html': [['Smart-home hubs', 'smart home hub'], ['Smart lighting', 'smart lighting'], ['Projectors', 'home projector'], ['Sensors', 'smart home sensors']]
 };
 
-const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+const currentPage = activePage;
 const recommendedProducts = editorialRecommendations[currentPage];
 
 if (recommendedProducts && document.querySelector('main')) {
@@ -235,84 +242,6 @@ if (recommendedProducts && document.querySelector('main')) {
   recommendations.innerHTML = `<p class="eyebrow">ASARK recommends</p><h2>Selected for this collection.</h2><p class="page-affiliate-disclosure">As an Amazon Associate I earn from qualifying purchases.</p><div class="page-affiliate-links">${links}</div>`;
   document.querySelector('.site-footer')?.before(recommendations);
 }
-const filters = document.querySelectorAll('[data-filter]');
-const visualCards = document.querySelectorAll('.visual-card');
-const visualSearch = document.querySelector('#visual-search');
-const collectionStatus = document.querySelector('#collection-status');
-const feedButtons = document.querySelectorAll('[data-feed]');
-let activeVisualFilter = 'all';
-let activeFeed = 'explore';
-
-const getSavedKey = (card) => {
-  const title = card?.querySelector('h3')?.textContent.trim() || 'concept';
-  return `asark-saved-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
-};
-
-const isCardSaved = (card) => {
-  try { return localStorage.getItem(getSavedKey(card)) === 'true'; } catch { return false; }
-};
-
-const updateSavedState = (button, saved) => {
-  button.classList.toggle('is-saved', saved);
-  button.setAttribute('aria-pressed', String(saved));
-  button.textContent = saved ? 'Saved' : 'Save';
-};
-
-const applyVisualFilters = () => {
-  const query = visualSearch ? visualSearch.value.trim().toLowerCase() : '';
-  let visibleCount = 0;
-  visualCards.forEach((card) => {
-    const title = card.querySelector('h3')?.textContent.toLowerCase() || '';
-    const category = card.dataset.category || '';
-    const matchesCategory = activeVisualFilter === 'all' || category === activeVisualFilter;
-    const matchesSearch = !query || title.includes(query) || category.includes(query);
-    const matchesFeed = activeFeed === 'explore' || isCardSaved(card);
-    const isVisible = matchesCategory && matchesSearch && matchesFeed;
-    card.hidden = !isVisible;
-    if (isVisible) visibleCount += 1;
-  });
-  if (collectionStatus) {
-    const singular = activeFeed === 'saved' ? 'saved idea' : 'idea to explore';
-    const plural = activeFeed === 'saved' ? 'saved ideas' : 'ideas to explore';
-    collectionStatus.textContent = visibleCount === 1 ? `1 ${singular}` : `${visibleCount} ${plural}`;
-  }
-};
-
-filters.forEach((button) => button.addEventListener('click', () => {
-  activeVisualFilter = button.dataset.filter || 'all';
-  filters.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-  applyVisualFilters();
-}));
-
-visualSearch?.addEventListener('input', applyVisualFilters);
-
-feedButtons.forEach((button) => button.addEventListener('click', () => {
-  activeFeed = button.dataset.feed || 'explore';
-  feedButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-  applyVisualFilters();
-}));
-
-const sharedSearchQuery = new URLSearchParams(window.location.search).get('q');
-if (visualSearch && sharedSearchQuery) {
-  visualSearch.value = sharedSearchQuery;
-  applyVisualFilters();
-}
-
-document.querySelectorAll('.visual-save').forEach((button) => {
-  const card = button.closest('.visual-card');
-  const key = getSavedKey(card);
-  let saved = false;
-  try { saved = localStorage.getItem(key) === 'true'; } catch {}
-  updateSavedState(button, saved);
-  button.addEventListener('click', (event) => {
-    event.stopPropagation();
-    saved = !saved;
-    try { localStorage.setItem(key, String(saved)); } catch {}
-    updateSavedState(button, saved);
-    if (activeFeed === 'saved') applyVisualFilters();
-  });
-});
-
 const shareButton = document.querySelector('#share-button');
 if (navigator.share && shareButton) {
   shareButton.addEventListener('click', () => navigator.share({ title: document.title, url: window.location.href }));
@@ -332,7 +261,7 @@ document.querySelectorAll('[data-account-form]').forEach((form) => {
 
 const motionQuery = window.matchMedia('(prefers-reduced-motion: no-preference)');
 if (motionQuery.matches && 'IntersectionObserver' in window) {
-  const revealTargets = document.querySelectorAll('.content-section, .discover-section, .visual-card, .blog-card, .curated-card, .interior-card, .lifestyle-card, .affiliate-product-card');
+  const revealTargets = document.querySelectorAll('.content-section, .curated-card, .interior-card, .lifestyle-card, .affiliate-product-card');
   revealTargets.forEach((element, index) => {
     element.classList.add('motion-reveal');
     element.style.setProperty('--reveal-delay', `${Math.min(index % 6, 5) * 70}ms`);
