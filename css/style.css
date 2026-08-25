@@ -306,6 +306,37 @@ body { background: radial-gradient(circle at 84% -10%, rgba(135, 246, 229, .09),
 .site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--signal); }
 .eyebrow { color: var(--signal); text-shadow: 0 0 18px rgba(135, 246, 229, .22); }
 .hero { background-image: radial-gradient(circle at 50% 18%, rgba(135, 246, 229, .17), transparent 25%), linear-gradient(90deg, rgba(0, 0, 0, .76), rgba(0, 0, 0, .22), rgba(0, 0, 0, .76)), linear-gradient(rgba(6, 10, 12, .18), rgba(5, 5, 7, .76)), url("https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2200&q=85"); }
+
+/* Local AI image collection */
+.hero { background-image: radial-gradient(circle at 50% 18%, rgba(135, 246, 229, .17), transparent 25%), linear-gradient(90deg, rgba(0, 0, 0, .76), rgba(0, 0, 0, .22), rgba(0, 0, 0, .76)), linear-gradient(rgba(6, 10, 12, .18), rgba(5, 5, 7, .76)), url("../ai images/Gemini_Generated_Image_(1).png"); }
+.interiors-hero, .curated-hero-image { background-image: linear-gradient(90deg, rgba(8, 8, 7, .88) 5%, rgba(8, 8, 7, .42) 58%, rgba(8, 8, 7, .15)), url("../ai images/Gemini_Generated_Image_(2).png"); }
+.interior-image.ai-interior-01 { background-image: url("../ai images/Gemini_Generated_Image_(10).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-02 { background-image: url("../ai images/Gemini_Generated_Image_(11).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-03 { background-image: url("../ai images/Gemini_Generated_Image_(12).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-04 { background-image: url("../ai images/Gemini_Generated_Image_(13).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-05 { background-image: url("../ai images/Gemini_Generated_Image_(14).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-06 { background-image: url("../ai images/Gemini_Generated_Image_(15).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-07 { background-image: url("../ai images/Gemini_Generated_Image_(16).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-08 { background-image: url("../ai images/Gemini_Generated_Image_(17).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-09 { background-image: url("../ai images/Gemini_Generated_Image_(18).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-10 { background-image: url("../ai images/Gemini_Generated_Image_(19).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-11 { background-image: url("../ai images/Gemini_Generated_Image_(20).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-12 { background-image: url("../ai images/modern house.png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-01 { background-image: url("../ai images/Gemini_Generated_Image_(1).png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-02 { background-image: url("../ai images/Gemini_Generated_Image_(2).png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-03 { background-image: url("../ai images/Gemini_Generated_Image_(3).png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-04 { background-image: url("../ai images/Gemini_Generated_Image_(4).png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-05 { background-image: url("../ai images/Gemini_Generated_Image_(5).png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-06 { background-image: url("../ai images/Gemini_Generated_Image_(6).png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-07 { background-image: url("../ai images/Gemini_Generated_Image_(7).png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-08 { background-image: url("../ai images/Gemini_Generated_Image_(8).png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-09 { background-image: url("../ai images/Gemini_Generated_Image_(9).png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-10 { background-image: url("../ai images/Gemini_Generated_Image_39a5aj39a5aj39a5.png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-11 { background-image: url("../ai images/Gemini_Generated_Image_3mhdo63mhdo63mhd.png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-12 { background-image: url("../ai images/Gemini_Generated_Image_gbjlagbjlagbjlag.png"); background-size: cover; background-position: center; }
+.curated-image, .curated-image-01 { background-image: url("../ai images/Gemini_Generated_Image_jquxqcjquxqcjqux.png"); background-size: cover; background-position: center; }
+.curated-image-02 { background-image: url("../ai images/Gemini_Generated_Image_jv701qjv701qjv70.png"); }
+.curated-image-03 { background-image: url("../ai images/Gemini_Generated_Image_lc0e35lc0e35lc0e.png"); }
 .hero h1 { text-shadow: 0 14px 48px rgba(0, 0, 0, .6), 0 0 40px rgba(135, 246, 229, .09); }
 .btn { border-color: var(--signal); background: linear-gradient(110deg, var(--signal), #d9ad32 86%); box-shadow: 0 10px 26px rgba(135, 246, 229, .16); }
 .btn:hover { border-color: #d7fff8; background: #d7fff8; box-shadow: 0 14px 34px rgba(135, 246, 229, .28); }

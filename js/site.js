@@ -1,6 +1,47 @@
 const menuToggle = document.querySelector('.menu-toggle');
 const siteNav = document.querySelector('.site-nav');
 
+// Keep every visible editorial image on ASARK within the supplied AI image collection.
+const aiImageFiles = [
+  'Gemini_Generated_Image_(1).png', 'Gemini_Generated_Image_(2).png',
+  'Gemini_Generated_Image_(3).png', 'Gemini_Generated_Image_(4).png',
+  'Gemini_Generated_Image_(5).png', 'Gemini_Generated_Image_(6).png',
+  'Gemini_Generated_Image_(7).png', 'Gemini_Generated_Image_(8).png',
+  'Gemini_Generated_Image_(9).png', 'Gemini_Generated_Image_(10).png',
+  'Gemini_Generated_Image_(11).png', 'Gemini_Generated_Image_(12).png',
+  'Gemini_Generated_Image_(13).png', 'Gemini_Generated_Image_(14).png',
+  'Gemini_Generated_Image_(15).png', 'Gemini_Generated_Image_(16).png',
+  'Gemini_Generated_Image_(17).png', 'Gemini_Generated_Image_(18).png',
+  'Gemini_Generated_Image_(19).png', 'Gemini_Generated_Image_(20).png',
+  'Gemini_Generated_Image_39a5aj39a5aj39a5.png',
+  'Gemini_Generated_Image_3mhdo63mhdo63mhd.png',
+  'Gemini_Generated_Image_gbjlagbjlagbjlag.png',
+  'Gemini_Generated_Image_jquxqcjquxqcjqux.png',
+  'Gemini_Generated_Image_jv701qjv701qjv70.png',
+  'Gemini_Generated_Image_lc0e35lc0e35lc0e.png',
+  'Gemini_Generated_Image_ld8r28ld8r28ld8r.png',
+  'Gemini_Generated_Image_o0n0yjo0n0yjo0n0.png',
+  'Gemini_Generated_Image_w1zouxw1zouxw1zo.png', 'modern house.png'
+];
+const homeUrl = new URL(document.querySelector('.logo')?.getAttribute('href') || 'index.html', window.location.href);
+const aiImageUrl = (index) => new URL(`ai images/${aiImageFiles[index % aiImageFiles.length]}`, homeUrl).href;
+
+document.querySelectorAll('img').forEach((image, index) => {
+  if (image.closest('.site-header') || image.src.includes('asark-mark')) return;
+  image.dataset.originalImage = image.src;
+  image.src = aiImageUrl(index);
+  image.removeAttribute('srcset');
+  image.dataset.aiImage = 'true';
+});
+
+document.querySelectorAll('.image-provenance, .visual-source-note').forEach((note) => {
+  note.textContent = 'Images are AI-generated visual studies from the ASARK collection. They illustrate concepts and do not depict built projects, real products or real places.';
+});
+
+document.querySelectorAll('.visual-info span').forEach((label) => {
+  label.textContent = label.textContent.replace('EDITORIAL REFERENCE', 'AI-GENERATED CONCEPT');
+});
+
 const headerSearch = document.createElement('form');
 headerSearch.className = 'header-search';
 headerSearch.setAttribute('role', 'search');
@@ -105,7 +146,7 @@ if ('serviceWorker' in navigator) {
 }
 
 document.querySelectorAll('.site-footer').forEach((footer) => {
-  footer.textContent = 'ASARK · The Art of Future Luxury';
+  footer.textContent = '© 2026 ASARK · The Art of Future Luxury';
 });
 
 if (menuToggle && siteNav) {
@@ -137,7 +178,8 @@ document.querySelectorAll('a[href$="design.html"]').forEach((link) => {
 document.querySelectorAll('.visual-card, .card[data-project-link], .card').forEach((card) => {
   const image = card.querySelector('img');
   if (!card.matches('.visual-card') && !card.dataset.projectLink && !image) return;
-  const imageKey = image ? Object.keys(imageProjects).find((key) => image.src.includes(key)) : null;
+  const imageSource = image?.dataset.originalImage || image?.src || '';
+  const imageKey = image ? Object.keys(imageProjects).find((key) => imageSource.includes(key)) : null;
   const destination = card.dataset.projectLink || (imageKey && imageProjects[imageKey]) || 'visual.html';
   card.tabIndex = 0;
   card.setAttribute('role', 'link');
