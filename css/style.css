@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --bg: #0a0a09;
   --surface: #141310;
   --line: rgba(217, 173, 50, 0.22);
@@ -451,4 +451,3 @@ body { background: radial-gradient(circle at 84% -10%, rgba(135, 246, 229, .09),
   @keyframes orbital-breathe { 0%, 100% { opacity: .48; transform: translateX(-50%) scale(.98); } 50% { opacity: .92; transform: translateX(-50%) scale(1.025); } }
   @keyframes signal-flicker { 0%, 93%, 100% { opacity: 1; } 94%, 96% { opacity: .42; } }
 }
-
