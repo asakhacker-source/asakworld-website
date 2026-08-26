@@ -1,7 +1,7 @@
-const CACHE_NAME = 'asark-app-v62';
+const CACHE_NAME = 'asark-app-v63';
 const OFFLINE_URL = './offline.html';
 const APP_SHELL = [
-  './', './index.html', './offline.html', './css/style.css?v=61', './js/site.js?v=62', './js/auth-config.js',
+  './', './index.html', './offline.html', './css/style.css?v=61', './js/site.js?v=63', './js/auth-config.js',
   './manifest.webmanifest', './assets/asark-mark.svg', './assets/icon-192.png', './assets/icon-512.png'
 ];
 
