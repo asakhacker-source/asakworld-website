@@ -439,6 +439,18 @@ body { background: radial-gradient(circle at 84% -10%, rgba(135, 246, 229, .09),
 .blog-post p { max-width: 760px; color: var(--muted); font-size: 1.04rem; line-height: 1.85; }
 .blog-post .blog-post-lead { margin: 0; color: var(--text); font: 400 clamp(1.35rem, 2.3vw, 1.75rem)/1.6 var(--serif); }
 .blog-post .blog-post-closing { color: var(--text); font: 400 clamp(1.45rem, 2.4vw, 2rem)/1.5 var(--serif); }
+.blog-directory { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr); gap: clamp(28px, 5vw, 70px); align-items: center; margin: 60px 0 75px; padding-bottom: 75px; border-bottom: 1px solid var(--line); }
+.blog-directory figure, .technology-showcase { margin: 0; }
+.blog-directory img, .technology-showcase img { display: block; width: 100%; border: 1px solid rgba(135, 246, 229, .24); }
+.blog-directory figcaption, .technology-showcase figcaption { margin-top: 12px; color: var(--muted); font-size: 10px; letter-spacing: 1px; line-height: 1.5; text-transform: uppercase; }
+.blog-directory h2 { margin: 0 0 18px; font: 400 clamp(2.4rem, 4vw, 4rem)/.95 var(--serif); }
+.blog-directory > div > p:not(.eyebrow) { color: var(--muted); line-height: 1.75; }
+.blog-directory nav { display: grid; gap: 1px; margin-top: 28px; border: 1px solid var(--line); background: var(--line); }
+.blog-directory nav a { display: flex; align-items: center; justify-content: space-between; min-height: 54px; padding: 0 18px; background: var(--surface); color: var(--text); font-size: 11px; letter-spacing: 1px; text-decoration: none; text-transform: uppercase; }
+.blog-directory nav a::after { color: var(--signal, var(--gold)); content: '→'; }
+.blog-directory nav a:hover { background: rgba(135, 246, 229, .12); color: var(--signal, var(--gold)); }
+.technology-showcase { margin: 58px 0 0; }
+@media (max-width: 760px) { .blog-directory { grid-template-columns: 1fr; margin-bottom: 55px; padding-bottom: 55px; } }
 @media (max-width: 760px) { .technology-page { width: min(100% - 32px, 1280px); }.technology-grid { grid-template-columns: 1fr; }.technology-grid article { min-height: 0; }.technology-grid h2 { margin-top: 30px; } }
 
 /* Motion system */

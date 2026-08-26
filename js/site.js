@@ -246,6 +246,26 @@ const recommendedProducts = affiliateExcludedPages.has(currentPage)
   ? null
   : (editorialRecommendations[currentPage] || defaultRecommendations);
 
+if (currentPage === 'blogs.html') {
+  const blogPost = document.querySelector('.blog-post');
+  if (blogPost) {
+    const blogDirectory = document.createElement('section');
+    blogDirectory.className = 'blog-directory';
+    blogDirectory.innerHTML = '<figure><img src="assets/technology-blog.png" alt="AI-generated editorial illustration connecting artificial intelligence, market data, animation, space technology and an electric vehicle"><figcaption>AI-generated editorial visual study: five connected technologies shaping the future.</figcaption></figure><div><p class="eyebrow">Read by topic</p><h2>Five field guides for the future.</h2><p>Explore each technology through its own focused ASARK page.</p><nav aria-label="Technology blog topics"><a href="ai-technology.html">AI Technology</a><a href="market-technology.html">Market Technology</a><a href="animation-technology.html">Animation Technology</a><a href="space.html">Space Technology</a><a href="vehicle-technology.html">Vehicle Technology</a></nav></div>';
+    blogPost.before(blogDirectory);
+  }
+}
+
+if (currentPage === 'technology.html') {
+  const technologyGrid = document.querySelector('.technology-grid');
+  if (technologyGrid) {
+    const technologyShowcase = document.createElement('figure');
+    technologyShowcase.className = 'technology-showcase';
+    technologyShowcase.innerHTML = '<img src="assets/technology-showcase.png" alt="AI-generated 20-tile visual overview of artificial intelligence, markets, animation, space and vehicle technology"><figcaption>AI-generated visual overview: twenty connected technology concepts across five future-facing fields.</figcaption>';
+    technologyGrid.before(technologyShowcase);
+  }
+}
+
 if (recommendedProducts && document.querySelector('main')) {
   const recommendations = document.createElement('aside');
   recommendations.className = 'page-affiliate';
