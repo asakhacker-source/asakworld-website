@@ -22,16 +22,9 @@ if (siteNav) {
     const childLinks = children.map(([childHref, childLabel]) =>
       `<li><a href="${childHref}"${childHref === activeNavHref ? ' aria-current="page"' : ''}>${childLabel}</a></li>`
     ).join('');
-    return `<div class="nav-dropdown"><a href="${href}"${isActive ? ' aria-current="page"' : ''}>${label}</a><button class="nav-dropdown-toggle" type="button" aria-label="Show ${label} pages" aria-expanded="false">⌄</button><ul class="nav-submenu">${childLinks}</ul></div>`;
+    return `<div class="nav-dropdown"><a href="${href}"${isActive ? ' aria-current="page"' : ''}>${label}</a><ul class="nav-submenu">${childLinks}</ul></div>`;
   });
   siteNav.innerHTML = `<div class="nav-links nav-links-primary">${navigationLinks.join('')}${dropdownLinks.join('')}</div>`;
-  siteNav.querySelectorAll('.nav-dropdown-toggle').forEach((button) => {
-    button.addEventListener('click', () => {
-      const dropdown = button.closest('.nav-dropdown');
-      const isOpen = dropdown.classList.toggle('is-open');
-      button.setAttribute('aria-expanded', String(isOpen));
-    });
-  });
 }
 
 // Keep every visible editorial image on ASARK within the supplied AI image collection.
