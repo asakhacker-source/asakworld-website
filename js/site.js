@@ -264,35 +264,24 @@ if (currentPage === 'blogs.html') {
     'space-title': '<h3>Satellites in everyday life</h3><p>Satellites support navigation, communication, television broadcasting, weather forecasting, environmental monitoring, disaster management, scientific research and mapping. Weather systems continuously observe conditions that help specialists study storms, clouds, temperatures and climate patterns.</p><h3>Smaller and smarter systems</h3><p>Advances in electronics and manufacturing have enabled smaller satellite platforms for research, communication and observation. Efficient processors, improved sensors and intelligent software can help satellites process more useful information before transmitting it to Earth.</p><h3>Robotics and exploration</h3><p>Robotic spacecraft can explore environments that are difficult for people to reach, analysing surfaces, atmospheres, radiation and other conditions. Future missions may use increasingly autonomous systems for complex scientific tasks.</p><h3>Sustainable exploration</h3><p>Responsible space development includes managing orbital debris, coordinating satellite operations, designing efficient spacecraft and considering long-term environmental impact.</p>',
     'vehicle-title': '<h3>Electric vehicles</h3><p>EVs use electric motors and battery systems rather than relying entirely on internal-combustion engines. Battery management, power electronics, regenerative braking, charging infrastructure, thermal management and vehicle-control software all shape performance, safety, cost and lifespan.</p><h3>Connected vehicles</h3><p>Connected vehicles can exchange information with digital infrastructure and cloud services to support navigation, maintenance, updates and traffic management. Vehicle-to-everything, or V2X, is being researched to help compatible vehicles and infrastructure communicate.</p><h3>Driver-assistance technology</h3><p>Cameras, radar, ultrasonic sensors and other systems can support parking assistance, adaptive cruise control, lane support and collision warnings. Their capabilities and limitations must be understood clearly, with testing, cybersecurity, regulation and human responsibility remaining essential.</p><h3>The future of transportation</h3><p>Electric mobility, renewable energy, connected vehicles, intelligent infrastructure and improved public transport can help make travel safer, cleaner, more efficient, accessible and sustainable.</p>'
   };
-  Object.entries(blogTopicDetails).forEach(([headingId, content]) => {
+  const blogVisualCards = {
+    'ai-title': [['AI processor & neural network', 'Powerful chips and neural networks are the backbone of modern AI systems.'], ['AI assistant interface', 'Assistants help people find information and complete useful tasks.'], ['AI in healthcare & education', 'AI can support analysis, learning and more personalised experiences.'], ['Responsible AI', 'Privacy, fairness, transparency and accountability are essential.']],
+    'market-title': [['Market analytics dashboard', 'Real-time information can reveal demand, performance and changing trends.'], ['E-commerce ecosystem', 'Online platforms connect businesses with customers across the world.'], ['Digital payments', 'Secure payment systems make transactions faster and more reliable.'], ['AI-powered business insights', 'Data tools can help teams recognise patterns and plan ahead.']],
+    'animation-title': [['3D modelling', 'Artists create digital objects with specialised tools and techniques.'], ['Motion capture', 'Physical movement can be recorded and translated into digital animation.'], ['Animation production pipeline', 'Modelling, rigging, lighting and rendering work together to create motion.'], ['Real-time rendering', 'Advanced graphics systems create rich visual worlds with greater immediacy.']],
+    'space-title': [['Satellites in orbit', 'Satellite systems support communication, weather observation and navigation.'], ['Modern spacecraft', 'Launch vehicles and spacecraft make ambitious scientific missions possible.'], ['Planetary exploration', 'Robotic systems investigate distant environments and collect valuable data.'], ['Sustainable space technology', 'Future missions must manage resources and orbit responsibly.']],
+    'vehicle-title': [['Electric vehicles', 'EVs use electric motors and battery systems for cleaner mobility.'], ['Battery & charging technology', 'Better batteries and reliable charging support practical electric transport.'], ['Connected smart vehicles', 'Vehicles can exchange useful information with networks and infrastructure.'], ['Advanced driver assistance', 'Sensors and intelligent systems can support safer, more confident journeys.']]
+  };
+  Object.entries(blogTopicDetails).forEach(([headingId, content], topicIndex) => {
     const topicHeader = document.getElementById(headingId)?.closest('header');
-    if (!topicHeader) return;
+    const topic = topicHeader?.parentElement;
+    const grid = topic?.querySelector('.blog-card-grid');
+    if (!topicHeader || !grid) return;
+    grid.innerHTML = blogVisualCards[headingId].map(([title, description], cardIndex) => `<article><div class="journal-card-image" role="img" aria-label="${title}" style="--image-x:${cardIndex * 33.333}%;--image-y:${topicIndex * 25}%"></div><div class="journal-card-copy"><p class="card-kicker">${String(cardIndex + 1).padStart(2, '0')} · Visual guide</p><h3>${title}</h3><p>${description}</p></div></article>`).join('');
     const detail = document.createElement('div');
     detail.className = 'blog-topic-detail';
     detail.innerHTML = content;
-    topicHeader.after(detail);
+    grid.after(detail);
   });
-  const aiBlogTopic = document.getElementById('ai-technology');
-  if (aiBlogTopic) {
-    const aiBlogVisual = document.createElement('figure');
-    aiBlogVisual.className = 'ai-topic-visual';
-    aiBlogVisual.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/AI Technology/ai-technology-blog.png" alt="AI technology infographic showing machine learning, virtual assistants, healthcare, education and responsible AI"><figcaption>AI-generated educational visual: five practical areas of AI technology.</figcaption>';
-    aiBlogTopic.querySelector('.blog-topic-detail')?.after(aiBlogVisual);
-  }
-  const animationBlogTopic = document.getElementById('animation-technology');
-  if (animationBlogTopic) {
-    const animationBlogVisual = document.createElement('figure');
-    animationBlogVisual.className = 'animation-technology-overview';
-    animationBlogVisual.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/Animation Technology/animation-technology-feature.png" alt="Animation Technology infographic featuring 3D animation, AI tools, virtual reality, motion capture and visual storytelling"><figcaption>Animation Technology: creative tools that bring ideas to life through motion, immersive worlds and visual storytelling.</figcaption>';
-    animationBlogTopic.querySelector('.blog-topic-detail')?.after(animationBlogVisual);
-  }
-  const spaceBlogTopic = document.getElementById('space-technology');
-  if (spaceBlogTopic) {
-    const spaceBlogVisual = document.createElement('figure');
-    spaceBlogVisual.className = 'space-technology-overview';
-    spaceBlogVisual.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/Space Technology/space-technology-feature.png" alt="Space Technology infographic featuring satellites, launch vehicles, planetary exploration, astronomy and space research"><figcaption>Space Technology: exploring beyond boundaries through satellites, launch systems, research and planetary exploration.</figcaption>';
-    spaceBlogTopic.querySelector('.blog-topic-detail')?.after(spaceBlogVisual);
-  }
   if (window.location.hash) {
     window.setTimeout(() => document.querySelector(window.location.hash)?.scrollIntoView({ block: 'start' }), 0);
   }

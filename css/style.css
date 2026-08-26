@@ -523,14 +523,16 @@ body { background: radial-gradient(circle at 84% -10%, rgba(135, 246, 229, .09),
 .journal-topic-nav a { padding: 10px 14px; border: 1px solid rgba(135, 246, 229, .28); color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: 1px; text-decoration: none; text-transform: uppercase; }
 .journal-topic-nav a:hover { border-color: var(--signal); color: var(--signal); }
 .commerce-journal .blog-topic { scroll-margin-top: 90px; }
-.commerce-journal .blog-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 900px; }
-.commerce-journal .blog-card-grid article { display: flex; min-height: 250px; flex-direction: column; padding: clamp(23px, 3vw, 34px); }
-.commerce-journal .blog-card-grid h3 { margin: 24px 0 12px; }
+.commerce-journal .blog-card-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: none; border: 0; background: transparent; gap: 16px; }
+.commerce-journal .blog-card-grid article { display: flex; min-width: 0; min-height: 0; flex-direction: column; padding: 0; border: 1px solid rgba(135, 246, 229, .2); background: linear-gradient(145deg, rgba(24, 27, 25, .96), rgba(15, 16, 14, .96)); overflow: hidden; }
+.journal-card-image { width: 100%; aspect-ratio: 1.24; border-bottom: 1px solid rgba(135, 246, 229, .22); background-image: url('../ai images/Technology/technology-innovations-grid.png'); background-position: var(--image-x) var(--image-y); background-repeat: no-repeat; background-size: 400% 500%; }
+.journal-card-copy { display: flex; min-height: 166px; flex-direction: column; padding: 18px; }
+.commerce-journal .blog-card-grid h3 { margin: 15px 0 9px; font: 400 clamp(1.15rem, 1.55vw, 1.45rem)/1.05 var(--serif); }
 .commerce-journal .blog-card-grid p { margin-left: 0; margin-right: 0; }
-.commerce-journal .blog-card-grid a { margin-top: auto; padding-top: 25px; color: var(--signal); font-size: 10px; font-weight: 700; letter-spacing: 1px; text-decoration: none; text-transform: uppercase; }
-.commerce-journal .blog-card-grid a:hover { color: var(--text); }
+.commerce-journal .blog-card-grid .journal-card-copy > p:last-child { margin-bottom: 0; font-size: .88rem; }
 .card-kicker { color: var(--gold) !important; font-size: 9px !important; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase; }
 @media (max-width: 1050px) { .commerce-hub .technology-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 900px) { .commerce-journal .blog-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 700px) { .hub-metrics { grid-template-columns: 1fr; }.hub-metrics div + div { padding-left: 0; border-left: 0; }.technology-shop-panel { grid-template-columns: 1fr; }.commerce-journal .blog-card-grid { grid-template-columns: 1fr; }.technology-hub-hero, .blog-commerce-hero { padding: 30px 24px; } }
 
 /* Motion system */
