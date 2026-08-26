@@ -229,11 +229,29 @@ document.querySelectorAll('.visual-card, .card[data-project-link], .card').forEa
 
 const editorialRecommendations = {
   'architecture.html': [['Architecture books', 'architecture coffee table books'], ['Outdoor lighting', 'architectural outdoor lighting'], ['Architectural model tools', 'architectural model making tools']],
-  'ai-technology.html': [['Smart-home hubs', 'smart home hub'], ['Smart lighting', 'smart lighting'], ['Projectors', 'home projector'], ['Sensors', 'smart home sensors']]
+  'ancient.html': [['Ancient architecture books', 'ancient architecture books'], ['World history books', 'world history books'], ['Drawing notebooks', 'architect sketchbook']],
+  'modern.html': [['Modern architecture books', 'modern architecture books'], ['Architectural lighting', 'architectural lighting'], ['Design sketchbooks', 'architecture sketchbook']],
+  'futuristic.html': [['Future design books', 'futuristic design books'], ['Smart lighting', 'smart lighting'], ['3D printing tools', '3d printing tools']],
+  'hacker-setup.html': [['Mechanical keyboards', 'mechanical keyboard'], ['Monitor arms', 'monitor arm'], ['USB-C hubs', 'usb c hub']],
+  'technology.html': [['Technology books', 'technology books'], ['Smart-home hubs', 'smart home hub'], ['Portable SSDs', 'portable ssd']],
+  'ai-technology.html': [['Smart-home hubs', 'smart home hub'], ['Smart lighting', 'smart lighting'], ['Projectors', 'home projector'], ['Sensors', 'smart home sensors']],
+  'market-technology.html': [['Finance books', 'personal finance books'], ['Business notebooks', 'business notebook'], ['Desk organisers', 'desk organizer']],
+  'animation-technology.html': [['Drawing tablets', 'drawing tablet'], ['Animation books', 'animation books'], ['Colour-calibrated monitors', 'color calibrated monitor']],
+  'vehicle-technology.html': [['Car phone mounts', 'car phone mount'], ['Dash cameras', 'dash camera'], ['Portable tyre inflators', 'portable tyre inflator']],
+  'space.html': [['Smart lighting', 'smart lighting'], ['Air purifiers', 'air purifier'], ['Home sensors', 'smart home sensors']],
+  'semiconductor.html': [['Electronics books', 'electronics books'], ['Circuit design kits', 'electronics circuit kit'], ['Precision tool kits', 'precision screwdriver set']],
+  'vlsi.html': [['VLSI books', 'vlsi design books'], ['Electronics books', 'semiconductor books'], ['Technical notebooks', 'engineering notebook']],
+  'processor.html': [['Computer architecture books', 'computer architecture books'], ['Cooling pads', 'laptop cooling pad'], ['USB-C hubs', 'usb c hub']],
+  'graphics-card.html': [['Graphics cards', 'graphics card'], ['Gaming monitors', 'gaming monitor'], ['GPU support brackets', 'gpu support bracket']],
+  'blogs.html': [['Technology books', 'technology books'], ['Reading lights', 'reading lamp'], ['Notebooks', 'notebook journal']]
 };
 
 const currentPage = activePage;
-const recommendedProducts = editorialRecommendations[currentPage];
+const affiliateExcludedPages = new Set(['login.html', 'signup.html', 'offline.html']);
+const defaultRecommendations = [['Design books', 'design books'], ['Desk lighting', 'desk lamp'], ['Everyday organisers', 'desk organizer']];
+const recommendedProducts = affiliateExcludedPages.has(currentPage)
+  ? null
+  : (editorialRecommendations[currentPage] || defaultRecommendations);
 
 if (recommendedProducts && document.querySelector('main')) {
   const recommendations = document.createElement('aside');
