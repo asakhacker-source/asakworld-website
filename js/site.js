@@ -271,16 +271,12 @@ if (currentPage === 'blogs.html') {
     'space-title': [['Satellites in orbit', 'Satellite systems support communication, weather observation and navigation.'], ['Modern spacecraft', 'Launch vehicles and spacecraft make ambitious scientific missions possible.'], ['Planetary exploration', 'Robotic systems investigate distant environments and collect valuable data.'], ['Sustainable space technology', 'Future missions must manage resources and orbit responsibly.']],
     'vehicle-title': [['Electric vehicles', 'EVs use electric motors and battery systems for cleaner mobility.'], ['Battery & charging technology', 'Better batteries and reliable charging support practical electric transport.'], ['Connected smart vehicles', 'Vehicles can exchange useful information with networks and infrastructure.'], ['Advanced driver assistance', 'Sensors and intelligent systems can support safer, more confident journeys.']]
   };
-  Object.entries(blogTopicDetails).forEach(([headingId, content], topicIndex) => {
+  Object.entries(blogVisualCards).forEach(([headingId, cards], topicIndex) => {
     const topicHeader = document.getElementById(headingId)?.closest('header');
     const topic = topicHeader?.parentElement;
     const grid = topic?.querySelector('.blog-card-grid');
     if (!topicHeader || !grid) return;
-    grid.innerHTML = blogVisualCards[headingId].map(([title, description], cardIndex) => `<article><div class="journal-card-image" role="img" aria-label="${title}" style="--image-x:${cardIndex * 33.333}%;--image-y:${topicIndex * 25}%"></div><div class="journal-card-copy"><p class="card-kicker">${String(cardIndex + 1).padStart(2, '0')} · Visual guide</p><h3>${title}</h3><p>${description}</p></div></article>`).join('');
-    const detail = document.createElement('div');
-    detail.className = 'blog-topic-detail';
-    detail.innerHTML = content;
-    grid.after(detail);
+    grid.innerHTML = cards.map(([title, description], cardIndex) => `<article><div class="journal-card-image" role="img" aria-label="${title}" style="--image-x:${cardIndex * 33.333}%;--image-y:${topicIndex * 25}%"></div><div class="journal-card-copy"><p class="card-kicker">${String(cardIndex + 1).padStart(2, '0')} · Visual guide</p><h3>${title}</h3><p>${description}</p></div></article>`).join('');
   });
   if (window.location.hash) {
     window.setTimeout(() => document.querySelector(window.location.hash)?.scrollIntoView({ block: 'start' }), 0);
