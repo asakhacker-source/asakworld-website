@@ -1,4 +1,4 @@
-const CACHE_NAME = 'asark-app-v30';
+const CACHE_NAME = 'asark-app-v31';
 const OFFLINE_URL = './offline.html';
 const APP_SHELL = [
   './', './index.html', './architecture.html', './ancient.html', './modern.html', './futuristic.html', './technology.html', './ai-technology.html', './space.html', './semiconductor.html', './vlsi.html', './processor.html', './graphics-card.html',
@@ -11,7 +11,7 @@ const APP_SHELL = [
   './projects/material-stories.html', './projects/minimal-estate.html',
   './projects/modern-elegance.html', './projects/new-classic.html',
   './projects/private-villa.html', './projects/quiet-luxury.html',
-  './projects/timeless-style.html', './css/style.css', './js/site.js',
+  './projects/timeless-style.html', './css/style.css', './js/site.js', './js/auth-config.js',
   './manifest.webmanifest', './assets/asark-mark.svg', './assets/icon-192.png',
   './assets/icon-512.png'
 ];

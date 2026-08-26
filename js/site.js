@@ -257,6 +257,65 @@ if (saveButton) {
   saveButton.addEventListener('click', () => { saveButton.textContent = 'Saved'; saveButton.disabled = true; });
 }
 
+const authConfig = window.ASARK_AUTH || {};
+const supabaseUrl = (authConfig.supabaseUrl || '').replace(/\/$/, '');
+const supabaseAnonKey = authConfig.supabaseAnonKey || '';
+const isAuthConfigured = /^https:\/\/[^/]+\.supabase\.co$/i.test(supabaseUrl) && supabaseAnonKey.length > 20;
+
+const setAuthMessage = (form, text) => {
+  const message = form.querySelector('.account-form-message');
+  if (message) message.textContent = text;
+};
+
+const beginSocialLogin = (provider, form) => {
+  if (!isAuthConfigured) {
+    setAuthMessage(form, 'Account sign-in needs Supabase configuration. See AUTHENTICATION.md.');
+    return;
+  }
+  const providerName = provider === 'Microsoft' ? 'azure' : 'google';
+  const authorizeUrl = new URL(`${supabaseUrl}/auth/v1/authorize`);
+  authorizeUrl.searchParams.set('provider', providerName);
+  authorizeUrl.searchParams.set('redirect_to', new URL('index.html', window.location.href).href);
+  if (providerName === 'azure') authorizeUrl.searchParams.set('scopes', 'email');
+  window.location.assign(authorizeUrl.href);
+};
+
+const submitEmailAuth = async (form) => {
+  if (!isAuthConfigured) {
+    setAuthMessage(form, 'Account sign-in needs Supabase configuration. See AUTHENTICATION.md.');
+    return;
+  }
+  const values = new FormData(form);
+  const isSignup = form.dataset.accountForm === 'signup';
+  const endpoint = isSignup ? '/auth/v1/signup' : '/auth/v1/token?grant_type=password';
+  const payload = { email: values.get('email'), password: values.get('password') };
+  if (isSignup) payload.data = { full_name: values.get('name') || '' };
+  setAuthMessage(form, isSignup ? 'Creating your account…' : 'Signing you in…');
+  try {
+    const response = await fetch(`${supabaseUrl}${endpoint}`, {
+      method: 'POST',
+      headers: { apikey: supabaseAnonKey, Authorization: `Bearer ${supabaseAnonKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.msg || result.message || 'Unable to complete authentication.');
+    if (result.access_token) localStorage.setItem('asark.auth.session', JSON.stringify(result));
+    if (isSignup && !result.access_token) {
+      setAuthMessage(form, 'Account created. Check your email to confirm your address.');
+      return;
+    }
+    window.location.assign(new URL('index.html', window.location.href).href);
+  } catch (error) {
+    setAuthMessage(form, error.message || 'Unable to complete authentication.');
+  }
+};
+
+const oauthParameters = new URLSearchParams(window.location.hash.slice(1));
+if (oauthParameters.get('access_token')) {
+  localStorage.setItem('asark.auth.session', JSON.stringify(Object.fromEntries(oauthParameters.entries())));
+  history.replaceState({}, document.title, `${window.location.pathname}${window.location.search}`);
+}
+
 document.querySelectorAll('[data-account-form]').forEach((form) => {
   const socialAuth = document.createElement('div');
   socialAuth.className = 'social-auth';
@@ -264,14 +323,12 @@ document.querySelectorAll('[data-account-form]').forEach((form) => {
   form.before(socialAuth);
   socialAuth.querySelectorAll('[data-social-provider]').forEach((button) => {
     button.addEventListener('click', () => {
-      const message = form.querySelector('.account-form-message');
-      if (message) message.textContent = `${button.dataset.socialProvider} sign-in will be available once ASARK connects its secure authentication service.`;
+      beginSocialLogin(button.dataset.socialProvider, form);
     });
   });
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-    const message = form.querySelector('.account-form-message');
-    if (message) message.textContent = 'Account sign-in will be available when ASARK connects a secure authentication service.';
+    submitEmailAuth(form);
   });
 });
 
