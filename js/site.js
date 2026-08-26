@@ -247,6 +247,19 @@ const recommendedProducts = affiliateExcludedPages.has(currentPage)
   : (editorialRecommendations[currentPage] || defaultRecommendations);
 
 if (currentPage === 'blogs.html') {
+  const blogTopicAnchors = {
+    'ai-title': 'ai-technology',
+    'market-title': 'market-technology',
+    'animation-title': 'animation-technology',
+    'space-title': 'space-technology',
+    'vehicle-title': 'vehicle-technology'
+  };
+  Object.entries(blogTopicAnchors).forEach(([headingId, sectionId]) => {
+    document.querySelector(`[aria-labelledby="${headingId}"]`)?.setAttribute('id', sectionId);
+  });
+  if (window.location.hash) {
+    window.setTimeout(() => document.querySelector(window.location.hash)?.scrollIntoView({ block: 'start' }), 0);
+  }
   const blogPost = document.querySelector('.blog-post');
   if (blogPost) {
     const blogDirectory = document.createElement('section');
@@ -263,6 +276,25 @@ if (currentPage === 'technology.html') {
     technologyShowcase.className = 'technology-showcase';
     technologyShowcase.innerHTML = '<img src="assets/technology-showcase.png" alt="AI-generated 20-tile visual overview of artificial intelligence, markets, animation, space and vehicle technology"><figcaption>AI-generated visual overview: twenty connected technology concepts across five future-facing fields.</figcaption>';
     technologyGrid.before(technologyShowcase);
+  }
+}
+
+const technologyBlogConnections = {
+  'ai-technology.html': ['ai-technology', 'Read the AI Technology blog guide'],
+  'market-technology.html': ['market-technology', 'Read the Market Technology blog guide'],
+  'animation-technology.html': ['animation-technology', 'Read the Animation Technology blog guide'],
+  'space.html': ['space-technology', 'Read the Space Technology blog guide'],
+  'vehicle-technology.html': ['vehicle-technology', 'Read the Vehicle Technology blog guide']
+};
+const technologyBlogConnection = technologyBlogConnections[currentPage];
+if (technologyBlogConnection) {
+  const [topicId, label] = technologyBlogConnection;
+  const technologyGrid = document.querySelector('.technology-grid');
+  if (technologyGrid) {
+    const blogConnection = document.createElement('aside');
+    blogConnection.className = 'blog-connection';
+    blogConnection.innerHTML = `<p class="eyebrow">ASARK Blog</p><h2>Go deeper.</h2><p>Explore the visual field guide for this technology.</p><a class="btn-outline" href="blogs.html#${topicId}">${label}</a>`;
+    technologyGrid.before(blogConnection);
   }
 }
 

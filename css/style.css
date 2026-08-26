@@ -467,6 +467,12 @@ body { background: radial-gradient(circle at 84% -10%, rgba(135, 246, 229, .09),
 .blog-directory nav a:hover { background: rgba(135, 246, 229, .12); color: var(--signal, var(--gold)); }
 .technology-showcase { margin: 58px 0 0; }
 @media (max-width: 760px) { .blog-directory { grid-template-columns: 1fr; margin-bottom: 55px; padding-bottom: 55px; } }
+.blog-connection { display: flex; align-items: center; gap: 22px; margin-top: 54px; padding: clamp(26px, 4vw, 42px); border: 1px solid rgba(135, 246, 229, .24); background: linear-gradient(115deg, rgba(135, 246, 229, .11), rgba(20, 19, 16, .76)); }
+.blog-connection .eyebrow { flex: 0 0 auto; margin: 0; }
+.blog-connection h2 { margin: 0; font: 400 clamp(1.7rem, 3vw, 2.5rem)/1 var(--serif); }
+.blog-connection > p:not(.eyebrow) { flex: 1; margin: 0; color: var(--muted); line-height: 1.6; }
+.blog-connection .btn-outline { flex: 0 0 auto; }
+@media (max-width: 760px) { .blog-connection { align-items: flex-start; flex-direction: column; }.blog-connection > p:not(.eyebrow) { flex: auto; } }
 @media (max-width: 760px) { .technology-page { width: min(100% - 32px, 1280px); }.technology-grid { grid-template-columns: 1fr; }.technology-grid article { min-height: 0; }.technology-grid h2 { margin-top: 30px; } }
 
 /* Motion system */
