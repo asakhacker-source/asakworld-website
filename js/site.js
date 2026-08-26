@@ -196,10 +196,6 @@ const projectDestinations = {
   'Dining and Kitchen': 'projects/dining-and-kitchen.html'
 };
 
-document.querySelectorAll('a[href$="design.html"]').forEach((link) => {
-  link.textContent = 'AI Technology';
-});
-
 document.querySelectorAll('.visual-card, .card[data-project-link], .card').forEach((card) => {
   const image = card.querySelector('img');
   if (!card.matches('.visual-card') && !card.dataset.projectLink && !image) return;
