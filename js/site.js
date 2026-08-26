@@ -200,7 +200,7 @@ const editorialRecommendations = {
 };
 
 const currentPage = activePage;
-const affiliateAllowedPages = new Set(['technology.html', 'ai-technology.html', 'semiconductor.html', 'market-technology.html', 'animation-technology.html', 'space.html', 'vehicle-technology.html', 'blogs.html', 'curated.html']);
+const affiliateAllowedPages = new Set(['ai-technology.html', 'semiconductor.html', 'market-technology.html', 'animation-technology.html', 'space.html', 'vehicle-technology.html', 'blogs.html', 'curated.html']);
 const recommendedProducts = affiliateAllowedPages.has(currentPage) ? editorialRecommendations[currentPage] : null;
 
 if (currentPage === 'architecture.html') {
@@ -222,7 +222,7 @@ if (currentPage === 'technology.html') {
   if (technologyGrid) {
     const technologyShowcase = document.createElement('figure');
     technologyShowcase.className = 'technology-showcase';
-    technologyShowcase.innerHTML = '<img src="ai images/Technology/technology-showcase-grid.webp" alt="Visual overview of artificial intelligence, market, animation, space and vehicle technology" data-ai-image-fixed><figcaption>Explore twenty connected innovations across AI, market, animation, space and vehicle technology.</figcaption>';
+    technologyShowcase.innerHTML = '<img src="ai images/Technology/technology-showcase-grid.webp" alt="Visual overview of artificial intelligence, market, animation, space and vehicle technology" data-ai-image-fixed width="1536" height="1024"><figcaption>Explore twenty connected innovations across AI, market, animation, space and vehicle technology.</figcaption>';
     technologyGrid.before(technologyShowcase);
   }
 }
@@ -232,7 +232,7 @@ if (currentPage === 'ai-technology.html') {
   if (technologyGrid) {
     const aiOverview = document.createElement('figure');
     aiOverview.className = 'ai-technology-overview';
-    aiOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/AI Technology/ai-technology-overview.webp" alt="AI technology overview showing machine learning, AI assistants, healthcare, education and responsible AI"><figcaption>AI-generated overview: building a smarter future with responsible artificial intelligence.</figcaption>';
+    aiOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/AI Technology/ai-technology-overview.webp" alt="AI technology overview showing machine learning, AI assistants, healthcare, education and responsible AI" width="1536" height="1024"><figcaption>AI-generated overview: building a smarter future with responsible artificial intelligence.</figcaption>';
     technologyGrid.before(aiOverview);
   }
 }
@@ -242,7 +242,7 @@ if (currentPage === 'animation-technology.html') {
   if (technologyGrid) {
     const animationOverview = document.createElement('figure');
     animationOverview.className = 'animation-technology-overview';
-    animationOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/Animation Technology/animation-technology-feature.webp" alt="Animation Technology infographic featuring 3D animation, AI tools, virtual reality, motion capture and visual storytelling"><figcaption>Animation Technology: creative tools that bring ideas to life through motion, immersive worlds and visual storytelling.</figcaption>';
+    animationOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/Animation Technology/animation-technology-feature.webp" alt="Animation Technology infographic featuring 3D animation, AI tools, virtual reality, motion capture and visual storytelling" width="1672" height="941"><figcaption>Animation Technology: creative tools that bring ideas to life through motion, immersive worlds and visual storytelling.</figcaption>';
     technologyGrid.before(animationOverview);
   }
 }
@@ -252,7 +252,7 @@ if (currentPage === 'space.html') {
   if (spaceGrid) {
     const spaceOverview = document.createElement('figure');
     spaceOverview.className = 'space-technology-overview';
-    spaceOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/Space Technology/space-technology-feature.webp" alt="Space Technology infographic featuring satellites, launch vehicles, planetary exploration, astronomy and space research"><figcaption>Space Technology: exploring beyond boundaries through satellites, launch systems, research and planetary exploration.</figcaption>';
+    spaceOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/Space Technology/space-technology-feature.webp" alt="Space Technology infographic featuring satellites, launch vehicles, planetary exploration, astronomy and space research" width="1536" height="1024"><figcaption>Space Technology: exploring beyond boundaries through satellites, launch systems, research and planetary exploration.</figcaption>';
     spaceGrid.before(spaceOverview);
   }
 }
