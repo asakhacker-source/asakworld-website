@@ -60,11 +60,10 @@ document.querySelectorAll('.visual-info span').forEach((label) => {
   label.textContent = label.textContent.replace('EDITORIAL REFERENCE', 'AI-GENERATED CONCEPT');
 });
 
-const headerSearch = document.createElement('form');
+const headerSearch = { setAttribute() {}, addEventListener() {} };
 headerSearch.className = 'header-search';
 headerSearch.setAttribute('role', 'search');
 headerSearch.innerHTML = '<label><span class="sr-only">Search ASARK</span><input type="search" name="q" placeholder="Search" autocomplete="off"></label><button type="submit" aria-label="Search ASARK">⌕</button>';
-siteNav?.append(headerSearch);
 
 const accountActions = document.createElement('div');
 accountActions.className = 'account-actions';
