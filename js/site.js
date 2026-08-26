@@ -258,6 +258,16 @@ if (saveButton) {
 }
 
 document.querySelectorAll('[data-account-form]').forEach((form) => {
+  const socialAuth = document.createElement('div');
+  socialAuth.className = 'social-auth';
+  socialAuth.innerHTML = '<p>Or continue with</p><div><button class="social-auth-button" type="button" data-social-provider="Google"><span aria-hidden="true">G</span>Continue with Google</button><button class="social-auth-button" type="button" data-social-provider="Microsoft"><span aria-hidden="true">⊞</span>Continue with Microsoft</button></div>';
+  form.before(socialAuth);
+  socialAuth.querySelectorAll('[data-social-provider]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const message = form.querySelector('.account-form-message');
+      if (message) message.textContent = `${button.dataset.socialProvider} sign-in will be available once ASARK connects its secure authentication service.`;
+    });
+  });
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     const message = form.querySelector('.account-form-message');

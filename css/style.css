@@ -411,6 +411,14 @@ body { background: radial-gradient(circle at 84% -10%, rgba(135, 246, 229, .09),
 .account-form-message { min-height: 20px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
 .account-switch { margin: 27px 0 0; color: var(--muted); font-size: 12px; }
 .account-switch a { color: var(--signal, var(--gold)); }
+.social-auth { margin: 0 0 25px; }
+.social-auth > p { display: flex; align-items: center; gap: 12px; margin: 0 0 15px; color: var(--muted); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+.social-auth > p::before, .social-auth > p::after { height: 1px; flex: 1; background: rgba(135, 246, 229, .2); content: ''; }
+.social-auth > div { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.social-auth-button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 48px; border: 1px solid rgba(135, 246, 229, .32); background: rgba(3, 5, 5, .52); color: var(--text); cursor: pointer; font: 700 11px var(--sans); letter-spacing: .4px; }
+.social-auth-button:hover { border-color: var(--signal, var(--gold)); background: rgba(135, 246, 229, .1); }
+.social-auth-button span { color: var(--signal, var(--gold)); font-size: 18px; font-weight: 700; }
+@media (max-width: 460px) { .social-auth > div { grid-template-columns: 1fr; } }
 
 /* Technology section pages */
 .technology-page { width: min(100% - 40px, 1280px); margin: 0 auto; padding: clamp(90px, 12vw, 150px) 0; }
