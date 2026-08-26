@@ -2,13 +2,10 @@ const menuToggle = document.querySelector('.menu-toggle');
 const siteNav = document.querySelector('.site-nav');
 
 const primarySections = [
-  ['visual.html', 'Visuals'], ['stories.html', 'Stories'], ['curated.html', 'Curated'], ['about.html', 'About']
+  ['index.html', 'Home'], ['blogs.html', 'Journal'], ['visual.html', 'Visuals'], ['curated.html', 'Resources'], ['about.html', 'About']
 ];
 const dropdownSections = [
-  ['architecture.html', 'Architecture', [['ancient.html', 'Ancient World'], ['modern.html', 'Modern World'], ['futuristic.html', 'Futuristic World'], ['hacker-setup.html', 'Future Workspaces']]],
-  ['technology.html', 'Technology', [['ai-technology.html', 'AI Technology'], ['semiconductor.html', 'Semiconductor'], ['computing.html', 'Computing'], ['market-technology.html', 'Future Finance'], ['animation-technology.html', 'Digital Creation'], ['vehicle-technology.html', 'Future Mobility'], ['space.html', 'Space Technology']]],
-  ['art-design.html', 'Art', [['art-design.html#digital-art', 'Digital Art'], ['art-design.html#ai-art', 'AI Art'], ['art-design.html#visual-design', 'Visual Design'], ['art-design.html#interior-design', 'Interior Design'], ['art-design.html#industrial-design', 'Industrial Design'], ['art-design.html#concepts', 'Concepts']]],
-  ['culture-future.html', 'Culture & Future', [['ancient.html', 'Ancient World'], ['culture-future.html#future-civilization', 'Future Civilization'], ['culture-future.html#lifestyle', 'Lifestyle'], ['culture-future.html#ideas', 'Ideas'], ['culture-future.html#future-living', 'Future Living']]]
+  ['technology.html', 'Technology', [['ai-technology.html', 'AI Technology'], ['semiconductor.html', 'Semiconductor & VLSI'], ['market-technology.html', 'Market Technology'], ['animation-technology.html', 'Animation Technology'], ['space.html', 'Space Technology'], ['vehicle-technology.html', 'Vehicle Technology'], ['computing.html', 'Computing']]]
 ];
 const activePage = window.location.pathname.split('/').pop() || 'index.html';
 const activeNavHref = activePage === 'index.html' && window.location.hash === '#about'
@@ -25,7 +22,7 @@ if (siteNav) {
     ).join('');
     return `<div class="nav-dropdown"><a href="${href}"${isActive ? ' aria-current="page"' : ''}>${label}</a><ul class="nav-submenu">${childLinks}</ul></div>`;
   });
-  siteNav.innerHTML = `<div class="nav-links nav-links-primary">${navigationLinks.join('')}${dropdownLinks.join('')}</div>`;
+  siteNav.innerHTML = `<div class="nav-links nav-links-primary">${navigationLinks.slice(0, 1).join('')}${dropdownLinks.join('')}${navigationLinks.slice(1).join('')}</div>`;
 }
 
 // Keep every visible editorial image on ASARK within the supplied AI image collection.
@@ -47,12 +44,40 @@ const aiImagePaths = [
 const homeUrl = new URL(document.querySelector('.logo')?.getAttribute('href') || 'index.html', window.location.href);
 const aiImageUrl = (index) => new URL(`ai images/${aiImagePaths[index % aiImagePaths.length]}`, homeUrl).href;
 
-document.querySelectorAll('img').forEach((image, index) => {
-  if (image.closest('.site-header') || image.src.includes('asark-mark') || image.dataset.aiImageFixed !== undefined) return;
+// Compatibility for pre-existing architecture and project pages. Core technology
+// pages now define their images in their own HTML; this only resolves old file names.
+const legacyAiImageMap = {
+  'Gemini_Generated_Image_(1).png': 'Architecture/Ancient World/Gemini_Generated_Image_(1).png',
+  'Gemini_Generated_Image_(2).png': 'Architecture/Ancient World/Gemini_Generated_Image_(2).png',
+  'Gemini_Generated_Image_(3).png': 'Architecture/Ancient World/Gemini_Generated_Image_(3).png',
+  'Gemini_Generated_Image_(4).png': 'Architecture/Modern World/Gemini_Generated_Image_(4).png',
+  'Gemini_Generated_Image_(5).png': 'Architecture/Modern World/Gemini_Generated_Image_(5).png',
+  'Gemini_Generated_Image_(6).png': 'Architecture/Modern World/Gemini_Generated_Image_(6).png',
+  'Gemini_Generated_Image_(7).png': 'Architecture/Futuristic World/Gemini_Generated_Image_(7).png',
+  'Gemini_Generated_Image_(8).png': 'Architecture/Futuristic World/Gemini_Generated_Image_(8).png',
+  'Gemini_Generated_Image_(9).png': 'Architecture/Futuristic World/Gemini_Generated_Image_(9).png',
+  'Gemini_Generated_Image_(10).png': 'Architecture/Hacker Setup/Gemini_Generated_Image_(10).png',
+  'Gemini_Generated_Image_(11).png': 'Architecture/Hacker Setup/Gemini_Generated_Image_(11).png',
+  'Gemini_Generated_Image_(12).png': 'Technology/AI Technology/Gemini_Generated_Image_(12).png',
+  'Gemini_Generated_Image_(13).png': 'Technology/AI Technology/Gemini_Generated_Image_(13).png',
+  'Gemini_Generated_Image_(14).png': 'Technology/AI Technology/Gemini_Generated_Image_(14).png',
+  'Gemini_Generated_Image_(15).png': 'Technology/Market Technology/Gemini_Generated_Image_(15).png',
+  'Gemini_Generated_Image_(16).png': 'Technology/Market Technology/Gemini_Generated_Image_(16).png',
+  'Gemini_Generated_Image_(17).png': 'Technology/Animation Technology/Gemini_Generated_Image_(17).png',
+  'Gemini_Generated_Image_(18).png': 'Technology/Animation Technology/Gemini_Generated_Image_(18).png',
+  'Gemini_Generated_Image_(19).png': 'Technology/Vehicle Technology/Gemini_Generated_Image_(19).png',
+  'Gemini_Generated_Image_(20).png': 'Technology/Vehicle Technology/Gemini_Generated_Image_(20).png'
+};
+document.querySelectorAll('img[src*="ai%20images/Gemini"]').forEach((image) => {
+  const legacyName = decodeURIComponent(image.getAttribute('src') || '').split('/').pop();
+  const mappedPath = legacyAiImageMap[legacyName];
+  if (mappedPath) image.src = new URL(`ai images/${mappedPath}`, homeUrl).href;
+});
+
+document.querySelectorAll('img[data-ai-image]').forEach((image, index) => {
   image.dataset.originalImage = image.src;
   image.src = aiImageUrl(index);
   image.removeAttribute('srcset');
-  image.dataset.aiImage = 'true';
 });
 
 document.querySelectorAll('.image-provenance, .visual-source-note').forEach((note) => {
@@ -156,7 +181,7 @@ if ('serviceWorker' in navigator) {
 }
 
 document.querySelectorAll('.site-footer').forEach((footer) => {
-  footer.textContent = '© 2026 ASARK · Exploring Art, Technology & Tomorrow';
+  footer.textContent = '© 2026 ASARK · Technology, Design & The Future';
 });
 
 if (menuToggle && siteNav) {
@@ -343,11 +368,11 @@ if (currentPage === 'space.html') {
 }
 
 const technologyBlogConnections = {
-  'ai-technology.html': ['ai-technology', 'Read the AI Technology blog guide'],
-  'market-technology.html': ['market-technology', 'Read the Market Technology blog guide'],
-  'animation-technology.html': ['animation-technology', 'Read the Animation Technology blog guide'],
-  'space.html': ['space-technology', 'Read the Space Technology blog guide'],
-  'vehicle-technology.html': ['vehicle-technology', 'Read the Vehicle Technology blog guide']
+  'ai-technology.html': ['ai-title', 'Read the AI Technology Journal guide'],
+  'market-technology.html': ['market-title', 'Read the Market Technology Journal guide'],
+  'animation-technology.html': ['animation-title', 'Read the Animation Technology Journal guide'],
+  'space.html': ['space-title', 'Read the Space Technology Journal guide'],
+  'vehicle-technology.html': ['vehicle-title', 'Read the Vehicle Technology Journal guide']
 };
 const technologyBlogConnection = technologyBlogConnections[currentPage];
 if (technologyBlogConnection) {
