@@ -326,6 +326,16 @@ if (currentPage === 'ai-technology.html') {
   }
 }
 
+if (currentPage === 'space.html') {
+  const spaceGrid = document.querySelector('.content-section .grid');
+  if (spaceGrid) {
+    const spaceOverview = document.createElement('figure');
+    spaceOverview.className = 'space-technology-overview';
+    spaceOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/Space Technology/space-technology-overview.png" alt="Space technology visual covering satellites, spacecraft, planetary exploration and technology for Earth"><figcaption>AI-generated overview: space technology, exploration and the systems that support life on Earth.</figcaption>';
+    spaceGrid.before(spaceOverview);
+  }
+}
+
 const technologyBlogConnections = {
   'ai-technology.html': ['ai-technology', 'Read the AI Technology blog guide'],
   'market-technology.html': ['market-technology', 'Read the Market Technology blog guide'],
