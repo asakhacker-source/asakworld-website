@@ -2,12 +2,10 @@ const menuToggle = document.querySelector('.menu-toggle');
 const siteNav = document.querySelector('.site-nav');
 
 const primarySections = [
-  ['index.html', 'Home'], ['index.html#about', 'About'], ['blogs.html', 'Blogs']
+  ['visual.html', 'Visuals'], ['stories.html', 'Stories'], ['curated.html', 'Curated'], ['about.html', 'About']
 ];
 const dropdownSections = [
-  ['architecture.html', 'Architecture', [['ancient.html', 'Ancient World'], ['modern.html', 'Modern World'], ['futuristic.html', 'Futuristic World'], ['hacker-setup.html', 'Hacker Setup']]],
-  ['technology.html', 'Technology', [['ai-technology.html', 'AI Technology'], ['market-technology.html', 'Market Technology'], ['animation-technology.html', 'Animation Technology'], ['vehicle-technology.html', 'Vehicle Technology'], ['space.html', 'Space Technology']]],
-  ['semiconductor.html', 'Semiconductor', [['vlsi.html', 'VLSI'], ['processor.html', 'Processor'], ['graphics-card.html', 'Graphics Card']]]
+  ['explore.html', 'Explore', [['architecture.html', 'Architecture'], ['technology.html', 'Technology'], ['art-design.html', 'Art & Design'], ['culture-future.html', 'Culture & Future']]]
 ];
 const activePage = window.location.pathname.split('/').pop() || 'index.html';
 const activeNavHref = activePage === 'index.html' && window.location.hash === '#about'
@@ -24,7 +22,7 @@ if (siteNav) {
     ).join('');
     return `<div class="nav-dropdown"><a href="${href}"${isActive ? ' aria-current="page"' : ''}>${label}</a><ul class="nav-submenu">${childLinks}</ul></div>`;
   });
-  siteNav.innerHTML = `<div class="nav-links nav-links-primary">${navigationLinks.join('')}${dropdownLinks.join('')}</div>`;
+  siteNav.innerHTML = `<div class="nav-links nav-links-primary">${dropdownLinks.join('')}${navigationLinks.join('')}</div>`;
 }
 
 // Keep every visible editorial image on ASARK within the supplied AI image collection.
