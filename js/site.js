@@ -311,7 +311,7 @@ if (currentPage === 'technology.html') {
   if (technologyGrid) {
     const technologyShowcase = document.createElement('figure');
     technologyShowcase.className = 'technology-showcase';
-    technologyShowcase.innerHTML = '<img src="assets/technology-showcase.png" alt="AI-generated 20-tile visual overview of artificial intelligence, markets, animation, space and vehicle technology"><figcaption>AI-generated visual overview: twenty connected technology concepts across five future-facing fields.</figcaption>';
+    technologyShowcase.innerHTML = '<img src="ai images/Technology/technology-showcase-grid.png" alt="Visual overview of artificial intelligence, market, animation, space and vehicle technology" data-ai-image-fixed><figcaption>Explore twenty connected innovations across AI, market, animation, space and vehicle technology.</figcaption>';
     technologyGrid.before(technologyShowcase);
   }
 }
