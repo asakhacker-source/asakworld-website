@@ -2,10 +2,8 @@ const menuToggle = document.querySelector('.menu-toggle');
 const siteNav = document.querySelector('.site-nav');
 
 const primarySections = [
-  ['index.html', 'Home'], ['index.html#about', 'About'], ['space.html', 'Space'], ['architecture.html', 'Architecture'], ['ai-technology.html', 'AI Technology'],
-  ['semiconductor.html', 'Semiconductor'], ['hacker-setup.html', 'Hacker Setup'], ['market-technology.html', 'Market Technology'],
-  ['animation-technology.html', 'Animation Technology'], ['ancient.html', 'Ancient World'], ['vehicle-technology.html', 'Vehicle Technology'],
-  ['blogs.html', 'Blogs']
+  ['index.html', 'Home'], ['index.html#about', 'About'], ['architecture.html', 'Architecture'],
+  ['technology.html', 'Technology'], ['semiconductor.html', 'Semiconductor'], ['blogs.html', 'Blogs']
 ];
 const activePage = window.location.pathname.split('/').pop() || 'index.html';
 const activeNavHref = activePage === 'index.html' && window.location.hash === '#about'

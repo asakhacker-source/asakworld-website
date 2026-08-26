@@ -411,7 +411,10 @@ body { background: radial-gradient(circle at 84% -10%, rgba(135, 246, 229, .09),
 .technology-grid article { min-height: 280px; padding: clamp(28px, 4vw, 50px); background: var(--surface); }
 .technology-grid span { color: var(--signal); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; }
 .technology-grid h2 { margin: 44px 0 14px; font: 400 clamp(1.9rem, 3vw, 2.8rem)/1 var(--serif); }
+.technology-grid h2 a { color: inherit; text-decoration: none; }
+.technology-grid h2 a:hover, .technology-grid h2 a:focus-visible { color: var(--signal); }
 .technology-grid p { margin: 0; color: var(--muted); line-height: 1.75; }
+.architecture-worlds { margin-top: clamp(70px, 10vw, 120px); }
 @media (max-width: 760px) { .technology-page { width: min(100% - 32px, 1280px); }.technology-grid { grid-template-columns: 1fr; }.technology-grid article { min-height: 0; }.technology-grid h2 { margin-top: 30px; } }
 
 /* Motion system */
