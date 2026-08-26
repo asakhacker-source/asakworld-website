@@ -1,19 +1,8 @@
-const CACHE_NAME = 'asark-app-v57';
+const CACHE_NAME = 'asark-app-v58';
 const OFFLINE_URL = './offline.html';
 const APP_SHELL = [
-  './', './index.html', './architecture.html', './ancient.html', './modern.html', './futuristic.html', './technology.html', './ai-technology.html', './space.html', './semiconductor.html', './vlsi.html', './processor.html', './graphics-card.html',
-  './hacker-setup.html', './market-technology.html', './animation-technology.html', './vehicle-technology.html', './blogs.html', './about.html', './visual.html', './explore.html', './art-design.html', './culture-future.html', './stories.html', './curated.html', './computing.html',
-  './login.html', './signup.html',
-  './offline.html', './guides/intelligent-home-foundation.html', './guides/ambient-lighting.html',
-  './guides/coffee-ritual.html', './projects/beyond-the-shore.html',
-  './projects/contemporary-estate.html', './projects/dining-and-kitchen.html',
-  './projects/glass-and-stone.html', './projects/living-spaces.html',
-  './projects/material-stories.html', './projects/minimal-estate.html',
-  './projects/modern-elegance.html', './projects/new-classic.html',
-  './projects/private-villa.html', './projects/quiet-luxury.html',
-  './projects/timeless-style.html', './css/style.css', './js/site.js?v=57', './js/auth-config.js',
-  './manifest.webmanifest', './assets/asark-mark.svg', './assets/icon-192.png', './assets/technology-blog.png', './assets/technology-showcase.png', './ai images/Technology/technology-showcase-grid.png', './ai images/Technology/technology-innovations-grid.png', './ai images/Technology/AI Technology/ai-technology-blog.png', './ai images/Technology/AI Technology/ai-technology-overview.png', './ai images/Technology/Animation Technology/animation-technology-feature.png', './ai images/Technology/Space Technology/space-technology-feature.png',
-  './assets/icon-512.png'
+  './', './index.html', './offline.html', './css/style.css?v=58', './js/site.js?v=58', './js/auth-config.js',
+  './manifest.webmanifest', './assets/asark-mark.svg', './assets/icon-192.png', './assets/icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {

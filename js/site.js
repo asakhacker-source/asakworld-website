@@ -29,26 +29,13 @@ if (siteNav) {
 }
 
 // Keep every visible editorial image on ASARK within the supplied AI image collection.
-const aiImagePaths = [
+const architectureImages = [
   'Architecture/Ancient World/Gemini_Generated_Image_(1).png', 'Architecture/Ancient World/Gemini_Generated_Image_(2).png', 'Architecture/Ancient World/Gemini_Generated_Image_(3).png',
   'Architecture/Modern World/Gemini_Generated_Image_(4).png', 'Architecture/Modern World/Gemini_Generated_Image_(5).png', 'Architecture/Modern World/Gemini_Generated_Image_(6).png',
   'Architecture/Futuristic World/Gemini_Generated_Image_(7).png', 'Architecture/Futuristic World/Gemini_Generated_Image_(8).png', 'Architecture/Futuristic World/Gemini_Generated_Image_(9).png',
-  'Architecture/Hacker Setup/Gemini_Generated_Image_(10).png', 'Architecture/Hacker Setup/Gemini_Generated_Image_(11).png',
-  'Technology/AI Technology/Gemini_Generated_Image_(12).png', 'Technology/AI Technology/Gemini_Generated_Image_(13).png', 'Technology/AI Technology/Gemini_Generated_Image_(14).png',
-  'Technology/Market Technology/Gemini_Generated_Image_(15).png', 'Technology/Market Technology/Gemini_Generated_Image_(16).png',
-  'Technology/Animation Technology/Gemini_Generated_Image_(17).png', 'Technology/Animation Technology/Gemini_Generated_Image_(18).png',
-  'Technology/Vehicle Technology/Gemini_Generated_Image_(19).png', 'Technology/Vehicle Technology/Gemini_Generated_Image_(20).png',
-  'Technology/Space Technology/Gemini_Generated_Image_39a5aj39a5aj39a5.png', 'Technology/Space Technology/Gemini_Generated_Image_3mhdo63mhdo63mhd.png',
-  'Semiconductor/VLSI/Gemini_Generated_Image_gbjlagbjlagbjlag.png', 'Semiconductor/VLSI/Gemini_Generated_Image_jquxqcjquxqcjqux.png',
-  'Semiconductor/Processor/Gemini_Generated_Image_jv701qjv701qjv70.png', 'Semiconductor/Processor/Gemini_Generated_Image_lc0e35lc0e35lc0e.png',
-  'Semiconductor/Graphics Card/Gemini_Generated_Image_ld8r28ld8r28ld8r.png', 'Semiconductor/Graphics Card/Gemini_Generated_Image_o0n0yjo0n0yjo0n0.png', 'Semiconductor/Graphics Card/Gemini_Generated_Image_w1zouxw1zouxw1zo.png',
-  'Blogs/modern house.png', 'Blogs/our-best-look-ever-yet-at-tony-starks-mansion-from-the-book-v0-mq5lg6zmpg1g1.webp'
+  'Architecture/Hacker Setup/Gemini_Generated_Image_(10).png', 'Architecture/Hacker Setup/Gemini_Generated_Image_(11).png'
 ];
 const homeUrl = siteRootUrl;
-
-document.querySelectorAll('.image-provenance, .visual-source-note').forEach((note) => {
-  note.textContent = 'Images are AI-generated visual studies from the ASARK collection. They illustrate concepts and do not depict built projects, real products or real places.';
-});
 
 document.querySelectorAll('.visual-info span').forEach((label) => {
   label.textContent = label.textContent.replace('EDITORIAL REFERENCE', 'AI-GENERATED CONCEPT');
@@ -129,10 +116,6 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register(serviceWorkerUrl).catch(() => {});
   });
 }
-
-document.querySelectorAll('.site-footer').forEach((footer) => {
-  footer.textContent = '© 2026 ASARK · Technology, Design & The Future';
-});
 
 if (menuToggle && siteNav) {
   menuToggle.addEventListener('click', () => {
@@ -269,7 +252,7 @@ if (currentPage === 'architecture.html') {
     const architectureGallery = document.createElement('section');
     architectureGallery.className = 'architecture-gallery';
     architectureGallery.setAttribute('aria-labelledby', 'architecture-gallery-title');
-    const galleryCards = aiImagePaths.map((imagePath, index) =>
+    const galleryCards = architectureImages.map((imagePath, index) =>
       `<figure><img data-ai-image-fixed loading="lazy" src="ai images/${imagePath}" alt="AI-generated architectural visual study ${index + 1}"><figcaption>ASARK visual study ${String(index + 1).padStart(2, '0')}</figcaption></figure>`
     ).join('');
     architectureGallery.innerHTML = `<header><p class="eyebrow">ASARK visual archive</p><h2 id="architecture-gallery-title">Architecture visual collection</h2><p>All supplied AI-generated visual studies are collected here.</p></header><div>${galleryCards}</div>`;
