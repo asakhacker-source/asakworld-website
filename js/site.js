@@ -2,8 +2,12 @@ const menuToggle = document.querySelector('.menu-toggle');
 const siteNav = document.querySelector('.site-nav');
 
 const primarySections = [
-  ['index.html', 'Home'], ['index.html#about', 'About'], ['architecture.html', 'Architecture'],
-  ['technology.html', 'Technology'], ['semiconductor.html', 'Semiconductor'], ['blogs.html', 'Blogs']
+  ['index.html', 'Home'], ['index.html#about', 'About'], ['blogs.html', 'Blogs']
+];
+const dropdownSections = [
+  ['architecture.html', 'Architecture', [['ancient.html', 'Ancient World'], ['modern.html', 'Modern World'], ['futuristic.html', 'Futuristic World'], ['hacker-setup.html', 'Hacker Setup']]],
+  ['technology.html', 'Technology', [['ai-technology.html', 'AI Technology'], ['market-technology.html', 'Market Technology'], ['animation-technology.html', 'Animation Technology'], ['vehicle-technology.html', 'Vehicle Technology'], ['space.html', 'Space Technology']]],
+  ['semiconductor.html', 'Semiconductor', [['vlsi.html', 'VLSI'], ['processor.html', 'Processor'], ['graphics-card.html', 'Graphics Card']]]
 ];
 const activePage = window.location.pathname.split('/').pop() || 'index.html';
 const activeNavHref = activePage === 'index.html' && window.location.hash === '#about'
@@ -13,9 +17,21 @@ if (siteNav) {
   const navigationLinks = primarySections.map(([href, label]) =>
     `<a href="${href}"${href === activeNavHref ? ' aria-current="page"' : ''}>${label}</a>`
   );
-  const primaryLinks = navigationLinks.slice(0, -2).join('');
-  const secondaryLinks = navigationLinks.slice(-2).join('');
-  siteNav.innerHTML = `<div class="nav-links nav-links-primary">${primaryLinks}</div><div class="nav-links nav-links-secondary">${secondaryLinks}</div>`;
+  const dropdownLinks = dropdownSections.map(([href, label, children]) => {
+    const isActive = href === activeNavHref || children.some(([childHref]) => childHref === activeNavHref);
+    const childLinks = children.map(([childHref, childLabel]) =>
+      `<li><a href="${childHref}"${childHref === activeNavHref ? ' aria-current="page"' : ''}>${childLabel}</a></li>`
+    ).join('');
+    return `<div class="nav-dropdown"><a href="${href}"${isActive ? ' aria-current="page"' : ''}>${label}</a><button class="nav-dropdown-toggle" type="button" aria-label="Show ${label} pages" aria-expanded="false">⌄</button><ul class="nav-submenu">${childLinks}</ul></div>`;
+  });
+  siteNav.innerHTML = `<div class="nav-links nav-links-primary">${navigationLinks.join('')}${dropdownLinks.join('')}</div>`;
+  siteNav.querySelectorAll('.nav-dropdown-toggle').forEach((button) => {
+    button.addEventListener('click', () => {
+      const dropdown = button.closest('.nav-dropdown');
+      const isOpen = dropdown.classList.toggle('is-open');
+      button.setAttribute('aria-expanded', String(isOpen));
+    });
+  });
 }
 
 // Keep every visible editorial image on ASARK within the supplied AI image collection.

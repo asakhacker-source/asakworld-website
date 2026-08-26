@@ -25,6 +25,14 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .nav-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 22px; }
 .site-nav a { color: var(--text); font-size: 12px; letter-spacing: 1.2px; text-decoration: none; text-transform: uppercase; }
 .site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--gold); }
+.nav-dropdown { position: relative; display: inline-flex; align-items: center; }
+.nav-dropdown-toggle { padding: 2px 0 2px 5px; border: 0; background: transparent; color: var(--gold); cursor: pointer; font: 18px/1 var(--sans); }
+.nav-submenu { position: absolute; z-index: 30; top: calc(100% + 17px); left: -18px; display: none; width: max-content; min-width: 220px; margin: 0; padding: 12px; border: 1px solid rgba(135, 246, 229, .28); background: rgba(12, 15, 15, .98); box-shadow: 0 22px 45px rgba(0, 0, 0, .38); list-style: none; }
+.nav-submenu::before { position: absolute; top: -7px; left: 34px; width: 12px; height: 12px; border-top: 1px solid rgba(135, 246, 229, .28); border-left: 1px solid rgba(135, 246, 229, .28); background: rgba(12, 15, 15, .98); content: ''; transform: rotate(45deg); }
+.nav-submenu li { position: relative; }
+.site-nav .nav-submenu a { display: block; padding: 12px 14px; color: var(--text); font-size: 11px; }
+.site-nav .nav-submenu a:hover, .site-nav .nav-submenu a[aria-current="page"] { background: rgba(135, 246, 229, .12); color: var(--signal, var(--gold)); }
+.nav-dropdown:hover .nav-submenu, .nav-dropdown:focus-within .nav-submenu, .nav-dropdown.is-open .nav-submenu { display: block; }
 .header-search { display: flex; align-items: center; width: clamp(340px, 34vw, 520px); min-width: 300px; min-height: 58px; padding: 0 16px; border: 1px solid rgba(135, 246, 229, .35); transition: border-color .2s ease; }
 .header-search:focus-within { border-color: var(--signal, var(--gold)); }
 .header-search label { display: flex; flex: 1; min-width: 0; }
@@ -39,7 +47,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 
 /* Desktop header: keep navigation and search on one horizontal line. */
 @media (min-width: 821px) {
-  .site-header { display: flex; align-items: center; flex-wrap: nowrap; min-height: 76px; padding: 14px 3%; gap: clamp(10px, 1.1vw, 20px); overflow-x: auto; }
+  .site-header { display: flex; align-items: center; flex-wrap: nowrap; min-height: 76px; padding: 14px 3%; gap: clamp(10px, 1.1vw, 20px); overflow: visible; }
   .logo { position: static; flex: 0 0 auto; }
   .site-nav { display: flex; flex: 1 1 auto; align-items: center; flex-wrap: nowrap; min-width: 0; gap: clamp(10px, 1.1vw, 20px); }
   .nav-links { flex: 0 0 auto; flex-wrap: nowrap; gap: clamp(10px, 1.1vw, 20px); overflow: visible; white-space: nowrap; }
@@ -200,6 +208,11 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
   .site-nav { display: none; flex-basis: 100%; flex-direction: column; align-items: flex-start; gap: 17px; padding: 16px 0 6px; }
   .site-nav.is-open { display: flex; }
   .nav-links { flex-direction: column; align-items: flex-start; gap: 17px; width: 100%; }
+  .nav-dropdown { display: grid; grid-template-columns: auto auto; align-items: center; }
+  .nav-submenu { position: static; display: none; grid-column: 1 / -1; width: 100%; min-width: 0; margin-top: 10px; box-shadow: none; }
+  .nav-submenu::before { display: none; }
+  .nav-dropdown:hover .nav-submenu { display: none; }
+  .nav-dropdown:focus-within .nav-submenu, .nav-dropdown.is-open .nav-submenu { display: block; }
   .header-search { width: 100%; max-width: none; min-height: 44px; }
   .account-actions { margin-top: 3px; }
   .grid { grid-template-columns: 1fr; }
