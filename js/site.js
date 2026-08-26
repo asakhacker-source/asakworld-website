@@ -156,7 +156,7 @@ if ('serviceWorker' in navigator) {
 }
 
 document.querySelectorAll('.site-footer').forEach((footer) => {
-  footer.textContent = '© 2026 ASARK · The Art of Future Luxury';
+  footer.textContent = '© 2026 ASARK · Exploring Art, Technology & Tomorrow';
 });
 
 if (menuToggle && siteNav) {
