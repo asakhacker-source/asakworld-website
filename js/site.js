@@ -47,7 +47,7 @@ const homeUrl = new URL(document.querySelector('.logo')?.getAttribute('href') ||
 const aiImageUrl = (index) => new URL(`ai images/${aiImagePaths[index % aiImagePaths.length]}`, homeUrl).href;
 
 document.querySelectorAll('img').forEach((image, index) => {
-  if (image.closest('.site-header') || image.src.includes('asark-mark')) return;
+  if (image.closest('.site-header') || image.src.includes('asark-mark') || image.dataset.aiImageFixed !== undefined) return;
   image.dataset.originalImage = image.src;
   image.src = aiImageUrl(index);
   image.removeAttribute('srcset');
