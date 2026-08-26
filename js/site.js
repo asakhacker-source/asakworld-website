@@ -279,6 +279,13 @@ if (currentPage === 'blogs.html') {
     aiBlogVisual.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/AI Technology/ai-technology-blog.png" alt="AI technology infographic showing machine learning, virtual assistants, healthcare, education and responsible AI"><figcaption>AI-generated educational visual: five practical areas of AI technology.</figcaption>';
     aiBlogTopic.querySelector('.blog-topic-detail')?.after(aiBlogVisual);
   }
+  const spaceBlogTopic = document.getElementById('space-technology');
+  if (spaceBlogTopic) {
+    const spaceBlogVisual = document.createElement('figure');
+    spaceBlogVisual.className = 'space-technology-overview';
+    spaceBlogVisual.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/Space Technology/space-technology-feature.png" alt="Space Technology infographic featuring satellites, launch vehicles, planetary exploration, astronomy and space research"><figcaption>Space Technology: exploring beyond boundaries through satellites, launch systems, research and planetary exploration.</figcaption>';
+    spaceBlogTopic.querySelector('.blog-topic-detail')?.after(spaceBlogVisual);
+  }
   if (window.location.hash) {
     window.setTimeout(() => document.querySelector(window.location.hash)?.scrollIntoView({ block: 'start' }), 0);
   }
@@ -331,7 +338,7 @@ if (currentPage === 'space.html') {
   if (spaceGrid) {
     const spaceOverview = document.createElement('figure');
     spaceOverview.className = 'space-technology-overview';
-    spaceOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/Space Technology/space-technology-overview.png" alt="Space technology visual covering satellites, spacecraft, planetary exploration and technology for Earth"><figcaption>AI-generated overview: space technology, exploration and the systems that support life on Earth.</figcaption>';
+    spaceOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/Space Technology/space-technology-feature.png" alt="Space Technology infographic featuring satellites, launch vehicles, planetary exploration, astronomy and space research"><figcaption>Space Technology: exploring beyond boundaries through satellites, launch systems, research and planetary exploration.</figcaption>';
     spaceGrid.before(spaceOverview);
   }
 }
