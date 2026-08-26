@@ -27,6 +27,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--gold); }
 .nav-dropdown { position: relative; display: inline-flex; align-items: center; min-height: 42px; }
 .nav-dropdown > a { display: inline-flex; align-items: center; min-height: 42px; }
+.nav-submenu-toggle { display: none; border: 0; background: transparent; color: var(--signal); cursor: pointer; font: 700 9px var(--sans); letter-spacing: 1px; text-transform: uppercase; }
 .nav-submenu { position: absolute; z-index: 30; top: 100%; left: -18px; display: none; width: max-content; min-width: 220px; margin: 0; padding: 12px; border: 1px solid rgba(135, 246, 229, .28); background: rgba(12, 15, 15, .98); box-shadow: 0 22px 45px rgba(0, 0, 0, .38); list-style: none; }
 .nav-submenu::before { position: absolute; top: -7px; left: 34px; width: 12px; height: 12px; border-top: 1px solid rgba(135, 246, 229, .28); border-left: 1px solid rgba(135, 246, 229, .28); background: rgba(12, 15, 15, .98); content: ''; transform: rotate(45deg); }
 .nav-submenu li { position: relative; }
@@ -207,11 +208,13 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
   .site-nav { display: none; flex-basis: 100%; flex-direction: column; align-items: flex-start; gap: 17px; padding: 16px 0 6px; }
   .site-nav.is-open { display: flex; }
   .nav-links { flex-direction: column; align-items: flex-start; gap: 17px; width: 100%; }
-  .nav-dropdown { display: block; }
+  .nav-dropdown { display: grid; grid-template-columns: 1fr auto; align-items: center; }
+  .nav-submenu-toggle { display: inline-flex; min-height: 42px; align-items: center; padding: 0 12px; }
   .nav-submenu { position: static; display: none; grid-column: 1 / -1; width: 100%; min-width: 0; margin-top: 10px; box-shadow: none; }
   .nav-submenu::before { display: none; }
   .nav-dropdown:hover .nav-submenu { display: none; }
-  .nav-dropdown:focus-within .nav-submenu { display: block; }
+  .nav-dropdown:focus-within .nav-submenu { display: none; }
+  .nav-dropdown.is-open .nav-submenu { display: block; }
   .header-search { width: 100%; max-width: none; min-height: 44px; }
   .account-actions { margin-top: 3px; }
   .grid { grid-template-columns: 1fr; }

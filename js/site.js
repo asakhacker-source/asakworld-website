@@ -23,10 +23,19 @@ if (siteNav) {
     const childLinks = children.map(([childHref, childLabel]) =>
       `<li><a href="${siteHref(childHref)}"${childHref === activeNavHref ? ' aria-current="page"' : ''}>${childLabel}</a></li>`
     ).join('');
-    return `<div class="nav-dropdown"><a href="${siteHref(href)}"${isActive ? ' aria-current="page"' : ''}>${label}</a><ul class="nav-submenu">${childLinks}</ul></div>`;
+    const submenuId = `${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-submenu`;
+    return `<div class="nav-dropdown"><a href="${siteHref(href)}"${isActive ? ' aria-current="page"' : ''}>${label}</a><button class="nav-submenu-toggle" type="button" aria-expanded="false" aria-controls="${submenuId}" aria-label="Show ${label} menu">Menu</button><ul class="nav-submenu" id="${submenuId}">${childLinks}</ul></div>`;
   });
   siteNav.innerHTML = `<div class="nav-links nav-links-primary">${navigationLinks.slice(0, 1).join('')}${dropdownLinks.join('')}${navigationLinks.slice(1).join('')}</div>`;
 }
+
+document.querySelectorAll('.nav-submenu-toggle').forEach((toggle) => {
+  const dropdown = toggle.closest('.nav-dropdown');
+  const close = () => { dropdown?.classList.remove('is-open'); toggle.setAttribute('aria-expanded', 'false'); };
+  toggle.addEventListener('click', (event) => { event.stopPropagation(); const open = toggle.getAttribute('aria-expanded') === 'true'; document.querySelectorAll('.nav-submenu-toggle').forEach((item) => { item.closest('.nav-dropdown')?.classList.remove('is-open'); item.setAttribute('aria-expanded', 'false'); }); if (!open) { dropdown?.classList.add('is-open'); toggle.setAttribute('aria-expanded', 'true'); } });
+  dropdown?.addEventListener('keydown', (event) => { if (event.key === 'Escape') { close(); toggle.focus(); } });
+  document.addEventListener('click', (event) => { if (!dropdown?.contains(event.target)) close(); });
+});
 
 // Keep every visible editorial image on ASARK within the supplied AI image collection.
 const architectureImages = [
@@ -154,7 +163,7 @@ const projectDestinations = {
   'Dining and Kitchen': 'projects/dining-and-kitchen.html'
 };
 
-document.querySelectorAll('.visual-card, .card[data-project-link], .card').forEach((card) => {
+document.querySelectorAll('.visual-card[data-card-link], .card[data-project-link]').forEach((card) => {
   const image = card.querySelector('img');
   if (!card.matches('.visual-card') && !card.dataset.projectLink && !image) return;
   const imageSource = image?.dataset.originalImage || image?.src || '';
@@ -182,11 +191,11 @@ const editorialRecommendations = {
   'futuristic.html': [['Future design books', 'futuristic design books'], ['Smart lighting', 'smart lighting'], ['3D printing tools', '3d printing tools']],
   'hacker-setup.html': [['Mechanical keyboards', 'mechanical keyboard'], ['Monitor arms', 'monitor arm'], ['USB-C hubs', 'usb c hub']],
   'technology.html': [['Technology books', 'technology books'], ['Smart-home hubs', 'smart home hub'], ['Portable SSDs', 'portable ssd']],
-  'ai-technology.html': [['Smart-home hubs', 'smart home hub'], ['Smart lighting', 'smart lighting'], ['Projectors', 'home projector'], ['Sensors', 'smart home sensors']],
-  'market-technology.html': [['Finance books', 'personal finance books'], ['Business notebooks', 'business notebook'], ['Desk organisers', 'desk organizer']],
+  'ai-technology.html': [['AI books', 'artificial intelligence books'], ['Machine-learning books', 'machine learning books'], ['Python books', 'python programming books']],
+  'market-technology.html': [['Analytics books', 'data analytics books'], ['FinTech books', 'financial technology books'], ['Business technology books', 'business technology books']],
   'animation-technology.html': [['Drawing tablets', 'drawing tablet'], ['Animation books', 'animation books'], ['Colour-calibrated monitors', 'color calibrated monitor']],
-  'vehicle-technology.html': [['Car phone mounts', 'car phone mount'], ['Dash cameras', 'dash camera'], ['Portable tyre inflators', 'portable tyre inflator']],
-  'space.html': [['Smart lighting', 'smart lighting'], ['Air purifiers', 'air purifier'], ['Home sensors', 'smart home sensors']],
+  'vehicle-technology.html': [['Automotive engineering books', 'automotive engineering books'], ['EV technology books', 'electric vehicle technology books'], ['Emergency tyre inflators', 'portable tyre inflator']],
+  'space.html': [['Astronomy books', 'astronomy books'], ['Telescopes', 'beginner telescope'], ['Space-science books', 'space science books']],
   'semiconductor.html': [['Electronics books', 'electronics books'], ['Circuit design kits', 'electronics circuit kit'], ['Precision tool kits', 'precision screwdriver set']],
   'vlsi.html': [['VLSI books', 'vlsi design books'], ['Electronics books', 'semiconductor books'], ['Technical notebooks', 'engineering notebook']],
   'processor.html': [['Computer architecture books', 'computer architecture books'], ['Cooling pads', 'laptop cooling pad'], ['USB-C hubs', 'usb c hub']],
@@ -195,56 +204,8 @@ const editorialRecommendations = {
 };
 
 const currentPage = activePage;
-const affiliateExcludedPages = new Set(['login.html', 'signup.html', 'offline.html']);
-const defaultRecommendations = [['Design books', 'design books'], ['Desk lighting', 'desk lamp'], ['Everyday organisers', 'desk organizer']];
-const recommendedProducts = affiliateExcludedPages.has(currentPage)
-  ? null
-  : (editorialRecommendations[currentPage] || defaultRecommendations);
-
-if (currentPage === 'blogs.html') {
-  const blogTopicAnchors = {
-    'ai-title': 'ai-technology',
-    'market-title': 'market-technology',
-    'animation-title': 'animation-technology',
-    'space-title': 'space-technology',
-    'vehicle-title': 'vehicle-technology'
-  };
-  Object.entries(blogTopicAnchors).forEach(([headingId, sectionId]) => {
-    document.querySelector(`[aria-labelledby="${headingId}"]`)?.setAttribute('id', sectionId);
-  });
-  const blogTopicDetails = {
-    'ai-title': '<h3>How AI works</h3><p>Modern AI systems learn from data. Machine learning identifies patterns in large datasets and uses those patterns to make predictions or decisions. Deep learning extends this with multi-layer neural networks, supporting image recognition, natural-language processing, speech recognition, robotics and generative AI.</p><h3>AI in different industries</h3><p>In healthcare, AI can assist analysis of medical information. In education, it can support personalised learning. Agriculture, business and engineering teams can use AI to study conditions, automate repetitive work, forecast demand, organise information and accelerate simulation, design and testing.</p><h3>Responsible AI</h3><p>As AI becomes more integrated into society, privacy, security, fairness, transparency, accuracy and human oversight remain essential. AI should strengthen human capabilities and be developed with clear responsibility.</p>',
-    'market-title': '<h3>Data and market analysis</h3><p>Data analytics helps organisations study product demand, customer feedback, website activity, sales performance and economic trends. AI can reveal patterns that are difficult to identify manually, but technology should support careful judgement rather than replace it—market conditions can change quickly.</p><h3>E-commerce and digital payments</h3><p>Online stores let businesses reach customers beyond physical locations. Mobile banking, payment gateways and secure authentication have made transactions faster and more convenient, while creating a stronger need for trustworthy digital systems.</p><h3>What comes next</h3><p>Market technology will increasingly combine AI, automation, cloud computing, cybersecurity and analytics. Sustainable growth depends on using real-time information responsibly and protecting customer data.</p>',
-    'animation-title': '<h3>From 2D to 3D</h3><p>Two-dimensional animation remains valuable for cartoons, education and motion graphics. Three-dimensional animation creates objects with depth through modelling, materials, virtual lighting and character movement. A typical workflow moves through concept, modelling, texturing, rigging, animation, lighting, rendering and final editing.</p><h3>Motion capture and real-time graphics</h3><p>Motion capture records physical movement and translates it into digital animation. Real-time rendering makes it possible to explore complex scenes interactively instead of waiting for every frame to render.</p><h3>AI and animation</h3><p>AI-assisted tools can help generate concepts, improve motion, organise workflows and accelerate repetitive work. Human creativity remains central: artists and designers decide the story, emotion, visual identity and purpose.</p><h3>Beyond entertainment</h3><p>Animation also makes technical ideas easier to understand. Engineering simulations, medical visualisation and scientific explainers can reveal processes that are difficult to observe directly.</p>',
-    'space-title': '<h3>Satellites in everyday life</h3><p>Satellites support navigation, communication, television broadcasting, weather forecasting, environmental monitoring, disaster management, scientific research and mapping. Weather systems continuously observe conditions that help specialists study storms, clouds, temperatures and climate patterns.</p><h3>Smaller and smarter systems</h3><p>Advances in electronics and manufacturing have enabled smaller satellite platforms for research, communication and observation. Efficient processors, improved sensors and intelligent software can help satellites process more useful information before transmitting it to Earth.</p><h3>Robotics and exploration</h3><p>Robotic spacecraft can explore environments that are difficult for people to reach, analysing surfaces, atmospheres, radiation and other conditions. Future missions may use increasingly autonomous systems for complex scientific tasks.</p><h3>Sustainable exploration</h3><p>Responsible space development includes managing orbital debris, coordinating satellite operations, designing efficient spacecraft and considering long-term environmental impact.</p>',
-    'vehicle-title': '<h3>Electric vehicles</h3><p>EVs use electric motors and battery systems rather than relying entirely on internal-combustion engines. Battery management, power electronics, regenerative braking, charging infrastructure, thermal management and vehicle-control software all shape performance, safety, cost and lifespan.</p><h3>Connected vehicles</h3><p>Connected vehicles can exchange information with digital infrastructure and cloud services to support navigation, maintenance, updates and traffic management. Vehicle-to-everything, or V2X, is being researched to help compatible vehicles and infrastructure communicate.</p><h3>Driver-assistance technology</h3><p>Cameras, radar, ultrasonic sensors and other systems can support parking assistance, adaptive cruise control, lane support and collision warnings. Their capabilities and limitations must be understood clearly, with testing, cybersecurity, regulation and human responsibility remaining essential.</p><h3>The future of transportation</h3><p>Electric mobility, renewable energy, connected vehicles, intelligent infrastructure and improved public transport can help make travel safer, cleaner, more efficient, accessible and sustainable.</p>'
-  };
-  const blogVisualCards = {
-    'ai-title': [['AI processor & neural network', 'Powerful chips and neural networks are the backbone of modern AI systems.'], ['AI assistant interface', 'Assistants help people find information and complete useful tasks.'], ['AI in healthcare & education', 'AI can support analysis, learning and more personalised experiences.'], ['Responsible AI', 'Privacy, fairness, transparency and accountability are essential.']],
-    'market-title': [['Market analytics dashboard', 'Real-time information can reveal demand, performance and changing trends.'], ['E-commerce ecosystem', 'Online platforms connect businesses with customers across the world.'], ['Digital payments', 'Secure payment systems make transactions faster and more reliable.'], ['AI-powered business insights', 'Data tools can help teams recognise patterns and plan ahead.']],
-    'animation-title': [['3D modelling', 'Artists create digital objects with specialised tools and techniques.'], ['Motion capture', 'Physical movement can be recorded and translated into digital animation.'], ['Animation production pipeline', 'Modelling, rigging, lighting and rendering work together to create motion.'], ['Real-time rendering', 'Advanced graphics systems create rich visual worlds with greater immediacy.']],
-    'space-title': [['Satellites in orbit', 'Satellite systems support communication, weather observation and navigation.'], ['Modern spacecraft', 'Launch vehicles and spacecraft make ambitious scientific missions possible.'], ['Planetary exploration', 'Robotic systems investigate distant environments and collect valuable data.'], ['Sustainable space technology', 'Future missions must manage resources and orbit responsibly.']],
-    'vehicle-title': [['Electric vehicles', 'EVs use electric motors and battery systems for cleaner mobility.'], ['Battery & charging technology', 'Better batteries and reliable charging support practical electric transport.'], ['Connected smart vehicles', 'Vehicles can exchange useful information with networks and infrastructure.'], ['Advanced driver assistance', 'Sensors and intelligent systems can support safer, more confident journeys.']]
-  };
-  Object.entries(blogVisualCards).forEach(([headingId, cards], topicIndex) => {
-    const topicHeader = document.getElementById(headingId)?.closest('header');
-    const topic = topicHeader?.parentElement;
-    const grid = topic?.querySelector('.blog-card-grid');
-    if (!topicHeader || !grid) return;
-    grid.innerHTML = cards.map(([title, description], cardIndex) => `<article><div class="journal-card-image" role="img" aria-label="${title}" style="--image-x:${cardIndex * 33.333}%;--image-y:${topicIndex * 25}%"></div><div class="journal-card-copy"><p class="card-kicker">${String(cardIndex + 1).padStart(2, '0')} · Visual guide</p><h3>${title}</h3><p>${description}</p></div></article>`).join('');
-  });
-  if (window.location.hash) {
-    window.setTimeout(() => document.querySelector(window.location.hash)?.scrollIntoView({ block: 'start' }), 0);
-  }
-  document.querySelectorAll('.blog-card-grid img').forEach((image) => image.remove());
-  const blogPost = document.querySelector('.blog-post');
-  if (blogPost) {
-    const blogDirectory = document.createElement('section');
-    blogDirectory.className = 'blog-directory';
-    blogDirectory.innerHTML = '<figure><img src="assets/technology-blog.png" alt="AI-generated editorial illustration connecting artificial intelligence, market data, animation, space technology and an electric vehicle"><figcaption>AI-generated editorial visual study: five connected technologies shaping the future.</figcaption></figure><div><p class="eyebrow">Read by topic</p><h2>Five field guides for the future.</h2><p>Explore each technology through its own focused ASARK page.</p><nav aria-label="Technology blog topics"><a href="ai-technology.html">AI Technology</a><a href="market-technology.html">Market Technology</a><a href="animation-technology.html">Animation Technology</a><a href="space.html">Space Technology</a><a href="vehicle-technology.html">Vehicle Technology</a></nav></div>';
-    blogPost.before(blogDirectory);
-  }
-}
+const affiliateAllowedPages = new Set(['technology.html', 'ai-technology.html', 'semiconductor.html', 'market-technology.html', 'animation-technology.html', 'space.html', 'vehicle-technology.html', 'blogs.html', 'curated.html']);
+const recommendedProducts = affiliateAllowedPages.has(currentPage) ? editorialRecommendations[currentPage] : null;
 
 if (currentPage === 'architecture.html') {
   const architectureContent = document.querySelector('.content-section');
