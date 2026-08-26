@@ -543,7 +543,9 @@ body { background: radial-gradient(circle at 84% -10%, rgba(135, 246, 229, .09),
 .commerce-hub .technology-showcase { margin-top: 46px; }
 .commerce-hub .technology-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 18px; }
 .technology-card { display: flex; flex-direction: column; min-height: 340px !important; }
+.technology-card > img { width: calc(100% + clamp(56px, 8vw, 100px)); max-width: none; margin: calc(clamp(28px, 4vw, 50px) * -1) calc(clamp(28px, 4vw, 50px) * -1) 26px; aspect-ratio: 1.7; border-bottom: 1px solid rgba(135, 246, 229, .2); object-fit: cover; }
 .technology-card h2 { margin-top: 38px; }
+.technology-card > img + span + h2 { margin-top: 28px; }
 .technology-card > div { display: grid; gap: 10px; margin-top: auto; padding-top: 28px; }
 .technology-card > div a { color: var(--signal); font-size: 10px; font-weight: 700; letter-spacing: 1px; text-decoration: none; text-transform: uppercase; }
 .technology-card > div a + a { color: var(--muted); }

@@ -1,5 +1,8 @@
 const menuToggle = document.querySelector('.menu-toggle');
 const siteNav = document.querySelector('.site-nav');
+const manifestLink = document.querySelector('link[rel="manifest"]');
+const siteRootUrl = manifestLink ? new URL('.', manifestLink.href) : new URL('/', window.location.href);
+const siteHref = (path) => new URL(path, siteRootUrl).href;
 
 const primarySections = [
   ['index.html', 'Home'], ['blogs.html', 'Journal'], ['visual.html', 'Visuals'], ['curated.html', 'Resources'], ['about.html', 'About']
@@ -13,14 +16,14 @@ const activeNavHref = activePage === 'index.html' && window.location.hash === '#
   : activePage;
 if (siteNav) {
   const navigationLinks = primarySections.map(([href, label]) =>
-    `<a href="${href}"${href === activeNavHref ? ' aria-current="page"' : ''}>${label}</a>`
+    `<a href="${siteHref(href)}"${href === activeNavHref ? ' aria-current="page"' : ''}>${label}</a>`
   );
   const dropdownLinks = dropdownSections.map(([href, label, children]) => {
     const isActive = href === activeNavHref || children.some(([childHref]) => childHref === activeNavHref);
     const childLinks = children.map(([childHref, childLabel]) =>
-      `<li><a href="${childHref}"${childHref === activeNavHref ? ' aria-current="page"' : ''}>${childLabel}</a></li>`
+      `<li><a href="${siteHref(childHref)}"${childHref === activeNavHref ? ' aria-current="page"' : ''}>${childLabel}</a></li>`
     ).join('');
-    return `<div class="nav-dropdown"><a href="${href}"${isActive ? ' aria-current="page"' : ''}>${label}</a><ul class="nav-submenu">${childLinks}</ul></div>`;
+    return `<div class="nav-dropdown"><a href="${siteHref(href)}"${isActive ? ' aria-current="page"' : ''}>${label}</a><ul class="nav-submenu">${childLinks}</ul></div>`;
   });
   siteNav.innerHTML = `<div class="nav-links nav-links-primary">${navigationLinks.slice(0, 1).join('')}${dropdownLinks.join('')}${navigationLinks.slice(1).join('')}</div>`;
 }
@@ -41,44 +44,7 @@ const aiImagePaths = [
   'Semiconductor/Graphics Card/Gemini_Generated_Image_ld8r28ld8r28ld8r.png', 'Semiconductor/Graphics Card/Gemini_Generated_Image_o0n0yjo0n0yjo0n0.png', 'Semiconductor/Graphics Card/Gemini_Generated_Image_w1zouxw1zouxw1zo.png',
   'Blogs/modern house.png', 'Blogs/our-best-look-ever-yet-at-tony-starks-mansion-from-the-book-v0-mq5lg6zmpg1g1.webp'
 ];
-const homeUrl = new URL(document.querySelector('.logo')?.getAttribute('href') || 'index.html', window.location.href);
-const aiImageUrl = (index) => new URL(`ai images/${aiImagePaths[index % aiImagePaths.length]}`, homeUrl).href;
-
-// Compatibility for pre-existing architecture and project pages. Core technology
-// pages now define their images in their own HTML; this only resolves old file names.
-const legacyAiImageMap = {
-  'Gemini_Generated_Image_(1).png': 'Architecture/Ancient World/Gemini_Generated_Image_(1).png',
-  'Gemini_Generated_Image_(2).png': 'Architecture/Ancient World/Gemini_Generated_Image_(2).png',
-  'Gemini_Generated_Image_(3).png': 'Architecture/Ancient World/Gemini_Generated_Image_(3).png',
-  'Gemini_Generated_Image_(4).png': 'Architecture/Modern World/Gemini_Generated_Image_(4).png',
-  'Gemini_Generated_Image_(5).png': 'Architecture/Modern World/Gemini_Generated_Image_(5).png',
-  'Gemini_Generated_Image_(6).png': 'Architecture/Modern World/Gemini_Generated_Image_(6).png',
-  'Gemini_Generated_Image_(7).png': 'Architecture/Futuristic World/Gemini_Generated_Image_(7).png',
-  'Gemini_Generated_Image_(8).png': 'Architecture/Futuristic World/Gemini_Generated_Image_(8).png',
-  'Gemini_Generated_Image_(9).png': 'Architecture/Futuristic World/Gemini_Generated_Image_(9).png',
-  'Gemini_Generated_Image_(10).png': 'Architecture/Hacker Setup/Gemini_Generated_Image_(10).png',
-  'Gemini_Generated_Image_(11).png': 'Architecture/Hacker Setup/Gemini_Generated_Image_(11).png',
-  'Gemini_Generated_Image_(12).png': 'Technology/AI Technology/Gemini_Generated_Image_(12).png',
-  'Gemini_Generated_Image_(13).png': 'Technology/AI Technology/Gemini_Generated_Image_(13).png',
-  'Gemini_Generated_Image_(14).png': 'Technology/AI Technology/Gemini_Generated_Image_(14).png',
-  'Gemini_Generated_Image_(15).png': 'Technology/Market Technology/Gemini_Generated_Image_(15).png',
-  'Gemini_Generated_Image_(16).png': 'Technology/Market Technology/Gemini_Generated_Image_(16).png',
-  'Gemini_Generated_Image_(17).png': 'Technology/Animation Technology/Gemini_Generated_Image_(17).png',
-  'Gemini_Generated_Image_(18).png': 'Technology/Animation Technology/Gemini_Generated_Image_(18).png',
-  'Gemini_Generated_Image_(19).png': 'Technology/Vehicle Technology/Gemini_Generated_Image_(19).png',
-  'Gemini_Generated_Image_(20).png': 'Technology/Vehicle Technology/Gemini_Generated_Image_(20).png'
-};
-document.querySelectorAll('img[src*="ai%20images/Gemini"]').forEach((image) => {
-  const legacyName = decodeURIComponent(image.getAttribute('src') || '').split('/').pop();
-  const mappedPath = legacyAiImageMap[legacyName];
-  if (mappedPath) image.src = new URL(`ai images/${mappedPath}`, homeUrl).href;
-});
-
-document.querySelectorAll('img[data-ai-image]').forEach((image, index) => {
-  image.dataset.originalImage = image.src;
-  image.src = aiImageUrl(index);
-  image.removeAttribute('srcset');
-});
+const homeUrl = siteRootUrl;
 
 document.querySelectorAll('.image-provenance, .visual-source-note').forEach((note) => {
   note.textContent = 'Images are AI-generated visual studies from the ASARK collection. They illustrate concepts and do not depict built projects, real products or real places.';
@@ -88,29 +54,13 @@ document.querySelectorAll('.visual-info span').forEach((label) => {
   label.textContent = label.textContent.replace('EDITORIAL REFERENCE', 'AI-GENERATED CONCEPT');
 });
 
-const headerSearch = { setAttribute() {}, addEventListener() {} };
-headerSearch.className = 'header-search';
-headerSearch.setAttribute('role', 'search');
-headerSearch.innerHTML = '<label><span class="sr-only">Search ASARK</span><input type="search" name="q" placeholder="Search" autocomplete="off"></label><button type="submit" aria-label="Search ASARK">⌕</button>';
-
 const accountActions = document.createElement('div');
 accountActions.className = 'account-actions';
-const headerHomeUrl = new URL(document.querySelector('.logo')?.getAttribute('href') || 'index.html', window.location.href);
+const headerHomeUrl = siteRootUrl;
 const loginUrl = new URL('login.html', headerHomeUrl).href;
 const signupUrl = new URL('signup.html', headerHomeUrl).href;
 accountActions.innerHTML = `<a href="${loginUrl}">Log in</a><a class="account-signup" href="${signupUrl}">Sign up</a>`;
 siteNav?.append(accountActions);
-
-headerSearch.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const query = headerSearch.elements.q.value.trim();
-  if (!query) return;
-  const homeLink = document.querySelector('.logo')?.getAttribute('href') || 'index.html';
-  const homeUrl = new URL(homeLink, window.location.href);
-  const blogsUrl = new URL('blogs.html', homeUrl);
-  blogsUrl.searchParams.set('q', query);
-  window.location.href = blogsUrl.href;
-});
 
 let deferredInstallPrompt;
 let isInstalled = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
