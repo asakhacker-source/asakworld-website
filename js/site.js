@@ -39,10 +39,10 @@ document.querySelectorAll('.nav-submenu-toggle').forEach((toggle) => {
 
 // Keep every visible editorial image on ASARK within the supplied AI image collection.
 const architectureImages = [
-  'Architecture/Ancient World/Gemini_Generated_Image_(1).png', 'Architecture/Ancient World/Gemini_Generated_Image_(2).png', 'Architecture/Ancient World/Gemini_Generated_Image_(3).png',
-  'Architecture/Modern World/Gemini_Generated_Image_(4).png', 'Architecture/Modern World/Gemini_Generated_Image_(5).png', 'Architecture/Modern World/Gemini_Generated_Image_(6).png',
-  'Architecture/Futuristic World/Gemini_Generated_Image_(7).png', 'Architecture/Futuristic World/Gemini_Generated_Image_(8).png', 'Architecture/Futuristic World/Gemini_Generated_Image_(9).png',
-  'Architecture/Hacker Setup/Gemini_Generated_Image_(10).png', 'Architecture/Hacker Setup/Gemini_Generated_Image_(11).png'
+  'Architecture/Ancient World/Gemini_Generated_Image_(1).webp', 'Architecture/Ancient World/Gemini_Generated_Image_(2).webp', 'Architecture/Ancient World/Gemini_Generated_Image_(3).webp',
+  'Architecture/Modern World/Gemini_Generated_Image_(4).webp', 'Architecture/Modern World/Gemini_Generated_Image_(5).webp', 'Architecture/Modern World/Gemini_Generated_Image_(6).webp',
+  'Architecture/Futuristic World/Gemini_Generated_Image_(7).webp', 'Architecture/Futuristic World/Gemini_Generated_Image_(8).webp', 'Architecture/Futuristic World/Gemini_Generated_Image_(9).webp',
+  'Architecture/Hacker Setup/Gemini_Generated_Image_(10).webp', 'Architecture/Hacker Setup/Gemini_Generated_Image_(11).webp'
 ];
 const homeUrl = siteRootUrl;
 
@@ -226,7 +226,7 @@ if (currentPage === 'technology.html') {
   if (technologyGrid) {
     const technologyShowcase = document.createElement('figure');
     technologyShowcase.className = 'technology-showcase';
-    technologyShowcase.innerHTML = '<img src="ai images/Technology/technology-showcase-grid.png" alt="Visual overview of artificial intelligence, market, animation, space and vehicle technology" data-ai-image-fixed><figcaption>Explore twenty connected innovations across AI, market, animation, space and vehicle technology.</figcaption>';
+    technologyShowcase.innerHTML = '<img src="ai images/Technology/technology-showcase-grid.webp" alt="Visual overview of artificial intelligence, market, animation, space and vehicle technology" data-ai-image-fixed><figcaption>Explore twenty connected innovations across AI, market, animation, space and vehicle technology.</figcaption>';
     technologyGrid.before(technologyShowcase);
   }
 }
@@ -236,7 +236,7 @@ if (currentPage === 'ai-technology.html') {
   if (technologyGrid) {
     const aiOverview = document.createElement('figure');
     aiOverview.className = 'ai-technology-overview';
-    aiOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/AI Technology/ai-technology-overview.png" alt="AI technology overview showing machine learning, AI assistants, healthcare, education and responsible AI"><figcaption>AI-generated overview: building a smarter future with responsible artificial intelligence.</figcaption>';
+    aiOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/AI Technology/ai-technology-overview.webp" alt="AI technology overview showing machine learning, AI assistants, healthcare, education and responsible AI"><figcaption>AI-generated overview: building a smarter future with responsible artificial intelligence.</figcaption>';
     technologyGrid.before(aiOverview);
   }
 }
@@ -246,7 +246,7 @@ if (currentPage === 'animation-technology.html') {
   if (technologyGrid) {
     const animationOverview = document.createElement('figure');
     animationOverview.className = 'animation-technology-overview';
-    animationOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/Animation Technology/animation-technology-feature.png" alt="Animation Technology infographic featuring 3D animation, AI tools, virtual reality, motion capture and visual storytelling"><figcaption>Animation Technology: creative tools that bring ideas to life through motion, immersive worlds and visual storytelling.</figcaption>';
+    animationOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/Animation Technology/animation-technology-feature.webp" alt="Animation Technology infographic featuring 3D animation, AI tools, virtual reality, motion capture and visual storytelling"><figcaption>Animation Technology: creative tools that bring ideas to life through motion, immersive worlds and visual storytelling.</figcaption>';
     technologyGrid.before(animationOverview);
   }
 }
@@ -256,7 +256,7 @@ if (currentPage === 'space.html') {
   if (spaceGrid) {
     const spaceOverview = document.createElement('figure');
     spaceOverview.className = 'space-technology-overview';
-    spaceOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/Space Technology/space-technology-feature.png" alt="Space Technology infographic featuring satellites, launch vehicles, planetary exploration, astronomy and space research"><figcaption>Space Technology: exploring beyond boundaries through satellites, launch systems, research and planetary exploration.</figcaption>';
+    spaceOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/Space Technology/space-technology-feature.webp" alt="Space Technology infographic featuring satellites, launch vehicles, planetary exploration, astronomy and space research"><figcaption>Space Technology: exploring beyond boundaries through satellites, launch systems, research and planetary exploration.</figcaption>';
     spaceGrid.before(spaceOverview);
   }
 }
