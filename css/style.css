@@ -27,7 +27,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--gold); }
 .nav-dropdown { position: relative; display: inline-flex; align-items: center; min-height: 42px; }
 .nav-dropdown > a { display: inline-flex; align-items: center; min-height: 42px; }
-.nav-submenu { position: absolute; z-index: 30; top: calc(100% + 17px); left: -18px; display: none; width: max-content; min-width: 220px; margin: 0; padding: 12px; border: 1px solid rgba(135, 246, 229, .28); background: rgba(12, 15, 15, .98); box-shadow: 0 22px 45px rgba(0, 0, 0, .38); list-style: none; }
+.nav-submenu { position: absolute; z-index: 30; top: 100%; left: -18px; display: none; width: max-content; min-width: 220px; margin: 0; padding: 12px; border: 1px solid rgba(135, 246, 229, .28); background: rgba(12, 15, 15, .98); box-shadow: 0 22px 45px rgba(0, 0, 0, .38); list-style: none; }
 .nav-submenu::before { position: absolute; top: -7px; left: 34px; width: 12px; height: 12px; border-top: 1px solid rgba(135, 246, 229, .28); border-left: 1px solid rgba(135, 246, 229, .28); background: rgba(12, 15, 15, .98); content: ''; transform: rotate(45deg); }
 .nav-submenu li { position: relative; }
 .site-nav .nav-submenu a { display: block; padding: 12px 14px; color: var(--text); font-size: 11px; }
