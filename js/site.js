@@ -260,12 +260,27 @@ if (currentPage === 'blogs.html') {
   if (window.location.hash) {
     window.setTimeout(() => document.querySelector(window.location.hash)?.scrollIntoView({ block: 'start' }), 0);
   }
+  document.querySelectorAll('.blog-card-grid img').forEach((image) => image.remove());
   const blogPost = document.querySelector('.blog-post');
   if (blogPost) {
     const blogDirectory = document.createElement('section');
     blogDirectory.className = 'blog-directory';
     blogDirectory.innerHTML = '<figure><img src="assets/technology-blog.png" alt="AI-generated editorial illustration connecting artificial intelligence, market data, animation, space technology and an electric vehicle"><figcaption>AI-generated editorial visual study: five connected technologies shaping the future.</figcaption></figure><div><p class="eyebrow">Read by topic</p><h2>Five field guides for the future.</h2><p>Explore each technology through its own focused ASARK page.</p><nav aria-label="Technology blog topics"><a href="ai-technology.html">AI Technology</a><a href="market-technology.html">Market Technology</a><a href="animation-technology.html">Animation Technology</a><a href="space.html">Space Technology</a><a href="vehicle-technology.html">Vehicle Technology</a></nav></div>';
     blogPost.before(blogDirectory);
+  }
+}
+
+if (currentPage === 'architecture.html') {
+  const architectureContent = document.querySelector('.content-section');
+  if (architectureContent) {
+    const architectureGallery = document.createElement('section');
+    architectureGallery.className = 'architecture-gallery';
+    architectureGallery.setAttribute('aria-labelledby', 'architecture-gallery-title');
+    const galleryCards = aiImagePaths.map((imagePath, index) =>
+      `<figure><img data-ai-image-fixed loading="lazy" src="ai images/${imagePath}" alt="AI-generated architectural visual study ${index + 1}"><figcaption>ASARK visual study ${String(index + 1).padStart(2, '0')}</figcaption></figure>`
+    ).join('');
+    architectureGallery.innerHTML = `<header><p class="eyebrow">ASARK visual archive</p><h2 id="architecture-gallery-title">Architecture visual collection</h2><p>All supplied AI-generated visual studies are collected here.</p></header><div>${galleryCards}</div>`;
+    architectureContent.append(architectureGallery);
   }
 }
 
