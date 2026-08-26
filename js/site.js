@@ -46,10 +46,6 @@ const architectureImages = [
 ];
 const homeUrl = siteRootUrl;
 
-document.querySelectorAll('.visual-info span').forEach((label) => {
-  label.textContent = label.textContent.replace('EDITORIAL REFERENCE', 'AI-GENERATED CONCEPT');
-});
-
 const accountActions = document.createElement('div');
 accountActions.className = 'account-actions';
 const headerHomeUrl = siteRootUrl;
