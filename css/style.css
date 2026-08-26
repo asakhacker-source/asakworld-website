@@ -25,8 +25,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .nav-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 22px; }
 .site-nav a { color: var(--text); font-size: 12px; letter-spacing: 1.2px; text-decoration: none; text-transform: uppercase; }
 .site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--gold); }
-.nav-dropdown { position: relative; display: inline-flex; align-items: center; }
-.nav-dropdown-toggle { padding: 2px 0 2px 5px; border: 0; background: transparent; color: var(--gold); cursor: pointer; font: 18px/1 var(--sans); }
+.nav-dropdown { position: relative; display: inline-flex; align-items: center; min-height: 42px; }
+.nav-dropdown > a { display: inline-flex; align-items: center; min-height: 42px; }
+.nav-dropdown-toggle { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; min-height: 42px; padding: 0 0 0 5px; border: 0; background: transparent; color: var(--gold); cursor: pointer; font: 18px/1 var(--sans); }
 .nav-submenu { position: absolute; z-index: 30; top: calc(100% + 17px); left: -18px; display: none; width: max-content; min-width: 220px; margin: 0; padding: 12px; border: 1px solid rgba(135, 246, 229, .28); background: rgba(12, 15, 15, .98); box-shadow: 0 22px 45px rgba(0, 0, 0, .38); list-style: none; }
 .nav-submenu::before { position: absolute; top: -7px; left: 34px; width: 12px; height: 12px; border-top: 1px solid rgba(135, 246, 229, .28); border-left: 1px solid rgba(135, 246, 229, .28); background: rgba(12, 15, 15, .98); content: ''; transform: rotate(45deg); }
 .nav-submenu li { position: relative; }
@@ -49,12 +50,12 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 @media (min-width: 821px) {
   .site-header { display: flex; align-items: center; flex-wrap: nowrap; min-height: 76px; padding: 14px 3%; gap: clamp(10px, 1.1vw, 20px); overflow: visible; }
   .logo { position: static; flex: 0 0 auto; }
-  .site-nav { display: flex; flex: 1 1 auto; align-items: center; flex-wrap: nowrap; min-width: 0; gap: clamp(10px, 1.1vw, 20px); }
-  .nav-links { flex: 0 0 auto; flex-wrap: nowrap; gap: clamp(10px, 1.1vw, 20px); overflow: visible; white-space: nowrap; }
+  .site-nav { display: flex; flex: 1 1 auto; align-items: center; justify-content: flex-end; flex-wrap: nowrap; min-width: 0; gap: clamp(10px, 1.1vw, 20px); }
+  .nav-links { flex: 0 0 auto; align-items: center; flex-wrap: nowrap; gap: clamp(10px, 1.1vw, 20px); overflow: visible; white-space: nowrap; }
   .nav-links-primary, .nav-links-secondary { justify-content: flex-start; padding: 0; }
   .nav-links a { flex: 0 0 auto; }
   .header-search { flex: 1 1 260px; width: auto; min-width: 180px; min-height: 42px; }
-  .account-actions, .app-install { flex: 0 0 auto; }
+  .account-actions, .app-install { flex: 0 0 auto; min-height: 42px; }
 }
 
 @media (min-width: 1200px) {
