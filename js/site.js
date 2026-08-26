@@ -272,6 +272,13 @@ if (currentPage === 'blogs.html') {
     detail.innerHTML = content;
     topicHeader.after(detail);
   });
+  const aiBlogTopic = document.getElementById('ai-technology');
+  if (aiBlogTopic) {
+    const aiBlogVisual = document.createElement('figure');
+    aiBlogVisual.className = 'ai-topic-visual';
+    aiBlogVisual.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/AI Technology/ai-technology-blog.png" alt="AI technology infographic showing machine learning, virtual assistants, healthcare, education and responsible AI"><figcaption>AI-generated educational visual: five practical areas of AI technology.</figcaption>';
+    aiBlogTopic.querySelector('.blog-topic-detail')?.after(aiBlogVisual);
+  }
   if (window.location.hash) {
     window.setTimeout(() => document.querySelector(window.location.hash)?.scrollIntoView({ block: 'start' }), 0);
   }
@@ -306,6 +313,16 @@ if (currentPage === 'technology.html') {
     technologyShowcase.className = 'technology-showcase';
     technologyShowcase.innerHTML = '<img src="assets/technology-showcase.png" alt="AI-generated 20-tile visual overview of artificial intelligence, markets, animation, space and vehicle technology"><figcaption>AI-generated visual overview: twenty connected technology concepts across five future-facing fields.</figcaption>';
     technologyGrid.before(technologyShowcase);
+  }
+}
+
+if (currentPage === 'ai-technology.html') {
+  const technologyGrid = document.querySelector('.technology-grid');
+  if (technologyGrid) {
+    const aiOverview = document.createElement('figure');
+    aiOverview.className = 'ai-technology-overview';
+    aiOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/AI Technology/ai-technology-overview.png" alt="AI technology overview showing machine learning, AI assistants, healthcare, education and responsible AI"><figcaption>AI-generated overview: building a smarter future with responsible artificial intelligence.</figcaption>';
+    technologyGrid.before(aiOverview);
   }
 }
 

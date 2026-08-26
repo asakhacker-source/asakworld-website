@@ -451,6 +451,9 @@ body { background: radial-gradient(circle at 84% -10%, rgba(135, 246, 229, .09),
 .blog-topic-detail { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 38px; max-width: 1180px; margin: 0 0 35px; padding: 28px 0 4px; border-top: 1px solid rgba(135, 246, 229, .17); }
 .blog-topic-detail h3 { margin: 20px 0 8px; color: var(--signal, var(--gold)); font: 700 10px var(--sans); letter-spacing: 1.4px; text-transform: uppercase; }
 .blog-topic-detail p { margin: 0; color: var(--muted); font-size: .95rem; line-height: 1.7; }
+.ai-topic-visual, .ai-technology-overview { margin: 0 0 38px; }
+.ai-topic-visual img, .ai-technology-overview img { display: block; width: 100%; border: 1px solid rgba(80, 186, 255, .42); }
+.ai-topic-visual figcaption, .ai-technology-overview figcaption { margin-top: 12px; color: var(--muted); font-size: 10px; letter-spacing: 1px; line-height: 1.5; text-transform: uppercase; }
 .blog-card-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 .blog-card-grid article { overflow: hidden; border: 1px solid rgba(135, 246, 229, .18); background: linear-gradient(145deg, rgba(26, 27, 24, .92), var(--glass, #131513)); }
 .blog-card-grid img { display: block; width: 100%; aspect-ratio: 1.25; object-fit: cover; }
