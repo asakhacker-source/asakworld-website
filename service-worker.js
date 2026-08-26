@@ -1,4 +1,4 @@
-const CACHE_NAME = 'asark-app-v33';
+const CACHE_NAME = 'asark-app-v34';
 const OFFLINE_URL = './offline.html';
 const APP_SHELL = [
   './', './index.html', './architecture.html', './ancient.html', './modern.html', './futuristic.html', './technology.html', './ai-technology.html', './space.html', './semiconductor.html', './vlsi.html', './processor.html', './graphics-card.html',
