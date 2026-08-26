@@ -5,7 +5,10 @@ const primarySections = [
   ['visual.html', 'Visuals'], ['stories.html', 'Stories'], ['curated.html', 'Curated'], ['about.html', 'About']
 ];
 const dropdownSections = [
-  ['explore.html', 'Explore', [['architecture.html', 'Architecture'], ['technology.html', 'Technology'], ['art-design.html', 'Art & Design'], ['culture-future.html', 'Culture & Future']]]
+  ['architecture.html', 'Architecture', [['ancient.html', 'Ancient World'], ['modern.html', 'Modern World'], ['futuristic.html', 'Futuristic World'], ['hacker-setup.html', 'Future Workspaces']]],
+  ['technology.html', 'Technology', [['ai-technology.html', 'AI Technology'], ['semiconductor.html', 'Semiconductor'], ['computing.html', 'Computing'], ['market-technology.html', 'Future Finance'], ['animation-technology.html', 'Digital Creation'], ['vehicle-technology.html', 'Future Mobility'], ['space.html', 'Space Technology']]],
+  ['art-design.html', 'Art & Design', [['art-design.html#digital-art', 'Digital Art'], ['art-design.html#ai-art', 'AI Art'], ['art-design.html#visual-design', 'Visual Design'], ['art-design.html#interior-design', 'Interior Design'], ['art-design.html#industrial-design', 'Industrial Design'], ['art-design.html#concepts', 'Concepts']]],
+  ['culture-future.html', 'Culture & Future', [['ancient.html', 'Ancient World'], ['culture-future.html#future-civilization', 'Future Civilization'], ['culture-future.html#lifestyle', 'Lifestyle'], ['culture-future.html#ideas', 'Ideas'], ['culture-future.html#future-living', 'Future Living']]]
 ];
 const activePage = window.location.pathname.split('/').pop() || 'index.html';
 const activeNavHref = activePage === 'index.html' && window.location.hash === '#about'
@@ -22,7 +25,7 @@ if (siteNav) {
     ).join('');
     return `<div class="nav-dropdown"><a href="${href}"${isActive ? ' aria-current="page"' : ''}>${label}</a><ul class="nav-submenu">${childLinks}</ul></div>`;
   });
-  siteNav.innerHTML = `<div class="nav-links nav-links-primary">${dropdownLinks.join('')}${navigationLinks.join('')}</div>`;
+  siteNav.innerHTML = `<div class="nav-links nav-links-primary">${navigationLinks.join('')}${dropdownLinks.join('')}</div>`;
 }
 
 // Keep every visible editorial image on ASARK within the supplied AI image collection.

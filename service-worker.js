@@ -1,8 +1,8 @@
-const CACHE_NAME = 'asark-app-v48';
+const CACHE_NAME = 'asark-app-v49';
 const OFFLINE_URL = './offline.html';
 const APP_SHELL = [
   './', './index.html', './architecture.html', './ancient.html', './modern.html', './futuristic.html', './technology.html', './ai-technology.html', './space.html', './semiconductor.html', './vlsi.html', './processor.html', './graphics-card.html',
-  './hacker-setup.html', './market-technology.html', './animation-technology.html', './vehicle-technology.html', './blogs.html', './about.html', './visual.html', './explore.html', './art-design.html', './culture-future.html', './stories.html', './curated.html',
+  './hacker-setup.html', './market-technology.html', './animation-technology.html', './vehicle-technology.html', './blogs.html', './about.html', './visual.html', './explore.html', './art-design.html', './culture-future.html', './stories.html', './curated.html', './computing.html',
   './login.html', './signup.html',
   './offline.html', './guides/intelligent-home-foundation.html', './guides/ambient-lighting.html',
   './guides/coffee-ritual.html', './projects/beyond-the-shore.html',
