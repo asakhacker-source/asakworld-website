@@ -279,6 +279,13 @@ if (currentPage === 'blogs.html') {
     aiBlogVisual.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/AI Technology/ai-technology-blog.png" alt="AI technology infographic showing machine learning, virtual assistants, healthcare, education and responsible AI"><figcaption>AI-generated educational visual: five practical areas of AI technology.</figcaption>';
     aiBlogTopic.querySelector('.blog-topic-detail')?.after(aiBlogVisual);
   }
+  const animationBlogTopic = document.getElementById('animation-technology');
+  if (animationBlogTopic) {
+    const animationBlogVisual = document.createElement('figure');
+    animationBlogVisual.className = 'animation-technology-overview';
+    animationBlogVisual.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/Animation Technology/animation-technology-feature.png" alt="Animation Technology infographic featuring 3D animation, AI tools, virtual reality, motion capture and visual storytelling"><figcaption>Animation Technology: creative tools that bring ideas to life through motion, immersive worlds and visual storytelling.</figcaption>';
+    animationBlogTopic.querySelector('.blog-topic-detail')?.after(animationBlogVisual);
+  }
   const spaceBlogTopic = document.getElementById('space-technology');
   if (spaceBlogTopic) {
     const spaceBlogVisual = document.createElement('figure');
@@ -330,6 +337,16 @@ if (currentPage === 'ai-technology.html') {
     aiOverview.className = 'ai-technology-overview';
     aiOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/AI Technology/ai-technology-overview.png" alt="AI technology overview showing machine learning, AI assistants, healthcare, education and responsible AI"><figcaption>AI-generated overview: building a smarter future with responsible artificial intelligence.</figcaption>';
     technologyGrid.before(aiOverview);
+  }
+}
+
+if (currentPage === 'animation-technology.html') {
+  const technologyGrid = document.querySelector('.technology-grid');
+  if (technologyGrid) {
+    const animationOverview = document.createElement('figure');
+    animationOverview.className = 'animation-technology-overview';
+    animationOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/Animation Technology/animation-technology-feature.png" alt="Animation Technology infographic featuring 3D animation, AI tools, virtual reality, motion capture and visual storytelling"><figcaption>Animation Technology: creative tools that bring ideas to life through motion, immersive worlds and visual storytelling.</figcaption>';
+    technologyGrid.before(animationOverview);
   }
 }
 
