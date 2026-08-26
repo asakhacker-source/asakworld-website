@@ -227,6 +227,16 @@ if (currentPage === 'technology.html') {
   }
 }
 
+const visualFilters = document.querySelectorAll('[data-filter]');
+const visualCards = document.querySelectorAll('.visual-library-grid [data-category]');
+if (visualFilters.length && visualCards.length) {
+  visualFilters.forEach((button) => button.addEventListener('click', () => {
+    const filter = button.dataset.filter;
+    visualFilters.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+    visualCards.forEach((card) => { card.hidden = filter !== 'all' && card.dataset.category !== filter; });
+  }));
+}
+
 if (currentPage === 'ai-technology.html') {
   const technologyGrid = document.querySelector('.technology-grid');
   if (technologyGrid) {
