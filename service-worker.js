@@ -1,4 +1,4 @@
-const CACHE_NAME = 'asark-app-v51';
+const CACHE_NAME = 'asark-app-v52';
 const OFFLINE_URL = './offline.html';
 const APP_SHELL = [
   './', './index.html', './architecture.html', './ancient.html', './modern.html', './futuristic.html', './technology.html', './ai-technology.html', './space.html', './semiconductor.html', './vlsi.html', './processor.html', './graphics-card.html',
@@ -11,7 +11,7 @@ const APP_SHELL = [
   './projects/material-stories.html', './projects/minimal-estate.html',
   './projects/modern-elegance.html', './projects/new-classic.html',
   './projects/private-villa.html', './projects/quiet-luxury.html',
-  './projects/timeless-style.html', './css/style.css', './js/site.js', './js/auth-config.js',
+  './projects/timeless-style.html', './css/style.css', './js/site.js?v=52', './js/auth-config.js',
   './manifest.webmanifest', './assets/asark-mark.svg', './assets/icon-192.png', './assets/technology-blog.png', './assets/technology-showcase.png', './ai images/Technology/technology-showcase-grid.png', './ai images/Technology/technology-innovations-grid.png', './ai images/Technology/AI Technology/ai-technology-blog.png', './ai images/Technology/AI Technology/ai-technology-overview.png', './ai images/Technology/Animation Technology/animation-technology-feature.png', './ai images/Technology/Space Technology/space-technology-feature.png',
   './assets/icon-512.png'
 ];
