@@ -37,24 +37,21 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .account-actions .account-signup { padding: 9px 11px; border: 1px solid var(--signal, var(--gold)); color: var(--signal, var(--gold)); }
 .account-actions .account-signup:hover { background: var(--signal, var(--gold)); color: #0a0a09; }
 
-/* Desktop header: links have their own row and the search stays wide and centred. */
+/* Desktop header: keep navigation and search on one horizontal line. */
 @media (min-width: 821px) {
-  .site-header { display: block; min-height: 108px; padding: 14px 2% 10px 3%; }
-  .logo { position: absolute; top: 29px; left: 5%; }
-  .site-nav { display: grid; grid-template-columns: minmax(290px, 1fr) minmax(280px, 430px) auto; grid-template-areas: "primary primary primary" "secondary search account"; align-items: center; gap: 17px 22px; width: 100%; }
-  .nav-links { flex-wrap: wrap; gap: 10px clamp(12px, 1.25vw, 22px); overflow: visible; white-space: normal; }
-  .nav-links-primary { grid-area: primary; justify-content: center; padding: 0 0 2px min(185px, 14vw); }
-  .nav-links-secondary { grid-area: secondary; justify-content: flex-start; padding-left: min(310px, 19vw); }
+  .site-header { display: flex; align-items: center; flex-wrap: nowrap; min-height: 76px; padding: 14px 3%; gap: clamp(10px, 1.1vw, 20px); overflow-x: auto; }
+  .logo { position: static; flex: 0 0 auto; }
+  .site-nav { display: flex; flex: 1 1 auto; align-items: center; flex-wrap: nowrap; min-width: 0; gap: clamp(10px, 1.1vw, 20px); }
+  .nav-links { flex: 0 0 auto; flex-wrap: nowrap; gap: clamp(10px, 1.1vw, 20px); overflow: visible; white-space: nowrap; }
+  .nav-links-primary, .nav-links-secondary { justify-content: flex-start; padding: 0; }
   .nav-links a { flex: 0 0 auto; }
-  .header-search { grid-area: search; justify-self: stretch; width: 100%; min-width: 0; min-height: 48px; }
-  .account-actions { grid-area: account; justify-self: start; }
+  .header-search { flex: 1 1 260px; width: auto; min-width: 180px; min-height: 42px; }
+  .account-actions, .app-install { flex: 0 0 auto; }
 }
 
 @media (min-width: 1200px) {
-  .site-nav { grid-template-columns: clamp(170px, 12vw, 205px) auto minmax(360px, 1fr) auto; grid-template-areas: ". primary primary primary" ". secondary search account"; justify-content: start; }
-  .nav-links-primary { justify-content: flex-start; padding-left: 0; }
-  .nav-links-secondary { padding-left: 0; }
-  .header-search { min-height: 42px; }
+  .site-header { gap: clamp(12px, 1.2vw, 22px); }
+  .site-nav, .nav-links { gap: clamp(12px, 1.2vw, 22px); }
 }
 
 .hero { display: grid; min-height: min(790px, 84vh); place-items: center; padding: 120px 20px 86px; text-align: center; background: linear-gradient(90deg, rgba(0,0,0,.66), rgba(0,0,0,.17), rgba(0,0,0,.66)), linear-gradient(rgba(0,0,0,.16), rgba(0,0,0,.68)), url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(13).png") center / cover; }
