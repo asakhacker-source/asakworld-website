@@ -28,30 +28,23 @@ if (siteNav) {
 }
 
 // Keep every visible editorial image on ASARK within the supplied AI image collection.
-const aiImageFiles = [
-  'Gemini_Generated_Image_(1).png', 'Gemini_Generated_Image_(2).png',
-  'Gemini_Generated_Image_(3).png', 'Gemini_Generated_Image_(4).png',
-  'Gemini_Generated_Image_(5).png', 'Gemini_Generated_Image_(6).png',
-  'Gemini_Generated_Image_(7).png', 'Gemini_Generated_Image_(8).png',
-  'Gemini_Generated_Image_(9).png', 'Gemini_Generated_Image_(10).png',
-  'Gemini_Generated_Image_(11).png', 'Gemini_Generated_Image_(12).png',
-  'Gemini_Generated_Image_(13).png', 'Gemini_Generated_Image_(14).png',
-  'Gemini_Generated_Image_(15).png', 'Gemini_Generated_Image_(16).png',
-  'Gemini_Generated_Image_(17).png', 'Gemini_Generated_Image_(18).png',
-  'Gemini_Generated_Image_(19).png', 'Gemini_Generated_Image_(20).png',
-  'Gemini_Generated_Image_39a5aj39a5aj39a5.png',
-  'Gemini_Generated_Image_3mhdo63mhdo63mhd.png',
-  'Gemini_Generated_Image_gbjlagbjlagbjlag.png',
-  'Gemini_Generated_Image_jquxqcjquxqcjqux.png',
-  'Gemini_Generated_Image_jv701qjv701qjv70.png',
-  'Gemini_Generated_Image_lc0e35lc0e35lc0e.png',
-  'Gemini_Generated_Image_ld8r28ld8r28ld8r.png',
-  'Gemini_Generated_Image_o0n0yjo0n0yjo0n0.png',
-  'Gemini_Generated_Image_w1zouxw1zouxw1zo.png', 'modern house.png',
-  'our-best-look-ever-yet-at-tony-starks-mansion-from-the-book-v0-mq5lg6zmpg1g1.webp'
+const aiImagePaths = [
+  'Architecture/Ancient World/Gemini_Generated_Image_(1).png', 'Architecture/Ancient World/Gemini_Generated_Image_(2).png', 'Architecture/Ancient World/Gemini_Generated_Image_(3).png',
+  'Architecture/Modern World/Gemini_Generated_Image_(4).png', 'Architecture/Modern World/Gemini_Generated_Image_(5).png', 'Architecture/Modern World/Gemini_Generated_Image_(6).png',
+  'Architecture/Futuristic World/Gemini_Generated_Image_(7).png', 'Architecture/Futuristic World/Gemini_Generated_Image_(8).png', 'Architecture/Futuristic World/Gemini_Generated_Image_(9).png',
+  'Architecture/Hacker Setup/Gemini_Generated_Image_(10).png', 'Architecture/Hacker Setup/Gemini_Generated_Image_(11).png',
+  'Technology/AI Technology/Gemini_Generated_Image_(12).png', 'Technology/AI Technology/Gemini_Generated_Image_(13).png', 'Technology/AI Technology/Gemini_Generated_Image_(14).png',
+  'Technology/Market Technology/Gemini_Generated_Image_(15).png', 'Technology/Market Technology/Gemini_Generated_Image_(16).png',
+  'Technology/Animation Technology/Gemini_Generated_Image_(17).png', 'Technology/Animation Technology/Gemini_Generated_Image_(18).png',
+  'Technology/Vehicle Technology/Gemini_Generated_Image_(19).png', 'Technology/Vehicle Technology/Gemini_Generated_Image_(20).png',
+  'Technology/Space Technology/Gemini_Generated_Image_39a5aj39a5aj39a5.png', 'Technology/Space Technology/Gemini_Generated_Image_3mhdo63mhdo63mhd.png',
+  'Semiconductor/VLSI/Gemini_Generated_Image_gbjlagbjlagbjlag.png', 'Semiconductor/VLSI/Gemini_Generated_Image_jquxqcjquxqcjqux.png',
+  'Semiconductor/Processor/Gemini_Generated_Image_jv701qjv701qjv70.png', 'Semiconductor/Processor/Gemini_Generated_Image_lc0e35lc0e35lc0e.png',
+  'Semiconductor/Graphics Card/Gemini_Generated_Image_ld8r28ld8r28ld8r.png', 'Semiconductor/Graphics Card/Gemini_Generated_Image_o0n0yjo0n0yjo0n0.png', 'Semiconductor/Graphics Card/Gemini_Generated_Image_w1zouxw1zouxw1zo.png',
+  'Blogs/modern house.png', 'Blogs/our-best-look-ever-yet-at-tony-starks-mansion-from-the-book-v0-mq5lg6zmpg1g1.webp'
 ];
 const homeUrl = new URL(document.querySelector('.logo')?.getAttribute('href') || 'index.html', window.location.href);
-const aiImageUrl = (index) => new URL(`ai images/HOME/ARCHETECTURE/${aiImageFiles[index % aiImageFiles.length]}`, homeUrl).href;
+const aiImageUrl = (index) => new URL(`ai images/${aiImagePaths[index % aiImagePaths.length]}`, homeUrl).href;
 
 document.querySelectorAll('img').forEach((image, index) => {
   if (image.closest('.site-header') || image.src.includes('asark-mark')) return;

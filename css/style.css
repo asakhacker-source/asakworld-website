@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --bg: #0a0a09;
   --surface: #141310;
   --line: rgba(217, 173, 50, 0.22);
@@ -56,13 +56,12 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
   .header-search { flex: 1 1 260px; width: auto; min-width: 180px; min-height: 42px; }
   .account-actions, .app-install { flex: 0 0 auto; min-height: 42px; }
 }
-
 @media (min-width: 1200px) {
   .site-header { gap: clamp(12px, 1.2vw, 22px); }
   .site-nav, .nav-links { gap: clamp(12px, 1.2vw, 22px); }
 }
 
-.hero { display: grid; min-height: min(790px, 84vh); place-items: center; padding: 120px 20px 86px; text-align: center; background: linear-gradient(90deg, rgba(0,0,0,.66), rgba(0,0,0,.17), rgba(0,0,0,.66)), linear-gradient(rgba(0,0,0,.16), rgba(0,0,0,.68)), url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(13).png") center / cover; }
+.hero { display: grid; min-height: min(790px, 84vh); place-items: center; padding: 120px 20px 86px; text-align: center; background: linear-gradient(90deg, rgba(0,0,0,.66), rgba(0,0,0,.17), rgba(0,0,0,.66)), linear-gradient(rgba(0,0,0,.16), rgba(0,0,0,.68)), url("../ai images/Technology/AI Technology/Gemini_Generated_Image_(13).png") center / cover; }
 .hero-content { max-width: 850px; }
 .eyebrow { margin: 0 0 20px; color: var(--gold); font-size: 11px; letter-spacing: 3.5px; line-height: 1.5; text-transform: uppercase; }
 .hero h1, .page-intro h1, .discover-heading h2, .section-title, .visual-details h1, .visual-details h2 { font-family: var(--serif); font-weight: 400; }
@@ -147,7 +146,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 
 /* Interiors */
 .interiors-page { width: min(100% - 40px, 1400px); margin: 0 auto; }
-.interiors-hero { position: relative; display: flex; min-height: min(720px, 78vh); align-items: center; padding: clamp(45px, 8vw, 120px); overflow: hidden; background: linear-gradient(90deg, rgba(8, 8, 7, .88) 5%, rgba(8, 8, 7, .42) 58%, rgba(8, 8, 7, .15)), url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(16).png") center / cover; }
+.interiors-hero { position: relative; display: flex; min-height: min(720px, 78vh); align-items: center; padding: clamp(45px, 8vw, 120px); overflow: hidden; background: linear-gradient(90deg, rgba(8, 8, 7, .88) 5%, rgba(8, 8, 7, .42) 58%, rgba(8, 8, 7, .15)), url("../ai images/Technology/Market Technology/Gemini_Generated_Image_(16).png") center / cover; }
 .interiors-hero-content { position: relative; z-index: 1; max-width: 590px; }
 .interiors-hero h1, .interiors-intro h2 { margin: 0; font: 400 clamp(3.6rem, 7vw, 6.5rem)/.94 var(--serif); letter-spacing: -.035em; }
 .interiors-hero-content > p:not(.eyebrow) { max-width: 510px; margin: 25px 0 30px; color: var(--muted); font-size: 17px; line-height: 1.75; }
@@ -158,7 +157,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .interiors-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .interior-card { position: relative; min-height: 450px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
 .interior-feature { grid-column: span 2; grid-row: span 2; min-height: 920px; }
-.interior-image { position: absolute; inset: 0; background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(17).png"); background-repeat: no-repeat; background-size: 400% 300%; transition: transform .7s ease; }
+.interior-image { position: absolute; inset: 0; background-image: url("../ai images/Technology/Animation Technology/Gemini_Generated_Image_(17).png"); background-repeat: no-repeat; background-size: 400% 300%; transition: transform .7s ease; }
 .ai-interior-01 { background-position: 0% 0%; }.ai-interior-02 { background-position: 33.333% 0%; }.ai-interior-03 { background-position: 66.667% 0%; }.ai-interior-04 { background-position: 100% 0%; }.ai-interior-05 { background-position: 0% 50%; }.ai-interior-06 { background-position: 33.333% 50%; }.ai-interior-07 { background-position: 66.667% 50%; }.ai-interior-08 { background-position: 100% 50%; }.ai-interior-09 { background-position: 0% 100%; }.ai-interior-10 { background-position: 33.333% 100%; }.ai-interior-11 { background-position: 66.667% 100%; }.ai-interior-12 { background-position: 100% 100%; }
 .interior-card:hover .interior-image { transform: scale(1.045); }
 .interior-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 40%, rgba(0, 0, 0, .88)); }
@@ -180,7 +179,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .lifestyle-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .lifestyle-card { position: relative; min-height: 475px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
 .lifestyle-feature { grid-column: span 2; grid-row: span 2; min-height: 970px; }
-.lifestyle-image { position: absolute; inset: 0; background: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(18).png") no-repeat; background-size: 400% 300%; transition: transform .7s ease; }
+.lifestyle-image { position: absolute; inset: 0; background: url("../ai images/Technology/Animation Technology/Gemini_Generated_Image_(18).png") no-repeat; background-size: 400% 300%; transition: transform .7s ease; }
 .lifestyle-01 { background-position: 0% 0%; }.lifestyle-02 { background-position: 33.333% 0%; }.lifestyle-03 { background-position: 66.667% 0%; }.lifestyle-04 { background-position: 100% 0%; }.lifestyle-05 { background-position: 0% 50%; }.lifestyle-06 { background-position: 33.333% 50%; }.lifestyle-07 { background-position: 66.667% 50%; }.lifestyle-08 { background-position: 100% 50%; }.lifestyle-09 { background-position: 0% 100%; }.lifestyle-10 { background-position: 33.333% 100%; }.lifestyle-11 { background-position: 66.667% 100%; }.lifestyle-12 { background-position: 100% 100%; }
 .lifestyle-card:hover .lifestyle-image { transform: scale(1.045); }
 .lifestyle-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 38%, rgba(0, 0, 0, .9)); pointer-events: none; }
@@ -191,9 +190,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .ai-disclaimer { max-width: 720px; margin: 70px auto 0; color: var(--muted); font-size: 12px; line-height: 1.7; text-align: center; }
 
 /* Curated */
-.curated-page { overflow: hidden; }.curated-hero { display: grid; grid-template-columns: .92fr 1.08fr; min-height: min(760px, calc(100vh - 76px)); background: #11110e; }.curated-hero-copy { display: flex; flex-direction: column; justify-content: center; padding: clamp(56px, 9vw, 150px); }.curated-hero-copy h1, .curated-section-heading h2, .curated-note h2 { margin: 0; font: 400 clamp(3.6rem, 6vw, 6.4rem)/.91 var(--serif); letter-spacing: -.04em; }.curated-hero-copy > p:not(.eyebrow) { max-width: 450px; margin: 28px 0 34px; color: var(--muted); font-size: 17px; line-height: 1.8; }.curated-hero-copy .btn { width: fit-content; }.curated-hero-image { position: relative; min-height: 560px; background: linear-gradient(90deg, rgba(17,17,14,.08), rgba(17,17,14,.4)), url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(16).png") center / cover; }.curated-hero-image span { position: absolute; right: 28px; bottom: 26px; color: rgba(245,241,232,.78); font-size: 9px; letter-spacing: 1.7px; text-transform: uppercase; }
+.curated-page { overflow: hidden; }.curated-hero { display: grid; grid-template-columns: .92fr 1.08fr; min-height: min(760px, calc(100vh - 76px)); background: #11110e; }.curated-hero-copy { display: flex; flex-direction: column; justify-content: center; padding: clamp(56px, 9vw, 150px); }.curated-hero-copy h1, .curated-section-heading h2, .curated-note h2 { margin: 0; font: 400 clamp(3.6rem, 6vw, 6.4rem)/.91 var(--serif); letter-spacing: -.04em; }.curated-hero-copy > p:not(.eyebrow) { max-width: 450px; margin: 28px 0 34px; color: var(--muted); font-size: 17px; line-height: 1.8; }.curated-hero-copy .btn { width: fit-content; }.curated-hero-image { position: relative; min-height: 560px; background: linear-gradient(90deg, rgba(17,17,14,.08), rgba(17,17,14,.4)), url("../ai images/Technology/Market Technology/Gemini_Generated_Image_(16).png") center / cover; }.curated-hero-image span { position: absolute; right: 28px; bottom: 26px; color: rgba(245,241,232,.78); font-size: 9px; letter-spacing: 1.7px; text-transform: uppercase; }
 .curated-statement { display: grid; grid-template-columns: .65fr 1.35fr; gap: 70px; width: min(100% - 80px, 1180px); margin: 0 auto; padding: 130px 0; border-bottom: 1px solid var(--line); }.curated-statement .eyebrow { margin: 12px 0 0; }.curated-statement > p:last-child { max-width: 780px; margin: 0; font: 400 clamp(2rem, 3.4vw, 3.25rem)/1.22 var(--serif); }
-.curated-edit { width: min(100% - 80px, 1400px); margin: 0 auto; padding: 115px 0; }.curated-section-heading { display: grid; grid-template-columns: 1.1fr .6fr; align-items: end; gap: 70px; margin-bottom: 55px; }.curated-section-heading h2 { font-size: clamp(3rem, 5vw, 5.3rem); }.curated-section-heading > p { max-width: 380px; margin: 0 0 5px; color: var(--muted); line-height: 1.75; }.curated-grid { display: grid; grid-template-columns: 1.2fr .8fr .8fr; gap: 18px; }.curated-card { position: relative; min-height: 575px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }.curated-card-feature { min-height: 690px; }.curated-image { position: absolute; inset: 0; background: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(18).png") no-repeat; background-size: 400% 300%; transition: transform .7s ease; }.curated-image-01 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(17).png"); background-position: center; background-size: cover; }.curated-image-02 { background-position: 33.333% 50%; }.curated-image-03 { background-position: 100% 100%; }.curated-card:hover .curated-image { transform: scale(1.045); }.curated-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 35%, rgba(0,0,0,.92)); }.curated-card-copy { position: absolute; z-index: 1; right: 30px; bottom: 28px; left: 30px; }.curated-card-copy span { color: var(--gold); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }.curated-card-copy h3 { margin: 11px 0 10px; font: 400 clamp(2rem, 3vw, 3rem) var(--serif); }.curated-card-copy p { max-width: 370px; margin: 0; color: rgba(245,241,232,.8); font-size: 14px; line-height: 1.65; }
+.curated-edit { width: min(100% - 80px, 1400px); margin: 0 auto; padding: 115px 0; }.curated-section-heading { display: grid; grid-template-columns: 1.1fr .6fr; align-items: end; gap: 70px; margin-bottom: 55px; }.curated-section-heading h2 { font-size: clamp(3rem, 5vw, 5.3rem); }.curated-section-heading > p { max-width: 380px; margin: 0 0 5px; color: var(--muted); line-height: 1.75; }.curated-grid { display: grid; grid-template-columns: 1.2fr .8fr .8fr; gap: 18px; }.curated-card { position: relative; min-height: 575px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }.curated-card-feature { min-height: 690px; }.curated-image { position: absolute; inset: 0; background: url("../ai images/Technology/Animation Technology/Gemini_Generated_Image_(18).png") no-repeat; background-size: 400% 300%; transition: transform .7s ease; }.curated-image-01 { background-image: url("../ai images/Technology/Animation Technology/Gemini_Generated_Image_(17).png"); background-position: center; background-size: cover; }.curated-image-02 { background-position: 33.333% 50%; }.curated-image-03 { background-position: 100% 100%; }.curated-card:hover .curated-image { transform: scale(1.045); }.curated-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 35%, rgba(0,0,0,.92)); }.curated-card-copy { position: absolute; z-index: 1; right: 30px; bottom: 28px; left: 30px; }.curated-card-copy span { color: var(--gold); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }.curated-card-copy h3 { margin: 11px 0 10px; font: 400 clamp(2rem, 3vw, 3rem) var(--serif); }.curated-card-copy p { max-width: 370px; margin: 0; color: rgba(245,241,232,.8); font-size: 14px; line-height: 1.65; }
 .curated-principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 45px; width: min(100% - 80px, 1400px); margin: 0 auto; padding: 75px 7%; border: 1px solid var(--line); background: #12120f; }.curated-principles article + article { border-left: 1px solid var(--line); padding-left: 45px; }.curated-principles span { color: var(--gold); font: 400 20px var(--serif); }.curated-principles h2 { margin: 22px 0 12px; font: 400 28px var(--serif); }.curated-principles p { max-width: 290px; margin: 0; color: var(--muted); line-height: 1.7; }.curated-note { max-width: 720px; margin: 0 auto; padding: 135px 20px; text-align: center; }.curated-note h2 { font-size: clamp(3rem, 5vw, 4.6rem); }.curated-note > p:last-child { margin: 23px auto 0; color: var(--muted); line-height: 1.75; }
 
 /* About */
@@ -298,7 +297,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 /* Visual discovery feed */
 .discovery-tools { display: flex; align-items: center; justify-content: space-between; gap: 18px; max-width: 900px; margin: 24px auto 0; }
 .visual-search { position: relative; display: block; flex: 1; }
-.visual-search::before { position: absolute; z-index: 1; top: 50%; left: 16px; color: var(--gold); content: '⌕'; font: 24px/1 var(--serif); transform: translateY(-54%); }
+.visual-search::before { position: absolute; z-index: 1; top: 50%; left: 16px; color: var(--gold); content: 'âŒ•'; font: 24px/1 var(--serif); transform: translateY(-54%); }
 .visual-search input { width: 100%; min-height: 50px; padding: 0 18px 0 45px; border: 1px solid var(--line); border-radius: 2px; outline: 0; background: var(--surface); color: var(--text); font: 12px var(--sans); letter-spacing: .3px; }
 .visual-search input::placeholder { color: #918b80; }
 .visual-search input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(217, 173, 50, .12); }
@@ -323,38 +322,38 @@ body { background: radial-gradient(circle at 84% -10%, rgba(135, 246, 229, .09),
 .logo { text-shadow: 0 0 20px rgba(217, 173, 50, .32); }
 .site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--signal); }
 .eyebrow { color: var(--signal); text-shadow: 0 0 18px rgba(135, 246, 229, .22); }
-.hero { background-image: radial-gradient(circle at 50% 18%, rgba(135, 246, 229, .17), transparent 25%), linear-gradient(90deg, rgba(0, 0, 0, .76), rgba(0, 0, 0, .22), rgba(0, 0, 0, .76)), linear-gradient(rgba(6, 10, 12, .18), rgba(5, 5, 7, .76)), url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(13).png"); }
+.hero { background-image: radial-gradient(circle at 50% 18%, rgba(135, 246, 229, .17), transparent 25%), linear-gradient(90deg, rgba(0, 0, 0, .76), rgba(0, 0, 0, .22), rgba(0, 0, 0, .76)), linear-gradient(rgba(6, 10, 12, .18), rgba(5, 5, 7, .76)), url("../ai images/Technology/AI Technology/Gemini_Generated_Image_(13).png"); }
 
 /* Local AI image collection */
-.hero { background-image: radial-gradient(circle at 50% 18%, rgba(135, 246, 229, .17), transparent 25%), linear-gradient(90deg, rgba(0, 0, 0, .76), rgba(0, 0, 0, .22), rgba(0, 0, 0, .76)), linear-gradient(rgba(6, 10, 12, .18), rgba(5, 5, 7, .76)), url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(1).png"); }
-.interiors-hero, .curated-hero-image { background-image: linear-gradient(90deg, rgba(8, 8, 7, .88) 5%, rgba(8, 8, 7, .42) 58%, rgba(8, 8, 7, .15)), url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(2).png"); }
-.interior-image.ai-interior-01 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(10).png"); background-size: cover; background-position: center; }
-.interior-image.ai-interior-02 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(11).png"); background-size: cover; background-position: center; }
-.interior-image.ai-interior-03 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(12).png"); background-size: cover; background-position: center; }
-.interior-image.ai-interior-04 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(13).png"); background-size: cover; background-position: center; }
-.interior-image.ai-interior-05 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(14).png"); background-size: cover; background-position: center; }
-.interior-image.ai-interior-06 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(15).png"); background-size: cover; background-position: center; }
-.interior-image.ai-interior-07 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(16).png"); background-size: cover; background-position: center; }
-.interior-image.ai-interior-08 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(17).png"); background-size: cover; background-position: center; }
-.interior-image.ai-interior-09 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(18).png"); background-size: cover; background-position: center; }
-.interior-image.ai-interior-10 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(19).png"); background-size: cover; background-position: center; }
-.interior-image.ai-interior-11 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(20).png"); background-size: cover; background-position: center; }
-.interior-image.ai-interior-12 { background-image: url("../ai images/HOME/ARCHETECTURE/modern house.png"); background-size: cover; background-position: center; }
-.lifestyle-image.lifestyle-01 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(1).png"); background-size: cover; background-position: center; }
-.lifestyle-image.lifestyle-02 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(2).png"); background-size: cover; background-position: center; }
-.lifestyle-image.lifestyle-03 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(3).png"); background-size: cover; background-position: center; }
-.lifestyle-image.lifestyle-04 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(4).png"); background-size: cover; background-position: center; }
-.lifestyle-image.lifestyle-05 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(5).png"); background-size: cover; background-position: center; }
-.lifestyle-image.lifestyle-06 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(6).png"); background-size: cover; background-position: center; }
-.lifestyle-image.lifestyle-07 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(7).png"); background-size: cover; background-position: center; }
-.lifestyle-image.lifestyle-08 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(8).png"); background-size: cover; background-position: center; }
-.lifestyle-image.lifestyle-09 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_(9).png"); background-size: cover; background-position: center; }
-.lifestyle-image.lifestyle-10 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_39a5aj39a5aj39a5.png"); background-size: cover; background-position: center; }
-.lifestyle-image.lifestyle-11 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_3mhdo63mhdo63mhd.png"); background-size: cover; background-position: center; }
-.lifestyle-image.lifestyle-12 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_gbjlagbjlagbjlag.png"); background-size: cover; background-position: center; }
-.curated-image, .curated-image-01 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_jquxqcjquxqcjqux.png"); background-size: cover; background-position: center; }
-.curated-image-02 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_jv701qjv701qjv70.png"); }
-.curated-image-03 { background-image: url("../ai images/HOME/ARCHETECTURE/Gemini_Generated_Image_lc0e35lc0e35lc0e.png"); }
+.hero { background-image: radial-gradient(circle at 50% 18%, rgba(135, 246, 229, .17), transparent 25%), linear-gradient(90deg, rgba(0, 0, 0, .76), rgba(0, 0, 0, .22), rgba(0, 0, 0, .76)), linear-gradient(rgba(6, 10, 12, .18), rgba(5, 5, 7, .76)), url("../ai images/Architecture/Ancient World/Gemini_Generated_Image_(1).png"); }
+.interiors-hero, .curated-hero-image { background-image: linear-gradient(90deg, rgba(8, 8, 7, .88) 5%, rgba(8, 8, 7, .42) 58%, rgba(8, 8, 7, .15)), url("../ai images/Architecture/Ancient World/Gemini_Generated_Image_(2).png"); }
+.interior-image.ai-interior-01 { background-image: url("../ai images/Architecture/Hacker Setup/Gemini_Generated_Image_(10).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-02 { background-image: url("../ai images/Architecture/Hacker Setup/Gemini_Generated_Image_(11).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-03 { background-image: url("../ai images/Technology/AI Technology/Gemini_Generated_Image_(12).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-04 { background-image: url("../ai images/Technology/AI Technology/Gemini_Generated_Image_(13).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-05 { background-image: url("../ai images/Technology/AI Technology/Gemini_Generated_Image_(14).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-06 { background-image: url("../ai images/Technology/Market Technology/Gemini_Generated_Image_(15).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-07 { background-image: url("../ai images/Technology/Market Technology/Gemini_Generated_Image_(16).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-08 { background-image: url("../ai images/Technology/Animation Technology/Gemini_Generated_Image_(17).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-09 { background-image: url("../ai images/Technology/Animation Technology/Gemini_Generated_Image_(18).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-10 { background-image: url("../ai images/Technology/Vehicle Technology/Gemini_Generated_Image_(19).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-11 { background-image: url("../ai images/Technology/Vehicle Technology/Gemini_Generated_Image_(20).png"); background-size: cover; background-position: center; }
+.interior-image.ai-interior-12 { background-image: url("../ai images/Blogs/modern house.png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-01 { background-image: url("../ai images/Architecture/Ancient World/Gemini_Generated_Image_(1).png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-02 { background-image: url("../ai images/Architecture/Ancient World/Gemini_Generated_Image_(2).png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-03 { background-image: url("../ai images/Architecture/Ancient World/Gemini_Generated_Image_(3).png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-04 { background-image: url("../ai images/Architecture/Modern World/Gemini_Generated_Image_(4).png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-05 { background-image: url("../ai images/Architecture/Modern World/Gemini_Generated_Image_(5).png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-06 { background-image: url("../ai images/Architecture/Modern World/Gemini_Generated_Image_(6).png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-07 { background-image: url("../ai images/Architecture/Futuristic World/Gemini_Generated_Image_(7).png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-08 { background-image: url("../ai images/Architecture/Futuristic World/Gemini_Generated_Image_(8).png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-09 { background-image: url("../ai images/Architecture/Futuristic World/Gemini_Generated_Image_(9).png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-10 { background-image: url("../ai images/Technology/Space Technology/Gemini_Generated_Image_39a5aj39a5aj39a5.png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-11 { background-image: url("../ai images/Technology/Space Technology/Gemini_Generated_Image_3mhdo63mhdo63mhd.png"); background-size: cover; background-position: center; }
+.lifestyle-image.lifestyle-12 { background-image: url("../ai images/Semiconductor/VLSI/Gemini_Generated_Image_gbjlagbjlagbjlag.png"); background-size: cover; background-position: center; }
+.curated-image, .curated-image-01 { background-image: url("../ai images/Semiconductor/VLSI/Gemini_Generated_Image_jquxqcjquxqcjqux.png"); background-size: cover; background-position: center; }
+.curated-image-02 { background-image: url("../ai images/Semiconductor/Processor/Gemini_Generated_Image_jv701qjv701qjv70.png"); }
+.curated-image-03 { background-image: url("../ai images/Semiconductor/Processor/Gemini_Generated_Image_lc0e35lc0e35lc0e.png"); }
 .hero h1 { text-shadow: 0 14px 48px rgba(0, 0, 0, .6), 0 0 40px rgba(135, 246, 229, .09); }
 .btn { border-color: var(--signal); background: linear-gradient(110deg, var(--signal), #d9ad32 86%); box-shadow: 0 10px 26px rgba(135, 246, 229, .16); }
 .btn:hover { border-color: #d7fff8; background: #d7fff8; box-shadow: 0 14px 34px rgba(135, 246, 229, .28); }
@@ -452,3 +451,4 @@ body { background: radial-gradient(circle at 84% -10%, rgba(135, 246, 229, .09),
   @keyframes orbital-breathe { 0%, 100% { opacity: .48; transform: translateX(-50%) scale(.98); } 50% { opacity: .92; transform: translateX(-50%) scale(1.025); } }
   @keyframes signal-flicker { 0%, 93%, 100% { opacity: 1; } 94%, 96% { opacity: .42; } }
 }
+
