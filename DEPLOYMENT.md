@@ -1,0 +1,42 @@
+# ASARK Deployment
+
+## Production origin
+
+The approved public origin is `https://www.asark.publicvm.com/`. The GitHub Pages workflow and `CNAME` file deploy this static repository for that hostname. Configure the hosting/DNS layer to redirect the alternate non-`www` host to `www.asark.publicvm.com`.
+
+## Pre-deployment checks
+
+- Start from a clean Git working tree.
+- Confirm `sitemap.xml` contains 45 public URLs and `robots.txt` points to the production sitemap.
+- Confirm `manifest.webmanifest` and every `service-worker.js` `APP_SHELL` resource exist.
+- Confirm no private secrets are committed.
+- Confirm the intentionally missing Semiconductor, Market, and Vehicle visual assets have not been substituted with legacy imagery.
+- Understand whether authentication is intentionally disabled or has owner-supplied public Supabase configuration.
+
+## Authentication
+
+Authentication remains disabled until the owner supplies the Supabase project URL and public anon/publishable key in `js/auth-config.js`. Never place a `service_role` key, database password, OAuth client secret, or private key in browser JavaScript.
+
+When Supabase is enabled, the production CSP must allow the exact configured Supabase project origin in `connect-src`; do not use a wildcard.
+
+## HTTPS and security headers
+
+Serve the site over HTTPS. Configure these as hosting/server HTTP response headers, not HTML meta substitutes:
+
+- `Content-Security-Policy` with a restrictive policy based on the resources the site actually uses; use `frame-ancestors 'none'` if framing is not required.
+- `Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()`
+- `Referrer-Policy: strict-origin-when-cross-origin`
+- `X-Content-Type-Options: nosniff`
+- `Strict-Transport-Security` only after confirming the HTTPS and subdomain policy; do not enable `includeSubDomains` or preload without that decision.
+
+## 404 handling
+
+`404.html` is included for GitHub Pages. Confirm the hosting layer serves it with an HTTP 404 status rather than HTTP 200.
+
+## Cache and PWA
+
+Current production versions are `style.css?v=63`, `site.js?v=64`, and service-worker cache `asark-app-v65`. Change versions only when their underlying CSS, JavaScript, or service-worker behavior changes.
+
+## Post-deployment smoke test
+
+Test Home, Technology, Journal, Visuals, Resources, About, one Journal article, one Technology guide, login, signup, offline behavior, the manifest, and the service worker. Confirm HTTPS, navigation, responsive layout, images, canonical URLs, and no console-breaking JavaScript errors. If Supabase is still unconfigured, login and signup should show their configuration message rather than submit credentials.
