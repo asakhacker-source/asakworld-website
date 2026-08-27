@@ -2,7 +2,7 @@
 
 ## Production origin
 
-The approved public origin is `https://www.asark.publicvm.com/`. The GitHub Pages workflow and `CNAME` file deploy this static repository for that hostname. Configure the hosting/DNS layer to redirect the alternate non-`www` host to `www.asark.publicvm.com`.
+The approved public origin is `https://www.asark.publicvm.com/`. The GitHub Pages workflow and `CNAME` file deploy this static repository for that hostname. Configure the hosting, proxy, CDN, or dedicated redirect layer to redirect the alternate non-`www` host to `https://www.asark.publicvm.com/`; DNS alone does not issue HTTP redirects.
 
 ## Pre-deployment checks
 
@@ -21,7 +21,7 @@ When Supabase is enabled, the production CSP must allow the exact configured Sup
 
 ## HTTPS and security headers
 
-Serve the site over HTTPS. Configure these as hosting/server HTTP response headers, not HTML meta substitutes:
+Serve the site over HTTPS. GitHub Pages does not natively provide general per-site arbitrary custom response-header configuration from this repository. If these headers are required, apply them through a CDN/proxy, external edge configuration, or hosting that supports custom headers. Configure these as HTTP response headers, not HTML meta substitutes:
 
 - `Content-Security-Policy` with a restrictive policy based on the resources the site actually uses; use `frame-ancestors 'none'` if framing is not required.
 - `Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()`
