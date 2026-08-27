@@ -35,7 +35,7 @@ Serve the site over HTTPS. GitHub Pages does not natively provide general per-si
 
 ## Cache and PWA
 
-Current production versions are `style.css?v=63`, `site.js?v=64`, and service-worker cache `asark-app-v65`. Change versions only when their underlying CSS, JavaScript, or service-worker behavior changes.
+Current production versions are `style.css?v=63`, `site.js?v=65`, and service-worker cache `asark-app-v66`. Change versions only when their underlying CSS, JavaScript, or service-worker behavior changes.
 
 ## Post-deployment smoke test
 

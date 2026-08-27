@@ -44,15 +44,20 @@ const architectureImages = [
   ['Architecture/Futuristic World/Gemini_Generated_Image_(7).webp', 1472, 704], ['Architecture/Futuristic World/Gemini_Generated_Image_(8).webp', 1472, 704], ['Architecture/Futuristic World/Gemini_Generated_Image_(9).webp', 1472, 704],
   ['Architecture/Hacker Setup/Gemini_Generated_Image_(10).webp', 1024, 1024], ['Architecture/Hacker Setup/Gemini_Generated_Image_(11).webp', 1024, 1024]
 ];
+const authConfig = window.ASARK_AUTH || {};
+const supabaseUrl = (authConfig.supabaseUrl || '').replace(/\/$/, '');
+const supabaseAnonKey = authConfig.supabaseAnonKey || '';
+const isAuthConfigured = /^https:\/\/[^/]+\.supabase\.co$/i.test(supabaseUrl) && supabaseAnonKey.length > 20;
 const homeUrl = siteRootUrl;
 
-const accountActions = document.createElement('div');
-accountActions.className = 'account-actions';
-const headerHomeUrl = siteRootUrl;
-const loginUrl = new URL('login.html', headerHomeUrl).href;
-const signupUrl = new URL('signup.html', headerHomeUrl).href;
-accountActions.innerHTML = `<a href="${loginUrl}">Log in</a><a class="account-signup" href="${signupUrl}">Sign up</a>`;
-siteNav?.append(accountActions);
+if (isAuthConfigured && siteNav) {
+  const accountActions = document.createElement('div');
+  accountActions.className = 'account-actions';
+  const loginUrl = new URL('login.html', siteRootUrl).href;
+  const signupUrl = new URL('signup.html', siteRootUrl).href;
+  accountActions.innerHTML = `<a href="${loginUrl}">Log in</a><a class="account-signup" href="${signupUrl}">Sign up</a>`;
+  siteNav.append(accountActions);
+}
 
 let deferredInstallPrompt;
 let isInstalled = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
@@ -307,11 +312,6 @@ const saveButton = document.querySelector('#save-button');
 if (saveButton) {
   saveButton.addEventListener('click', () => { saveButton.textContent = 'Saved'; saveButton.disabled = true; });
 }
-
-const authConfig = window.ASARK_AUTH || {};
-const supabaseUrl = (authConfig.supabaseUrl || '').replace(/\/$/, '');
-const supabaseAnonKey = authConfig.supabaseAnonKey || '';
-const isAuthConfigured = /^https:\/\/[^/]+\.supabase\.co$/i.test(supabaseUrl) && supabaseAnonKey.length > 20;
 
 const setAuthMessage = (form, text) => {
   const message = form.querySelector('.account-form-message');
