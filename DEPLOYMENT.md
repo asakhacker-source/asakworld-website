@@ -10,7 +10,7 @@ The approved public origin is `https://www.asark.publicvm.com/`. The GitHub Page
 - Confirm `sitemap.xml` contains 45 public URLs and `robots.txt` points to the production sitemap.
 - Confirm `manifest.webmanifest` and every `service-worker.js` `APP_SHELL` resource exist.
 - Confirm no private secrets are committed.
-- Confirm the intentionally missing Semiconductor, Market, and Vehicle visual assets have not been substituted with legacy imagery.
+- Confirm the approved Semiconductor, Market, and Vehicle feature WebP assets are present and have not been replaced with legacy or untracked source imagery.
 - Understand whether authentication is intentionally disabled or has owner-supplied public Supabase configuration.
 
 ## Authentication
