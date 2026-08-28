@@ -492,13 +492,13 @@ const beginSocialLogin = async (provider, form) => {
   finally { releaseAuthInteraction(); }
 };
 const submitEmailAuth = async (form) => {
+  const values = new FormData(form); const isSignup = form.dataset.accountForm === 'signup';
+  const email = String(values.get('email') || '').trim(); const password = String(values.get('password') || '');
+  if (!email || !password) { setAuthMessage(form, 'Enter your email address and password.', 'error'); return; }
   if (!acquireAuthInteraction()) return;
   try {
     await authenticationInitialisation;
     if (!isAuthConfigured) { setAuthMessage(form, 'Account sign-in needs Supabase configuration.', 'error'); return; }
-    const values = new FormData(form); const isSignup = form.dataset.accountForm === 'signup';
-    const email = String(values.get('email') || '').trim(); const password = String(values.get('password') || '');
-    if (!email || !password) { setAuthMessage(form, 'Enter your email address and password.', 'error'); return; }
     setAuthMessage(form, isSignup ? 'Creating your account…' : 'Signing you in…');
     let result;
     if (isSignup) {
