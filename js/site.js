@@ -45,19 +45,24 @@ const architectureImages = [
   ['Architecture/Hacker Setup/Gemini_Generated_Image_(10).webp', 1024, 1024], ['Architecture/Hacker Setup/Gemini_Generated_Image_(11).webp', 1024, 1024]
 ];
 const authConfig = window.ASARK_AUTH || {};
-const supabaseUrl = (authConfig.supabaseUrl || '').replace(/\/$/, '');
-const supabaseAnonKey = authConfig.supabaseAnonKey || '';
-const isAuthConfigured = /^https:\/\/[^/]+\.supabase\.co$/i.test(supabaseUrl) && supabaseAnonKey.length > 20;
+const supabaseUrl = (typeof authConfig.supabaseUrl === 'string' ? authConfig.supabaseUrl : '').replace(/\/$/, '');
+const supabaseAnonKey = typeof authConfig.supabaseAnonKey === 'string' ? authConfig.supabaseAnonKey : '';
+const decodeLegacySupabaseKey = (key) => {
+  if (typeof key !== 'string' || !/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(key)) return null;
+  try {
+    const payload = key.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(atob(payload.padEnd(payload.length + (4 - payload.length % 4) % 4, '=')));
+  } catch { return null; }
+};
+const isPublicSupabaseKey = (key) => {
+  if (typeof key !== 'string') return false;
+  if (/^sb_secret_/i.test(key)) return false;
+  if (/^sb_publishable_[A-Za-z0-9_-]{20,}$/.test(key)) return true;
+  return decodeLegacySupabaseKey(key)?.role === 'anon';
+};
+const isAuthConfigured = /^https:\/\/[^/]+\.supabase\.co$/i.test(supabaseUrl) && isPublicSupabaseKey(supabaseAnonKey);
 const homeUrl = siteRootUrl;
 
-if (isAuthConfigured && siteNav) {
-  const accountActions = document.createElement('div');
-  accountActions.className = 'account-actions';
-  const loginUrl = new URL('login.html', siteRootUrl).href;
-  const signupUrl = new URL('signup.html', siteRootUrl).href;
-  accountActions.innerHTML = `<a href="${loginUrl}">Log in</a><a class="account-signup" href="${signupUrl}">Sign up</a>`;
-  siteNav.append(accountActions);
-}
 
 let deferredInstallPrompt;
 let isInstalled = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
@@ -313,75 +318,251 @@ if (saveButton) {
   saveButton.addEventListener('click', () => { saveButton.textContent = 'Saved'; saveButton.disabled = true; });
 }
 
-const setAuthMessage = (form, text) => {
+const AUTH_SESSION_KEY = 'asark.auth.session.v2';
+const AUTH_PKCE_KEY = 'asark.auth.pkce.v1';
+const LEGACY_AUTH_SESSION_KEY = 'asark.auth.session';
+const AUTH_REFRESH_SKEW_SECONDS = 90;
+const AUTH_CALLBACK_PATH = 'auth-callback.html';
+const AUTH_SOCIAL_FLOW_MAX_AGE_MS = 10 * 60 * 1000;
+const AUTH_SIGNUP_FLOW_MAX_AGE_MS = 60 * 60 * 1000;
+const AUTH_REQUEST_TIMEOUT_MS = 12 * 1000;
+let authenticationInitialisation = Promise.resolve();
+let authInteractionActive = false;
+
+const setAuthMessage = (form, text, type = '') => {
   const message = form.querySelector('.account-form-message');
-  if (message) message.textContent = text;
+  if (message) { message.textContent = text; message.dataset.state = type; }
 };
-
-const beginSocialLogin = (provider, form) => {
-  if (!isAuthConfigured) {
-    setAuthMessage(form, 'Account sign-in needs Supabase configuration. See AUTHENTICATION.md.');
-    return;
-  }
-  const providerName = provider === 'Microsoft' ? 'azure' : 'google';
-  const authorizeUrl = new URL(`${supabaseUrl}/auth/v1/authorize`);
-  authorizeUrl.searchParams.set('provider', providerName);
-  authorizeUrl.searchParams.set('redirect_to', new URL('index.html', window.location.href).href);
-  if (providerName === 'azure') authorizeUrl.searchParams.set('scopes', 'email');
-  window.location.assign(authorizeUrl.href);
+const setAuthBusy = (form, busy) => {
+  form.setAttribute('aria-busy', String(busy));
+  form.querySelectorAll('button, input').forEach((control) => { control.disabled = busy; });
 };
-
-const submitEmailAuth = async (form) => {
-  if (!isAuthConfigured) {
-    setAuthMessage(form, 'Account sign-in needs Supabase configuration. See AUTHENTICATION.md.');
-    return;
-  }
-  const values = new FormData(form);
-  const isSignup = form.dataset.accountForm === 'signup';
-  const endpoint = isSignup ? '/auth/v1/signup' : '/auth/v1/token?grant_type=password';
-  const payload = { email: values.get('email'), password: values.get('password') };
-  if (isSignup) payload.data = { full_name: values.get('name') || '' };
-  setAuthMessage(form, isSignup ? 'Creating your account…' : 'Signing you in…');
+const setAllAuthBusy = (busy) => {
+  document.querySelectorAll('[data-account-form]').forEach((form) => setAuthBusy(form, busy));
+  document.querySelectorAll('[data-social-provider]').forEach((control) => { control.disabled = busy; });
+};
+const acquireAuthInteraction = () => {
+  if (authInteractionActive) return false;
+  authInteractionActive = true;
+  setAllAuthBusy(true);
+  return true;
+};
+const releaseAuthInteraction = () => { authInteractionActive = false; setAllAuthBusy(false); };
+const authCallbackUrl = () => new URL(AUTH_CALLBACK_PATH, siteRootUrl).href;
+const isSafeReturnPath = (value) => {
+  if (typeof value !== 'string' || /[\\\u0000-\u001f\u007f]/.test(value)) return null;
   try {
-    const response = await fetch(`${supabaseUrl}${endpoint}`, {
-      method: 'POST',
-      headers: { apikey: supabaseAnonKey, Authorization: `Bearer ${supabaseAnonKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+    const resolved = new URL(value, siteRootUrl);
+    if (!/^https?:$/.test(resolved.protocol) || resolved.origin !== siteRootUrl.origin || resolved.username || resolved.password) return null;
+    return `${resolved.pathname}${resolved.search}${resolved.hash}`;
+  } catch { return null; }
+};
+const sessionReturnPath = () => isSafeReturnPath(new URLSearchParams(window.location.search).get('next')) || '/index.html';
+const parseJwtExpiry = (token) => {
+  try {
+    const payload = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+    const decoded = JSON.parse(atob(payload.padEnd(payload.length + (4 - payload.length % 4) % 4, '=')));
+    return Number.isFinite(decoded.exp) ? decoded.exp : 0;
+  } catch { return 0; }
+};
+const normaliseSession = (candidate) => {
+  if (!candidate || typeof candidate !== 'object' || typeof candidate.access_token !== 'string' || typeof candidate.refresh_token !== 'string') return null;
+  const expiresAt = Number(candidate.expires_at || parseJwtExpiry(candidate.access_token));
+  if (!Number.isFinite(expiresAt) || expiresAt <= 0 || candidate.access_token.split('.').length !== 3) return null;
+  return { access_token: candidate.access_token, refresh_token: candidate.refresh_token, expires_at: expiresAt, token_type: 'bearer', user: candidate.user || null };
+};
+const readStoredSession = () => {
+  localStorage.removeItem(LEGACY_AUTH_SESSION_KEY);
+  try {
+    const session = normaliseSession(JSON.parse(localStorage.getItem(AUTH_SESSION_KEY) || 'null'));
+    if (!session) localStorage.removeItem(AUTH_SESSION_KEY);
+    return session;
+  } catch { localStorage.removeItem(AUTH_SESSION_KEY); return null; }
+};
+const clearStoredSession = () => { localStorage.removeItem(AUTH_SESSION_KEY); localStorage.removeItem(LEGACY_AUTH_SESSION_KEY); };
+const storeSession = (session) => { localStorage.setItem(AUTH_SESSION_KEY, JSON.stringify(session)); };
+const authError = (message, status = 0) => Object.assign(new Error(message), {
+  status,
+  retryable: status === 0 || status === 408 || status === 429 || status >= 500
+});
+const authRequest = async (path, options = {}) => {
+  if (!isAuthConfigured) throw new Error('Authentication is not configured.');
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), AUTH_REQUEST_TIMEOUT_MS);
+  try {
+    const response = await fetch(`${supabaseUrl}${path}`, {
+      method: options.method || 'GET', credentials: 'omit', cache: 'no-store',
+      headers: { apikey: supabaseAnonKey, 'Content-Type': 'application/json', ...(options.accessToken ? { Authorization: `Bearer ${options.accessToken}` } : {}) },
+      signal: controller.signal,
+      ...(options.body ? { body: JSON.stringify(options.body) } : {})
     });
-    const result = await response.json();
-    if (!response.ok) throw new Error(result.msg || result.message || 'Unable to complete authentication.');
-    if (result.access_token) localStorage.setItem('asark.auth.session', JSON.stringify(result));
-    if (isSignup && !result.access_token) {
-      setAuthMessage(form, 'Account created. Check your email to confirm your address.');
-      return;
-    }
-    window.location.assign(new URL('index.html', window.location.href).href);
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok) throw authError('Unable to complete authentication.', response.status);
+    return body;
   } catch (error) {
-    setAuthMessage(form, error.message || 'Unable to complete authentication.');
+    if (error?.status) throw error;
+    throw authError('Unable to complete authentication.');
+  } finally { clearTimeout(timeout); }
+};
+const verifyAndStoreSession = async (candidate) => {
+  const session = normaliseSession(candidate);
+  if (!session) throw new Error('The authentication response was invalid.');
+  const user = await authRequest('/auth/v1/user', { accessToken: session.access_token });
+  if (!user || typeof user.id !== 'string') throw new Error('The authentication session could not be verified.');
+  session.user = { id: user.id, email: user.email || '', user_metadata: user.user_metadata || {} };
+  storeSession(session);
+  return session;
+};
+const refreshSession = async (session) => verifyAndStoreSession(await authRequest('/auth/v1/token?grant_type=refresh_token', { method: 'POST', body: { refresh_token: session.refresh_token } }));
+const base64Url = (bytes) => btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+const randomVerifier = () => { const bytes = new Uint8Array(64); crypto.getRandomValues(bytes); return base64Url(bytes); };
+const readPkceFlow = () => {
+  try {
+    const flow = JSON.parse(localStorage.getItem(AUTH_PKCE_KEY) || 'null');
+    const maxAge = flow?.purpose === 'signup' ? AUTH_SIGNUP_FLOW_MAX_AGE_MS : AUTH_SOCIAL_FLOW_MAX_AGE_MS;
+    const now = Date.now();
+    const age = now - flow?.createdAt;
+    if (!flow || !['signup', 'social'].includes(flow.purpose) || typeof flow.verifier !== 'string' || !/^[A-Za-z0-9_-]{43,128}$/.test(flow.verifier) || !Number.isFinite(flow.createdAt) || flow.createdAt <= 0 || flow.createdAt > now || age < 0 || age > maxAge || !isSafeReturnPath(flow.returnPath)) {
+      localStorage.removeItem(AUTH_PKCE_KEY);
+      return null;
+    }
+    return flow;
+  } catch { localStorage.removeItem(AUTH_PKCE_KEY); return null; }
+};
+const clearPkceFlow = () => localStorage.removeItem(AUTH_PKCE_KEY);
+const pkceChallenge = async (verifier) => base64Url(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier))));
+const createPkceFlow = async (purpose, allowExisting = false) => {
+  const existing = readPkceFlow();
+  if (existing) {
+    if (allowExisting && existing.purpose === purpose) return { ...existing, challenge: await pkceChallenge(existing.verifier), reused: true };
+    throw new Error('An authentication confirmation is already pending. Finish it before starting another sign-in.');
+  }
+  const verifier = randomVerifier();
+  const flow = { purpose, verifier, createdAt: Date.now(), returnPath: sessionReturnPath() };
+  localStorage.setItem(AUTH_PKCE_KEY, JSON.stringify(flow));
+  return { ...flow, challenge: await pkceChallenge(verifier), reused: false };
+};
+const renderAccountActions = (session = null) => {
+  if (!siteNav) return;
+  siteNav.querySelector('.account-actions')?.remove();
+  if (!isAuthConfigured) return;
+  const actions = document.createElement('div'); actions.className = 'account-actions';
+  if (session) {
+    const accountLabel = document.createElement('span'); accountLabel.className = 'account-label'; accountLabel.textContent = session.user?.email || 'Account';
+    const logoutButton = document.createElement('button'); logoutButton.className = 'account-logout'; logoutButton.type = 'button'; logoutButton.textContent = 'Log out';
+    logoutButton.addEventListener('click', async () => {
+      logoutButton.disabled = true;
+      try { await authRequest('/auth/v1/logout', { method: 'POST', accessToken: session.access_token }); } catch { /* Local logout remains safe if the network is unavailable. */ }
+      clearStoredSession(); renderAccountActions(); window.location.assign(siteHref('index.html'));
+    });
+    actions.append(accountLabel, logoutButton);
+  } else {
+    const loginLink = document.createElement('a'); loginLink.href = siteHref('login.html'); loginLink.textContent = 'Log in';
+    const signupLink = document.createElement('a'); signupLink.className = 'account-signup'; signupLink.href = siteHref('signup.html'); signupLink.textContent = 'Sign up';
+    actions.append(loginLink, signupLink);
+  }
+  siteNav.append(actions);
+};
+const restoreSession = async () => {
+  if (!isAuthConfigured) return renderAccountActions();
+  const stored = readStoredSession();
+  if (!stored) return renderAccountActions();
+  try {
+    const session = stored.expires_at - Math.floor(Date.now() / 1000) <= AUTH_REFRESH_SKEW_SECONDS ? await refreshSession(stored) : await verifyAndStoreSession(stored);
+    renderAccountActions(session);
+  } catch (error) {
+    if (!error?.retryable) clearStoredSession();
+    renderAccountActions();
   }
 };
-
-const oauthParameters = new URLSearchParams(window.location.hash.slice(1));
-if (oauthParameters.get('access_token')) {
-  localStorage.setItem('asark.auth.session', JSON.stringify(Object.fromEntries(oauthParameters.entries())));
-  history.replaceState({}, document.title, `${window.location.pathname}${window.location.search}`);
-}
+const beginSocialLogin = async (provider, form) => {
+  if (!acquireAuthInteraction()) return;
+  try {
+    await authenticationInitialisation;
+    if (!isAuthConfigured) { setAuthMessage(form, 'Account sign-in needs Supabase configuration.', 'error'); return; }
+    setAuthMessage(form, 'Redirecting to secure sign-in…');
+    const flow = await createPkceFlow('social');
+    const url = new URL(`${supabaseUrl}/auth/v1/authorize`);
+    url.searchParams.set('provider', provider === 'Microsoft' ? 'azure' : 'google');
+    url.searchParams.set('redirect_to', authCallbackUrl());
+    url.searchParams.set('code_challenge', flow.challenge); url.searchParams.set('code_challenge_method', 's256');
+    if (provider === 'Microsoft') url.searchParams.set('scopes', 'email');
+    window.location.assign(url.href);
+  } catch { setAuthMessage(form, 'Unable to start secure sign-in. Please try again.', 'error'); }
+  finally { releaseAuthInteraction(); }
+};
+const submitEmailAuth = async (form) => {
+  if (!acquireAuthInteraction()) return;
+  try {
+    await authenticationInitialisation;
+    if (!isAuthConfigured) { setAuthMessage(form, 'Account sign-in needs Supabase configuration.', 'error'); return; }
+    const values = new FormData(form); const isSignup = form.dataset.accountForm === 'signup';
+    const email = String(values.get('email') || '').trim(); const password = String(values.get('password') || '');
+    if (!email || !password) { setAuthMessage(form, 'Enter your email address and password.', 'error'); return; }
+    setAuthMessage(form, isSignup ? 'Creating your account…' : 'Signing you in…');
+    let result;
+    if (isSignup) {
+      const flow = await createPkceFlow('signup', true);
+      const signupUrl = new URL('/auth/v1/signup', supabaseUrl);
+      signupUrl.searchParams.set('redirect_to', authCallbackUrl());
+      result = await authRequest(`${signupUrl.pathname}${signupUrl.search}`, { method: 'POST', body: { email, password, data: { full_name: String(values.get('name') || '').trim() }, code_challenge: flow.challenge, code_challenge_method: 's256' } });
+    } else result = await authRequest('/auth/v1/token?grant_type=password', { method: 'POST', body: { email, password } });
+    if (result.access_token) { if (isSignup) clearPkceFlow(); await verifyAndStoreSession(result); window.location.assign(siteHref('index.html')); return; }
+    setAuthMessage(form, 'Check your email to verify your address before signing in.', 'success');
+  } catch (error) {
+    if (form.dataset.accountForm === 'signup' && !error.retryable && readPkceFlow()?.purpose === 'signup') clearPkceFlow();
+    setAuthMessage(form, 'Unable to complete that request. Check your details and try again.', 'error');
+  }
+  finally { releaseAuthInteraction(); }
+};
+const completeAuthCallback = async () => {
+  const callback = document.querySelector('[data-auth-callback]');
+  if (!callback) return;
+  const callbackUrl = new URL(window.location.href);
+  const parameters = callbackUrl.searchParams;
+  const hasProviderError = parameters.has('error') || parameters.has('error_code') || parameters.has('error_description');
+  const code = parameters.get('code');
+  const hasFragment = callbackUrl.hash.length > 1;
+  history.replaceState({}, document.title, window.location.pathname);
+  if (hasProviderError || hasFragment) {
+    clearPkceFlow();
+    callback.textContent = 'This sign-in could not be completed. Please return to Log in and try again.';
+    return;
+  }
+  if (!isAuthConfigured) {
+    if (code) clearPkceFlow();
+    callback.textContent = 'Authentication is not configured yet.';
+    return;
+  }
+  const flow = readPkceFlow();
+  if (!code || !flow) {
+    if (flow?.purpose !== 'signup') clearPkceFlow();
+    callback.textContent = 'This sign-in link has expired. Please start again.';
+    return;
+  }
+  callback.textContent = 'Finishing secure sign-in…';
+  try {
+    const session = await authRequest('/auth/v1/token?grant_type=pkce', { method: 'POST', body: { auth_code: code, code_verifier: flow.verifier } });
+    clearPkceFlow();
+    await verifyAndStoreSession(session);
+    window.location.replace(new URL(flow.returnPath, siteRootUrl).href);
+  } catch (error) {
+    clearPkceFlow();
+    callback.textContent = 'We could not verify this sign-in. Please return to Log in and try again.';
+  }
+};
 
 document.querySelectorAll('[data-account-form]').forEach((form) => {
-  const socialAuth = document.createElement('div');
-  socialAuth.className = 'social-auth';
+  const socialAuth = document.createElement('div'); socialAuth.className = 'social-auth';
   socialAuth.innerHTML = '<p>Or continue with</p><div><button class="social-auth-button" type="button" data-social-provider="Google"><span aria-hidden="true">G</span>Continue with Google</button><button class="social-auth-button" type="button" data-social-provider="Microsoft"><span aria-hidden="true">⊞</span>Continue with Microsoft</button></div>';
   form.before(socialAuth);
-  socialAuth.querySelectorAll('[data-social-provider]').forEach((button) => {
-    button.addEventListener('click', () => {
-      beginSocialLogin(button.dataset.socialProvider, form);
-    });
-  });
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    submitEmailAuth(form);
-  });
+  socialAuth.querySelectorAll('[data-social-provider]').forEach((button) => button.addEventListener('click', () => beginSocialLogin(button.dataset.socialProvider, form)));
+  form.addEventListener('submit', (event) => { event.preventDefault(); submitEmailAuth(form); });
 });
+const authCallbackTarget = document.querySelector('[data-auth-callback]');
+authenticationInitialisation = authCallbackTarget
+  ? completeAuthCallback().catch(() => { authCallbackTarget.textContent = 'We could not complete this sign-in. Please return to Log in and try again.'; })
+  : restoreSession().catch(() => { clearStoredSession(); renderAccountActions(); });
 
 const motionQuery = window.matchMedia('(prefers-reduced-motion: no-preference)');
 if (motionQuery.matches && 'IntersectionObserver' in window) {

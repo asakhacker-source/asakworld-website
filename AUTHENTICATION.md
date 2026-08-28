@@ -1,33 +1,73 @@
-# ASARK authentication setup
+# ASARK Supabase authentication setup
 
-This website uses Supabase Auth as its managed authentication backend. The browser connects directly to Supabase using only a public project URL and publishable/anon key. Never add a Supabase `service_role` key, Google client secret, or Microsoft client secret to this repository.
+ASARK is a static GitHub Pages website. Authentication runs in the browser against Supabase Auth and remains disabled until valid public configuration is supplied.
 
-## 1. Create and configure Supabase
+## Browser values versus private secrets
 
-1. Create a Supabase project.
-2. In **Authentication → URL Configuration**, set the Site URL to `https://www.asark.publicvm.com` and add that URL to the Redirect URLs list. Add your local development URL too, for example `http://127.0.0.1:5500`.
-3. In **Authentication → Providers**, enable Email, Google, and Azure (Microsoft).
-4. Copy the Project URL and public publishable/anon key into `js/auth-config.js`.
+`js/auth-config.js` may contain only the public `supabaseUrl` and a public key. Use a modern `sb_publishable_...` key. Legacy JWT keys are accepted only when their decoded payload role is exactly `anon`, for compatibility; decoding classifies the key format and does not verify its signature. `sb_secret_...`, legacy `service_role` JWTs, unknown key formats, Google/Microsoft client secrets, SMTP passwords, and every other private credential are rejected and must never appear in this repository, GitHub Pages, browser storage, or page source. Provider secrets belong only in their provider dashboard and the Supabase dashboard.
 
-## 2. Configure Google
+## 1. Supabase project and URL configuration
 
-Create an OAuth client in Google Cloud and set its authorised redirect URI to:
+1. Create or select the ASARK Supabase project.
+2. In **Authentication → URL Configuration**, set **Site URL** to `https://www.asark.publicvm.com`.
+3. Add these exact Redirect URLs:
+   - `https://www.asark.publicvm.com/auth-callback.html`
+   - `http://127.0.0.1:5500/auth-callback.html` for local testing, if that is your local server URL.
+4. Enable **Confirm email**. Set the **Email OTP Expiration** to one hour to match ASARK's `AUTH_SIGNUP_FLOW_MAX_AGE_MS`; if that dashboard setting changes, update the verifier lifetime in `js/site.js` to the same duration. The callback page completes verification with PKCE; do not point confirmation emails at `index.html`.
+5. Configure production email delivery and test confirmation mail before public launch.
+6. Use Supabase Auth rate limits and password-protection settings appropriate for production. Do not enable automatic confirmation just to simplify testing.
 
-`https://<your-project-ref>.supabase.co/auth/v1/callback`
+## 2. Public browser configuration
 
-Enter the Google client ID and secret only in the Supabase Google provider settings.
+After the project is configured, place only its public values in `js/auth-config.js`:
 
-## 3. Configure Microsoft
+```js
+window.ASARK_AUTH = Object.freeze({
+  supabaseUrl: 'https://your-project-ref.supabase.co',
+  supabaseAnonKey: 'your-public-publishable-or-anon-key'
+});
+```
 
-Create an Azure Entra ID app registration and set its web redirect URI to:
+Before deploying those values, add the exact same `https://your-project-ref.supabase.co` origin to `connect-src` in the restrictive CSPs on `login.html`, `signup.html`, and `auth-callback.html`, and in every existing ASARK CSP that loads authentication-aware JavaScript. Do not use a wildcard and do not relax `script-src`.
 
-`https://<your-project-ref>.supabase.co/auth/v1/callback`
+If either public value is missing or malformed, ASARK keeps Log in and Sign up hidden and makes no authentication request.
 
-Enter the Microsoft client ID, secret, and tenant URL only in the Supabase Azure provider settings.
+## 3. Email sign-up and login
 
-## Security checklist
+- Sign-up sends users to Supabase for email confirmation and shows a verification-pending message when no session is returned. The pending signup verifier is retained for the configured Email OTP Expiration (one hour by default for ASARK), not for the separate short authorization-code exchange lifetime.
+- Password login and callback sessions are verified with Supabase `/auth/v1/user` before ASARK stores them.
+- Expiring sessions are refreshed with the refresh token; invalid, expired, or unverifiable sessions are cleared.
+- Sign-up, password sign-in, and social-provider controls share a single-flight interaction guard. While one operation is pending, duplicate submits and provider clicks are ignored and all account controls are disabled; a recoverable completion or failure restores them for a deliberate retry.
+- A retryable session-restoration failure (network, timeout, 408, 429, or 5xx) retains the stored session but renders the navigation signed out until a later verified restoration succeeds. Definitive 400/401/403 responses and malformed, expired, structurally invalid, or unverifiable session data are cleared.
+- Logout asks Supabase to revoke the current session, then clears local session data even if the network is unavailable.
+- ASARK supports one pending PKCE flow per browser. Starting another social login while one is pending is deliberately blocked. A retryable signup-request failure may reuse its valid pending signup verifier, rather than silently overwriting it. The verifier is held in namespaced durable local storage so a confirmation link can open in a new tab or after a browser restart. Once `auth-callback.html` has received and scrubbed an authorization code, any callback-processing failure clears that pending flow because ASARK does not retain the authorization code for another exchange attempt. Retryable session-restoration failures may retain an already-stored session as described above.
+- Callback processing and stored-session restoration are mutually exclusive. The callback page processes a new sign-in on its own, so a delayed restoration of an older local session cannot overwrite it.
 
-- Keep email confirmation enabled for production.
-- Use only HTTPS for production redirect URLs.
-- Restrict Supabase Redirect URLs to ASARK domains you control.
-- Do not commit private keys or provider secrets.
+## 4. Google OAuth
+
+1. Create a **Web application** OAuth client in Google Cloud.
+2. Add `https://www.asark.publicvm.com` as an authorized JavaScript origin.
+3. Add Supabase's callback URL as the authorized redirect URI: `https://your-project-ref.supabase.co/auth/v1/callback`.
+4. In **Supabase → Authentication → Providers → Google**, enable Google and enter the Google client ID and client secret there only.
+5. Keep ASARK's `auth-callback.html` URL in Supabase's Redirect URL allowlist.
+
+## 5. Microsoft OAuth
+
+1. Create an application registration in Microsoft Entra ID.
+2. Add this Web redirect URI: `https://your-project-ref.supabase.co/auth/v1/callback`.
+3. In **Supabase → Authentication → Providers → Azure**, enter the Microsoft client ID, client secret, and Azure Tenant URL there only. The tenant URL format is `https://login.microsoftonline.com/<tenant-id>`.
+4. Enable the provider. ASARK requests the `email` scope and uses the same callback page.
+
+## 6. Security and verification checklist
+
+- Verify invalid or empty configuration makes no request to Supabase.
+- Test sign-up, confirmation email, verified login, logout, refresh, expiry, and a manually expired session.
+- Test Google and Microsoft in separate browser sessions, including cancelled consent and denied access.
+- Confirm `/auth-callback.html` rejects missing/expired codes and strips URL parameters after processing.
+- Confirm `/auth-callback.html` strips its complete query string and fragment before any configuration check or request; provider errors are intentionally shown only as a generic message.
+- Confirm no `access_token` URL fragment is persisted and no token/password appears in browser logs.
+- Confirm CSP allows only ASARK and the exact configured Supabase project for connections. The authentication-page CSPs are meta policies and intentionally do not claim to provide `frame-ancestors` protection; anti-framing requires a real `Content-Security-Policy` HTTP response header from the hosting/CDN layer.
+- Confirm the service worker does not cache callback responses or URLs carrying auth codes.
+- Confirm public navigation shows account actions only after valid configuration and a verified session.
+
+Supabase references: [Redirect URLs](https://supabase.com/docs/guides/auth/redirect-urls), [PKCE flow](https://supabase.com/docs/guides/auth/sessions/pkce-flow), [Google](https://supabase.com/docs/guides/auth/social-login/auth-google), and [Microsoft/Azure](https://supabase.com/docs/guides/auth/social-login/auth-azure).

@@ -29,13 +29,15 @@ Serve the site over HTTPS. GitHub Pages does not natively provide general per-si
 - `X-Content-Type-Options: nosniff`
 - `Strict-Transport-Security` only after confirming the HTTPS and subdomain policy; do not enable `includeSubDomains` or preload without that decision.
 
+`frame-ancestors` is enforced only when delivered in an HTTP `Content-Security-Policy` response header. A CSP meta element cannot provide anti-framing protection, so configure that directive at the hosting or CDN layer.
+
 ## 404 handling
 
 `404.html` is included for GitHub Pages. Confirm the hosting layer serves it with an HTTP 404 status rather than HTTP 200.
 
 ## Cache and PWA
 
-Current production versions are `style.css?v=63`, `site.js?v=65`, and service-worker cache `asark-app-v66`. Change versions only when their underlying CSS, JavaScript, or service-worker behavior changes.
+Current production versions are `style.css?v=64`, `site.js?v=66`, and service-worker cache `asark-app-v67`. Change versions only when their underlying CSS, JavaScript, or service-worker behavior changes.
 
 ## Post-deployment smoke test
 
