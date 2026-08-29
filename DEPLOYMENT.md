@@ -19,6 +19,8 @@ Email/password authentication is configured with the owner-supplied public Supab
 
 When Supabase is enabled, the production CSP must allow the exact configured Supabase project origin in `connect-src`; do not use a wildcard.
 
+Before deploying password recovery, add `https://www.asark.publicvm.com/reset-password.html` to the Supabase Auth Redirect URLs. This is a dashboard action, not a repository setting.
+
 ## HTTPS and security headers
 
 Serve the site over HTTPS. GitHub Pages does not natively provide general per-site arbitrary custom response-header configuration from this repository. If these headers are required, apply them through a CDN/proxy, external edge configuration, or hosting that supports custom headers. Configure these as HTTP response headers, not HTML meta substitutes:
@@ -37,7 +39,7 @@ Serve the site over HTTPS. GitHub Pages does not natively provide general per-si
 
 ## Cache and PWA
 
-Current deployment source versions are `style.css?v=64`, `site.js?v=70`, and service-worker cache `asark-app-v72`. Change versions only when their underlying CSS, JavaScript, or service-worker behavior changes.
+Current deployment source versions are `style.css?v=64`, `site.js?v=71`, and service-worker cache `asark-app-v73`. Change versions only when their underlying CSS, JavaScript, or service-worker behavior changes.
 
 ## Post-deployment smoke test
 

@@ -1,7 +1,7 @@
-const CACHE_NAME = 'asark-app-v72';
+const CACHE_NAME = 'asark-app-v73';
 const OFFLINE_URL = './offline.html';
 const APP_SHELL = [
-  './', './index.html', './offline.html', './css/style.css?v=64', './js/site.js?v=70',
+  './', './index.html', './offline.html', './css/style.css?v=64', './js/site.js?v=71',
   './manifest.webmanifest', './assets/asark-mark.svg', './assets/icon-192.png', './assets/icon-512.png'
 ];
 
@@ -20,7 +20,7 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin) return;
 
-  if (url.pathname.endsWith('/auth-callback.html') || url.pathname.endsWith('/js/auth-config.js') || url.searchParams.has('code')) {
+  if (url.pathname.endsWith('/auth-callback.html') || url.pathname.endsWith('/reset-password.html') || url.pathname.endsWith('/js/auth-config.js') || url.searchParams.has('code')) {
     event.respondWith(fetch(event.request, { cache: 'no-store' }));
     return;
   }

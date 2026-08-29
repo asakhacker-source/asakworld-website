@@ -333,12 +333,14 @@ const AUTH_PKCE_KEY = 'asark.auth.pkce.v1';
 const LEGACY_AUTH_SESSION_KEY = 'asark.auth.session';
 const AUTH_REFRESH_SKEW_SECONDS = 90;
 const AUTH_CALLBACK_PATH = 'auth-callback.html';
+const RESET_PASSWORD_PATH = 'reset-password.html';
 const AUTH_SOCIAL_FLOW_MAX_AGE_MS = 10 * 60 * 1000;
 const AUTH_SIGNUP_FLOW_MAX_AGE_MS = 60 * 60 * 1000;
 const AUTH_REQUEST_TIMEOUT_MS = 12 * 1000;
 let authenticationInitialisation = Promise.resolve();
 let authInteractionActive = false;
 let authFormsAvailable = false;
+let recoverySession = null;
 
 const setAuthMessage = (form, text, type = '') => {
   const message = form.querySelector('.account-form-message');
@@ -365,6 +367,7 @@ const acquireAuthInteraction = () => {
 };
 const releaseAuthInteraction = () => { authInteractionActive = false; setAllAuthBusy(false); };
 const authCallbackUrl = () => new URL(AUTH_CALLBACK_PATH, siteRootUrl).href;
+const resetPasswordUrl = () => new URL(RESET_PASSWORD_PATH, siteRootUrl).href;
 const isSafeReturnPath = (value) => {
   if (typeof value !== 'string' || /[\\\u0000-\u001f\u007f]/.test(value)) return null;
   try {
@@ -420,12 +423,16 @@ const authRequest = async (path, options = {}) => {
     throw authError('Unable to complete authentication.');
   } finally { clearTimeout(timeout); }
 };
-const verifyAndStoreSession = async (candidate) => {
+const verifySession = async (candidate) => {
   const session = normaliseSession(candidate);
   if (!session) throw new Error('The authentication response was invalid.');
   const user = await authRequest('/auth/v1/user', { accessToken: session.access_token });
   if (!user || typeof user.id !== 'string') throw new Error('The authentication session could not be verified.');
   session.user = { id: user.id, email: user.email || '', user_metadata: user.user_metadata || {} };
+  return session;
+};
+const verifyAndStoreSession = async (candidate) => {
+  const session = await verifySession(candidate);
   storeSession(session);
   return session;
 };
@@ -568,6 +575,85 @@ const completeAuthCallback = async () => {
     callback.textContent = 'We could not verify this sign-in. Please return to Log in and try again.';
   }
 };
+const setRecoveryFormState = (form, enabled, busy = false) => {
+  if (!form) return;
+  form.setAttribute('aria-busy', String(busy));
+  form.querySelectorAll('button, input').forEach((control) => { control.disabled = busy || !enabled; });
+};
+const submitPasswordRecovery = async (form) => {
+  const values = new FormData(form);
+  const email = String(values.get('email') || '').trim();
+  if (!email) { setAuthMessage(form, 'Enter your email address.', 'error'); return; }
+  if (!acquireAuthInteraction()) return;
+  setRecoveryFormState(form, false, true);
+  try {
+    await authenticationInitialisation;
+    if (!isAuthConfigured) throw new Error('Authentication is not configured.');
+    const requestUrl = new URL('/auth/v1/recover', supabaseUrl);
+    requestUrl.searchParams.set('redirect_to', resetPasswordUrl());
+    await authRequest(`${requestUrl.pathname}${requestUrl.search}`, { method: 'POST', body: { email } });
+    setAuthMessage(form, 'If an account exists for that email, a recovery link will be sent.', 'success');
+  } catch {
+    setAuthMessage(form, 'We could not send a recovery link right now. Please try again later.', 'error');
+  } finally {
+    releaseAuthInteraction();
+    setRecoveryFormState(form, isAuthConfigured);
+  }
+};
+const completePasswordRecovery = async (form) => {
+  const recoveryUrl = new URL(window.location.href);
+  const parameters = new URLSearchParams(recoveryUrl.hash.slice(1));
+  const candidate = {
+    access_token: parameters.get('access_token') || '',
+    refresh_token: parameters.get('refresh_token') || '',
+    expires_at: parameters.get('expires_at') || 0,
+    token_type: parameters.get('token_type') || '',
+    type: parameters.get('type') || ''
+  };
+  history.replaceState({}, document.title, window.location.pathname);
+  recoverySession = null;
+  clearStoredSession();
+  renderAccountActions();
+  setRecoveryFormState(form, false);
+  if (!isAuthConfigured || candidate.type !== 'recovery' || candidate.token_type.toLowerCase() !== 'bearer') {
+    setAuthMessage(form, 'This recovery link is invalid or has expired. Request a new link to continue.', 'error');
+    return;
+  }
+  try {
+    recoverySession = await verifySession(candidate);
+    setRecoveryFormState(form, true);
+    setAuthMessage(form, 'Choose a new password to finish recovery.', 'success');
+  } catch {
+    recoverySession = null;
+    clearStoredSession();
+    setAuthMessage(form, 'This recovery link is invalid or has expired. Request a new link to continue.', 'error');
+  }
+};
+const submitPasswordUpdate = async (form) => {
+  const values = new FormData(form);
+  const password = String(values.get('password') || '');
+  const confirmPassword = String(values.get('confirmPassword') || '');
+  if (password.length < 8) { setAuthMessage(form, 'Use a password with at least eight characters.', 'error'); return; }
+  if (password !== confirmPassword) { setAuthMessage(form, 'The new passwords do not match.', 'error'); return; }
+  if (!recoverySession || !acquireAuthInteraction()) return;
+  setRecoveryFormState(form, false, true);
+  try {
+    await authRequest('/auth/v1/user', { method: 'PUT', accessToken: recoverySession.access_token, body: { password } });
+    setAuthMessage(form, 'Your password has been updated. Return to Log in with your new password.', 'success');
+    try { await authRequest('/auth/v1/logout', { method: 'POST', accessToken: recoverySession.access_token }); } catch { /* Local cleanup still prevents reuse on this device. */ }
+    recoverySession = null;
+    clearStoredSession();
+    renderAccountActions();
+    setRecoveryFormState(form, false);
+    window.setTimeout(() => window.location.replace(siteHref('login.html')), 1800);
+  } catch {
+    recoverySession = null;
+    clearStoredSession();
+    renderAccountActions();
+    setAuthMessage(form, 'We could not update your password. Request a new recovery link and try again.', 'error');
+    setRecoveryFormState(form, false);
+  } finally { releaseAuthInteraction(); }
+};
 
 document.querySelectorAll('[data-account-form]').forEach((form) => {
   const socialProviders = [['google', 'Google', 'G'], ['microsoft', 'Microsoft', '⊞']].filter(([provider]) => isProviderEnabled(provider));
@@ -580,11 +666,24 @@ document.querySelectorAll('[data-account-form]').forEach((form) => {
   form.addEventListener('submit', (event) => { event.preventDefault(); submitEmailAuth(form); });
   setAllAuthBusy(authInteractionActive);
 });
+const passwordRecoveryForm = document.querySelector('[data-password-recovery-form]');
+if (passwordRecoveryForm) {
+  passwordRecoveryForm.addEventListener('submit', (event) => { event.preventDefault(); submitPasswordRecovery(passwordRecoveryForm); });
+}
+const passwordResetForm = document.querySelector('[data-password-reset-form]');
+if (passwordResetForm) {
+  passwordResetForm.addEventListener('submit', (event) => { event.preventDefault(); submitPasswordUpdate(passwordResetForm); });
+}
 const authCallbackTarget = document.querySelector('[data-auth-callback]');
 authenticationInitialisation = authCallbackTarget
   ? completeAuthCallback().catch(() => { authCallbackTarget.textContent = 'We could not complete this sign-in. Please return to Log in and try again.'; })
-  : restoreSession().catch(() => { clearStoredSession(); renderAccountActions(); });
-authenticationInitialisation = authenticationInitialisation.finally(() => setAuthFormAvailability(isAuthConfigured));
+  : passwordResetForm
+    ? completePasswordRecovery(passwordResetForm).catch(() => { recoverySession = null; clearStoredSession(); setRecoveryFormState(passwordResetForm, false); setAuthMessage(passwordResetForm, 'This recovery link is invalid or has expired. Request a new link to continue.', 'error'); })
+    : restoreSession().catch(() => { clearStoredSession(); renderAccountActions(); });
+authenticationInitialisation = authenticationInitialisation.finally(() => {
+  setAuthFormAvailability(isAuthConfigured);
+  setRecoveryFormState(passwordRecoveryForm, isAuthConfigured);
+});
 
 const motionQuery = window.matchMedia('(prefers-reduced-motion: no-preference)');
 if (motionQuery.matches && 'IntersectionObserver' in window) {

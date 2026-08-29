@@ -12,6 +12,7 @@ ASARK is a static GitHub Pages website. Authentication runs in the browser again
 2. In **Authentication → URL Configuration**, set **Site URL** to `https://www.asark.publicvm.com`.
 3. Add these exact Redirect URLs:
    - `https://www.asark.publicvm.com/auth-callback.html`
+   - `https://www.asark.publicvm.com/reset-password.html` for password recovery
    - `http://127.0.0.1:5500/auth-callback.html` for local testing, if that is your local server URL.
 4. Enable **Confirm email**. Set the **Email OTP Expiration** to one hour to match ASARK's `AUTH_SIGNUP_FLOW_MAX_AGE_MS`; if that dashboard setting changes, update the verifier lifetime in `js/site.js` to the same duration. The callback page completes verification with PKCE; do not point confirmation emails at `index.html`.
 5. Configure production email delivery and test confirmation mail before public launch.
@@ -81,3 +82,9 @@ Activation order: configure the Supabase project; set the Site URL and Redirect 
 - Confirm public navigation shows account actions only after valid configuration and a verified session.
 
 Supabase references: [Redirect URLs](https://supabase.com/docs/guides/auth/redirect-urls), [PKCE flow](https://supabase.com/docs/guides/auth/sessions/pkce-flow), [Google](https://supabase.com/docs/guides/auth/social-login/auth-google), and [Microsoft/Azure](https://supabase.com/docs/guides/auth/social-login/auth-azure).
+
+## 7. Password recovery
+
+ASARK's `forgot-password.html` sends a recovery request to `/auth/v1/recover` with the fixed redirect URL `https://www.asark.publicvm.com/reset-password.html`. Add that exact URL to **Authentication → URL Configuration → Redirect URLs** before deploying recovery support; it is a manual dashboard prerequisite.
+
+Supabase intentionally returns a non-enumerating result for unknown email addresses. ASARK therefore always displays the same confirmation message after a successful request. The reset page accepts only the supported implicit recovery return format: a `type=recovery` bearer session in the URL fragment. It immediately removes the fragment from the visible URL, verifies the session through `/auth/v1/user`, and enables the new-password controls only after verification. The recovery session is used only for `PUT /auth/v1/user`, then revoked locally and remotely after a successful update so the visitor returns to a clean logged-out state.
