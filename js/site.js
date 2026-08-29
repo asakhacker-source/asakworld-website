@@ -328,6 +328,7 @@ const AUTH_SIGNUP_FLOW_MAX_AGE_MS = 60 * 60 * 1000;
 const AUTH_REQUEST_TIMEOUT_MS = 12 * 1000;
 let authenticationInitialisation = Promise.resolve();
 let authInteractionActive = false;
+let authFormsAvailable = false;
 
 const setAuthMessage = (form, text, type = '') => {
   const message = form.querySelector('.account-form-message');
@@ -335,11 +336,16 @@ const setAuthMessage = (form, text, type = '') => {
 };
 const setAuthBusy = (form, busy) => {
   form.setAttribute('aria-busy', String(busy));
-  form.querySelectorAll('button, input').forEach((control) => { control.disabled = busy; });
+  form.querySelectorAll('button, input').forEach((control) => { control.disabled = busy || !authFormsAvailable; });
 };
 const setAllAuthBusy = (busy) => {
   document.querySelectorAll('[data-account-form]').forEach((form) => setAuthBusy(form, busy));
-  document.querySelectorAll('[data-social-provider]').forEach((control) => { control.disabled = busy; });
+  document.querySelectorAll('[data-social-provider]').forEach((control) => { control.disabled = busy || !authFormsAvailable; });
+};
+const setAuthFormAvailability = (available) => {
+  authFormsAvailable = Boolean(available && isAuthConfigured);
+  setAllAuthBusy(authInteractionActive);
+  if (!authFormsAvailable) document.querySelectorAll('[data-account-form]').forEach((form) => setAuthMessage(form, 'Authentication is temporarily unavailable.', 'error'));
 };
 const acquireAuthInteraction = () => {
   if (authInteractionActive) return false;
@@ -558,11 +564,13 @@ document.querySelectorAll('[data-account-form]').forEach((form) => {
   form.before(socialAuth);
   socialAuth.querySelectorAll('[data-social-provider]').forEach((button) => button.addEventListener('click', () => beginSocialLogin(button.dataset.socialProvider, form)));
   form.addEventListener('submit', (event) => { event.preventDefault(); submitEmailAuth(form); });
+  setAllAuthBusy(authInteractionActive);
 });
 const authCallbackTarget = document.querySelector('[data-auth-callback]');
 authenticationInitialisation = authCallbackTarget
   ? completeAuthCallback().catch(() => { authCallbackTarget.textContent = 'We could not complete this sign-in. Please return to Log in and try again.'; })
   : restoreSession().catch(() => { clearStoredSession(); renderAccountActions(); });
+authenticationInitialisation = authenticationInitialisation.finally(() => setAuthFormAvailability(isAuthConfigured));
 
 const motionQuery = window.matchMedia('(prefers-reduced-motion: no-preference)');
 if (motionQuery.matches && 'IntersectionObserver' in window) {
