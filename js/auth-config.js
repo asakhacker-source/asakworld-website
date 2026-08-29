@@ -4,5 +4,9 @@
  */
 window.ASARK_AUTH = Object.freeze({
   supabaseUrl: '',
-  supabaseAnonKey: ''
+  supabaseAnonKey: '',
+  providers: Object.freeze({
+    google: false,
+    microsoft: false
+  })
 });

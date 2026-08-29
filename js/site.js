@@ -45,7 +45,7 @@ const architectureImages = [
   ['Architecture/Hacker Setup/Gemini_Generated_Image_(10).webp', 1024, 1024], ['Architecture/Hacker Setup/Gemini_Generated_Image_(11).webp', 1024, 1024]
 ];
 const authConfig = window.ASARK_AUTH || {};
-const supabaseUrl = (typeof authConfig.supabaseUrl === 'string' ? authConfig.supabaseUrl : '').replace(/\/$/, '');
+const configuredSupabaseUrl = typeof authConfig.supabaseUrl === 'string' ? authConfig.supabaseUrl : '';
 const supabaseAnonKey = typeof authConfig.supabaseAnonKey === 'string' ? authConfig.supabaseAnonKey : '';
 const decodeLegacySupabaseKey = (key) => {
   if (typeof key !== 'string' || !/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(key)) return null;
@@ -60,7 +60,17 @@ const isPublicSupabaseKey = (key) => {
   if (/^sb_publishable_[A-Za-z0-9_-]{20,}$/.test(key)) return true;
   return decodeLegacySupabaseKey(key)?.role === 'anon';
 };
-const isAuthConfigured = /^https:\/\/[^/]+\.supabase\.co$/i.test(supabaseUrl) && isPublicSupabaseKey(supabaseAnonKey);
+const isValidSupabaseProjectUrl = (value) => {
+  if (typeof value !== 'string' || !value) return false;
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && !url.username && !url.password && !url.port && url.pathname === '/' && !url.search && !url.hash && /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.supabase\.co$/.test(url.hostname);
+  } catch { return false; }
+};
+const isAuthConfigured = isValidSupabaseProjectUrl(configuredSupabaseUrl) && isPublicSupabaseKey(supabaseAnonKey);
+const supabaseUrl = isAuthConfigured ? new URL(configuredSupabaseUrl).origin : '';
+const authProviders = authConfig.providers && typeof authConfig.providers === 'object' && !Array.isArray(authConfig.providers) ? authConfig.providers : {};
+const isProviderEnabled = (provider) => isAuthConfigured && ['google', 'microsoft'].includes(provider) && Object.prototype.hasOwnProperty.call(authProviders, provider) && authProviders[provider] === true;
 const homeUrl = siteRootUrl;
 
 
@@ -482,6 +492,7 @@ const restoreSession = async () => {
   }
 };
 const beginSocialLogin = async (provider, form) => {
+  if (!isProviderEnabled(provider)) { setAuthMessage(form, 'This sign-in option is temporarily unavailable.', 'error'); return; }
   if (!acquireAuthInteraction()) return;
   try {
     await authenticationInitialisation;
@@ -489,10 +500,10 @@ const beginSocialLogin = async (provider, form) => {
     setAuthMessage(form, 'Redirecting to secure sign-in…');
     const flow = await createPkceFlow('social');
     const url = new URL(`${supabaseUrl}/auth/v1/authorize`);
-    url.searchParams.set('provider', provider === 'Microsoft' ? 'azure' : 'google');
+    url.searchParams.set('provider', provider === 'microsoft' ? 'azure' : 'google');
     url.searchParams.set('redirect_to', authCallbackUrl());
     url.searchParams.set('code_challenge', flow.challenge); url.searchParams.set('code_challenge_method', 's256');
-    if (provider === 'Microsoft') url.searchParams.set('scopes', 'email');
+    if (provider === 'microsoft') url.searchParams.set('scopes', 'email');
     window.location.assign(url.href);
   } catch { setAuthMessage(form, 'Unable to start secure sign-in. Please try again.', 'error'); }
   finally { releaseAuthInteraction(); }
@@ -559,10 +570,13 @@ const completeAuthCallback = async () => {
 };
 
 document.querySelectorAll('[data-account-form]').forEach((form) => {
-  const socialAuth = document.createElement('div'); socialAuth.className = 'social-auth';
-  socialAuth.innerHTML = '<p>Or continue with</p><div><button class="social-auth-button" type="button" data-social-provider="Google"><span aria-hidden="true">G</span>Continue with Google</button><button class="social-auth-button" type="button" data-social-provider="Microsoft"><span aria-hidden="true">⊞</span>Continue with Microsoft</button></div>';
-  form.before(socialAuth);
-  socialAuth.querySelectorAll('[data-social-provider]').forEach((button) => button.addEventListener('click', () => beginSocialLogin(button.dataset.socialProvider, form)));
+  const socialProviders = [['google', 'Google', 'G'], ['microsoft', 'Microsoft', '⊞']].filter(([provider]) => isProviderEnabled(provider));
+  if (socialProviders.length) {
+    const socialAuth = document.createElement('div'); socialAuth.className = 'social-auth';
+    socialAuth.innerHTML = `<p>Or continue with</p><div>${socialProviders.map(([provider, label, mark]) => `<button class="social-auth-button" type="button" data-social-provider="${provider}"><span aria-hidden="true">${mark}</span>Continue with ${label}</button>`).join('')}</div>`;
+    form.before(socialAuth);
+    socialAuth.querySelectorAll('[data-social-provider]').forEach((button) => button.addEventListener('click', () => beginSocialLogin(button.dataset.socialProvider, form)));
+  }
   form.addEventListener('submit', (event) => { event.preventDefault(); submitEmailAuth(form); });
   setAllAuthBusy(authInteractionActive);
 });

@@ -24,13 +24,20 @@ After the project is configured, place only its public values in `js/auth-config
 ```js
 window.ASARK_AUTH = Object.freeze({
   supabaseUrl: 'https://your-project-ref.supabase.co',
-  supabaseAnonKey: 'your-public-publishable-or-anon-key'
+  supabaseAnonKey: 'your-public-publishable-or-anon-key',
+  providers: Object.freeze({ google: false, microsoft: false })
 });
 ```
 
 Before deploying those values, add the exact same `https://your-project-ref.supabase.co` origin to `connect-src` in the restrictive CSPs on `login.html`, `signup.html`, and `auth-callback.html`, and in every existing ASARK CSP that loads authentication-aware JavaScript. Do not use a wildcard and do not relax `script-src`.
 
 If either public value is missing or malformed, ASARK keeps Log in and Sign up hidden and makes no authentication request.
+
+ASARK parses the configured project URL with `URL()` and accepts only a canonical HTTPS `<project-ref>.supabase.co` origin. URL credentials, non-default ports, paths, query strings, fragments, and lookalike domains are rejected. Malformed configuration remains fail-closed and cannot receive authentication requests.
+
+The provider flags are public, contain no secrets, and default to `false`. Email/password authentication is independent: it can operate after general Supabase configuration while both OAuth providers remain disabled. Enable a provider flag only after that provider has been configured and tested in Supabase.
+
+Activation order: configure the Supabase project; set the Site URL and Redirect URL; allow the exact Supabase origin in CSP; add the public project URL and key; verify email/password; configure and test Google in Supabase, then set `google: true`; configure and test Microsoft in Supabase, then set `microsoft: true`.
 
 ## 3. Email sign-up and login
 
