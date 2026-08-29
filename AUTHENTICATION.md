@@ -1,6 +1,6 @@
 # ASARK Supabase authentication setup
 
-ASARK is a static GitHub Pages website. Authentication runs in the browser against Supabase Auth and remains disabled until valid public configuration is supplied.
+ASARK is a static GitHub Pages website. Authentication runs in the browser against Supabase Auth with configured public browser values. Email/password authentication is enabled; Google and Microsoft remain disabled until separately configured and approved.
 
 ## Browser values versus private secrets
 

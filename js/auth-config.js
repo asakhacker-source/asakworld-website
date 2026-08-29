@@ -3,8 +3,8 @@
  * in the browser; never place a service_role key or OAuth client secret here.
  */
 window.ASARK_AUTH = Object.freeze({
-  supabaseUrl: '',
-  supabaseAnonKey: '',
+  supabaseUrl: 'https://ldsfrqanuupeklzbcxpr.supabase.co',
+  supabaseAnonKey: 'sb_publishable_U7SSoD8WpmWvNfpdK2aOcA_v6NNnLwX',
   providers: Object.freeze({
     google: false,
     microsoft: false

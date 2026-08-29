@@ -15,7 +15,7 @@ The approved public origin is `https://www.asark.publicvm.com/`. The GitHub Page
 
 ## Authentication
 
-Authentication remains disabled until the owner supplies the Supabase project URL and public anon/publishable key in `js/auth-config.js`. Never place a `service_role` key, database password, OAuth client secret, or private key in browser JavaScript.
+Email/password authentication is configured with the owner-supplied public Supabase project URL and publishable key in `js/auth-config.js`. Google and Microsoft remain disabled. Never place a `service_role` key, database password, OAuth client secret, or private key in browser JavaScript.
 
 When Supabase is enabled, the production CSP must allow the exact configured Supabase project origin in `connect-src`; do not use a wildcard.
 
@@ -37,7 +37,7 @@ Serve the site over HTTPS. GitHub Pages does not natively provide general per-si
 
 ## Cache and PWA
 
-Current deployment source versions are `style.css?v=64`, `site.js?v=70`, and service-worker cache `asark-app-v71`. Change versions only when their underlying CSS, JavaScript, or service-worker behavior changes.
+Current deployment source versions are `style.css?v=64`, `site.js?v=70`, and service-worker cache `asark-app-v72`. Change versions only when their underlying CSS, JavaScript, or service-worker behavior changes.
 
 ## Post-deployment smoke test
 
