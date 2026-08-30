@@ -328,9 +328,12 @@ if (saveButton) {
   saveButton.addEventListener('click', () => { saveButton.textContent = 'Saved'; saveButton.disabled = true; });
 }
 
-const AUTH_SESSION_KEY = 'asark.auth.session.v2';
-const AUTH_PKCE_KEY = 'asark.auth.pkce.v1';
+const AUTH_SESSION_PREFIX = 'asark.auth.session.v3.';
+const OLD_AUTH_SESSION_V2_KEY = 'asark.auth.session.v2';
+const AUTH_PKCE_PREFIX = 'asark.auth.pkce.v2.';
+const OLD_AUTH_PKCE_V1_KEY = 'asark.auth.pkce.v1';
 const LEGACY_AUTH_SESSION_KEY = 'asark.auth.session';
+const AUTH_LIFECYCLE_KEY = 'asark.auth.lifecycle.v1';
 const AUTH_REFRESH_SKEW_SECONDS = 90;
 const AUTH_CALLBACK_PATH = 'auth-callback.html';
 const RESET_PASSWORD_PATH = 'reset-password.html';
@@ -341,6 +344,78 @@ let authenticationInitialisation = Promise.resolve();
 let authInteractionActive = false;
 let authFormsAvailable = false;
 let recoverySession = null;
+let authSessionGeneration = 0;
+let observedAuthLifecycleRevision = null;
+const invalidateAuthSessionGeneration = () => {
+  authSessionGeneration += 1;
+  return authSessionGeneration;
+};
+const isCurrentAuthSessionGeneration = (generation) => generation === authSessionGeneration;
+const isValidAuthLifecycleRevision = (revision) => typeof revision === 'string' && /^[A-Za-z0-9_-]{16,128}$/.test(revision);
+const sessionKeyForLifecycle = (revision) => isValidAuthLifecycleRevision(revision) ? `${AUTH_SESSION_PREFIX}${revision}` : null;
+const pkceKeyForLifecycle = (revision) => isValidAuthLifecycleRevision(revision) ? `${AUTH_PKCE_PREFIX}${revision}` : null;
+const storageGet = (key) => {
+  if (typeof key !== 'string') return null;
+  try { return localStorage.getItem(key); } catch { return null; }
+};
+const storageSet = (key, value) => {
+  if (typeof key !== 'string') return false;
+  try { localStorage.setItem(key, value); return true; } catch { return false; }
+};
+const storageRemove = (key) => {
+  if (typeof key !== 'string') return false;
+  try { localStorage.removeItem(key); return true; } catch { return false; }
+};
+const createAuthLifecycleRevision = () => {
+  try {
+    const bytes = new Uint8Array(16);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
+  } catch { return null; }
+};
+const readAuthLifecycleRevision = () => {
+  const existing = storageGet(AUTH_LIFECYCLE_KEY);
+  if (isValidAuthLifecycleRevision(existing)) return existing;
+  const revision = createAuthLifecycleRevision();
+  if (!revision || !storageSet(AUTH_LIFECYCLE_KEY, revision)) return null;
+  const authoritativeRevision = storageGet(AUTH_LIFECYCLE_KEY);
+  return isValidAuthLifecycleRevision(authoritativeRevision) ? authoritativeRevision : null;
+};
+const rotateAuthLifecycleRevision = () => {
+  const revision = createAuthLifecycleRevision();
+  if (!revision || !storageSet(AUTH_LIFECYCLE_KEY, revision)) return null;
+  const authoritativeRevision = storageGet(AUTH_LIFECYCLE_KEY);
+  if (!isValidAuthLifecycleRevision(authoritativeRevision)) return null;
+  observedAuthLifecycleRevision = authoritativeRevision;
+  return authoritativeRevision;
+};
+const adoptAuthLifecycleRevision = () => {
+  const revision = readAuthLifecycleRevision();
+  if (isValidAuthLifecycleRevision(revision)) observedAuthLifecycleRevision = revision;
+  return revision;
+};
+observedAuthLifecycleRevision = readAuthLifecycleRevision();
+const captureAuthOperation = () => ({ generation: authSessionGeneration, lifecycleRevision: adoptAuthLifecycleRevision() });
+const isCurrentAuthOperation = (operation) => Boolean(
+  operation
+  && isCurrentAuthSessionGeneration(operation.generation)
+  && isValidAuthLifecycleRevision(operation.lifecycleRevision)
+  && readAuthLifecycleRevision() === operation.lifecycleRevision
+);
+const beginAuthReplacement = () => {
+  const previousRevision = adoptAuthLifecycleRevision();
+  const replacementRevision = createAuthLifecycleRevision();
+  if (!isValidAuthLifecycleRevision(previousRevision) || !isValidAuthLifecycleRevision(replacementRevision) || !storageSet(AUTH_LIFECYCLE_KEY, replacementRevision)) return null;
+  if (storageGet(AUTH_LIFECYCLE_KEY) !== replacementRevision) return null;
+  observedAuthLifecycleRevision = replacementRevision;
+  invalidateAuthSessionGeneration();
+  clearStoredSession(previousRevision);
+  clearPkceFlow(previousRevision);
+  storageRemove(OLD_AUTH_PKCE_V1_KEY);
+  renderAccountActions();
+  const operation = { generation: authSessionGeneration, lifecycleRevision: replacementRevision };
+  return isCurrentAuthOperation(operation) ? operation : null;
+};
 
 const setAuthMessage = (form, text, type = '') => {
   const message = form.querySelector('.account-form-message');
@@ -390,16 +465,48 @@ const normaliseSession = (candidate) => {
   if (!Number.isFinite(expiresAt) || expiresAt <= 0 || candidate.access_token.split('.').length !== 3) return null;
   return { access_token: candidate.access_token, refresh_token: candidate.refresh_token, expires_at: expiresAt, token_type: 'bearer', user: candidate.user || null };
 };
-const readStoredSession = () => {
-  localStorage.removeItem(LEGACY_AUTH_SESSION_KEY);
+const parseStoredSessionEnvelope = (revision, rawEnvelope) => {
+  if (typeof rawEnvelope !== 'string') return null;
   try {
-    const session = normaliseSession(JSON.parse(localStorage.getItem(AUTH_SESSION_KEY) || 'null'));
-    if (!session) localStorage.removeItem(AUTH_SESSION_KEY);
-    return session;
-  } catch { localStorage.removeItem(AUTH_SESSION_KEY); return null; }
+    const envelope = JSON.parse(rawEnvelope);
+    if (!envelope || envelope.lifecycleRevision !== revision) return null;
+    const session = normaliseSession(envelope.session);
+    return session ? { lifecycleRevision: revision, rawEnvelope, session } : null;
+  } catch { return null; }
 };
-const clearStoredSession = () => { localStorage.removeItem(AUTH_SESSION_KEY); localStorage.removeItem(LEGACY_AUTH_SESSION_KEY); };
-const storeSession = (session) => { localStorage.setItem(AUTH_SESSION_KEY, JSON.stringify(session)); };
+const readStoredSession = (revision = adoptAuthLifecycleRevision()) => {
+  storageRemove(OLD_AUTH_SESSION_V2_KEY);
+  storageRemove(LEGACY_AUTH_SESSION_KEY);
+  const sessionKey = sessionKeyForLifecycle(revision);
+  if (!sessionKey) return null;
+  const rawEnvelope = storageGet(sessionKey);
+  return parseStoredSessionEnvelope(revision, rawEnvelope);
+};
+const clearStoredSession = (obsoleteRevision = null) => {
+  const obsoleteSessionKey = sessionKeyForLifecycle(obsoleteRevision);
+  if (obsoleteSessionKey) storageRemove(obsoleteSessionKey);
+  storageRemove(OLD_AUTH_SESSION_V2_KEY);
+  storageRemove(LEGACY_AUTH_SESSION_KEY);
+};
+const invalidateOrdinarySession = () => {
+  const obsoleteRevision = adoptAuthLifecycleRevision();
+  rotateAuthLifecycleRevision();
+  invalidateAuthSessionGeneration();
+  clearStoredSession(obsoleteRevision);
+};
+const storeSession = (session, operation) => {
+  if (!isCurrentAuthOperation(operation)) return null;
+  const sessionKey = sessionKeyForLifecycle(operation.lifecycleRevision);
+  if (!sessionKey) return null;
+  const serialized = JSON.stringify({ lifecycleRevision: operation.lifecycleRevision, session });
+  if (!storageSet(sessionKey, serialized)) return null;
+  if (!isCurrentAuthOperation(operation) || storageGet(sessionKey) !== serialized) return null;
+  return session;
+};
+const isAuthoritativeStoredSession = (operation, rawEnvelope) => {
+  const sessionKey = sessionKeyForLifecycle(operation?.lifecycleRevision);
+  return Boolean(sessionKey && isCurrentAuthOperation(operation) && storageGet(sessionKey) === rawEnvelope);
+};
 const authError = (message, status = 0) => Object.assign(new Error(message), {
   status,
   retryable: status === 0 || status === 408 || status === 429 || status >= 500
@@ -431,39 +538,59 @@ const verifySession = async (candidate) => {
   session.user = { id: user.id, email: user.email || '', user_metadata: user.user_metadata || {} };
   return session;
 };
-const verifyAndStoreSession = async (candidate) => {
+const verifyAndStoreSession = async (candidate, operation) => {
+  if (!isCurrentAuthOperation(operation)) return null;
   const session = await verifySession(candidate);
-  storeSession(session);
-  return session;
+  if (!isCurrentAuthOperation(operation)) return null;
+  return storeSession(session, operation);
 };
-const refreshSession = async (session) => verifyAndStoreSession(await authRequest('/auth/v1/token?grant_type=refresh_token', { method: 'POST', body: { refresh_token: session.refresh_token } }));
+const refreshSession = async (session, operation, sourceRawEnvelope) => {
+  if (!isAuthoritativeStoredSession(operation, sourceRawEnvelope)) return null;
+  const refreshed = await authRequest('/auth/v1/token?grant_type=refresh_token', { method: 'POST', body: { refresh_token: session.refresh_token } });
+  if (!isAuthoritativeStoredSession(operation, sourceRawEnvelope)) return null;
+  const verifiedSession = await verifySession(refreshed);
+  if (!isAuthoritativeStoredSession(operation, sourceRawEnvelope)) return null;
+  return storeSession(verifiedSession, operation);
+};
 const base64Url = (bytes) => btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
 const randomVerifier = () => { const bytes = new Uint8Array(64); crypto.getRandomValues(bytes); return base64Url(bytes); };
-const readPkceFlow = () => {
+const readPkceFlow = (lifecycleRevision) => {
+  const pkceKey = pkceKeyForLifecycle(lifecycleRevision);
+  if (!pkceKey) return null;
+  const rawFlow = storageGet(pkceKey);
   try {
-    const flow = JSON.parse(localStorage.getItem(AUTH_PKCE_KEY) || 'null');
+    const flow = JSON.parse(rawFlow || 'null');
     const maxAge = flow?.purpose === 'signup' ? AUTH_SIGNUP_FLOW_MAX_AGE_MS : AUTH_SOCIAL_FLOW_MAX_AGE_MS;
     const now = Date.now();
     const age = now - flow?.createdAt;
-    if (!flow || !['signup', 'social'].includes(flow.purpose) || typeof flow.verifier !== 'string' || !/^[A-Za-z0-9_-]{43,128}$/.test(flow.verifier) || !Number.isFinite(flow.createdAt) || flow.createdAt <= 0 || flow.createdAt > now || age < 0 || age > maxAge || !isSafeReturnPath(flow.returnPath)) {
-      localStorage.removeItem(AUTH_PKCE_KEY);
+    const stateIsValid = flow?.purpose !== 'social' || (typeof flow.state === 'string' && /^[A-Za-z0-9_-]{16,128}$/.test(flow.state));
+    if (!flow || flow.lifecycleRevision !== lifecycleRevision || !['signup', 'social'].includes(flow.purpose) || typeof flow.verifier !== 'string' || !/^[A-Za-z0-9_-]{43,128}$/.test(flow.verifier) || !isValidAuthLifecycleRevision(flow.lifecycleRevision) || !Number.isFinite(flow.createdAt) || flow.createdAt <= 0 || flow.createdAt > now || age < 0 || age > maxAge || !isSafeReturnPath(flow.returnPath) || !stateIsValid) {
+      clearPkceFlow(lifecycleRevision, rawFlow);
       return null;
     }
-    return flow;
-  } catch { localStorage.removeItem(AUTH_PKCE_KEY); return null; }
+    return { rawFlow, flow };
+  } catch { clearPkceFlow(lifecycleRevision, rawFlow); return null; }
 };
-const clearPkceFlow = () => localStorage.removeItem(AUTH_PKCE_KEY);
+const clearPkceFlow = (lifecycleRevision, expectedRawFlow = null) => {
+  const pkceKey = pkceKeyForLifecycle(lifecycleRevision);
+  if (!pkceKey) return false;
+  if (expectedRawFlow !== null && storageGet(pkceKey) !== expectedRawFlow) return false;
+  return storageRemove(pkceKey);
+};
 const pkceChallenge = async (verifier) => base64Url(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier))));
-const createPkceFlow = async (purpose, allowExisting = false) => {
-  const existing = readPkceFlow();
-  if (existing) {
-    if (allowExisting && existing.purpose === purpose) return { ...existing, challenge: await pkceChallenge(existing.verifier), reused: true };
-    throw new Error('An authentication confirmation is already pending. Finish it before starting another sign-in.');
-  }
+const createPkceFlow = async (purpose, lifecycleRevision) => {
+  const pkceKey = pkceKeyForLifecycle(lifecycleRevision);
+  if (!pkceKey || readAuthLifecycleRevision() !== lifecycleRevision || !['signup', 'social'].includes(purpose)) throw new Error('Unable to prepare secure sign-in.');
   const verifier = randomVerifier();
-  const flow = { purpose, verifier, createdAt: Date.now(), returnPath: sessionReturnPath() };
-  localStorage.setItem(AUTH_PKCE_KEY, JSON.stringify(flow));
-  return { ...flow, challenge: await pkceChallenge(verifier), reused: false };
+  const flow = { purpose, verifier, lifecycleRevision, createdAt: Date.now(), returnPath: sessionReturnPath(), ...(purpose === 'social' ? { state: randomVerifier() } : {}) };
+  const rawFlow = JSON.stringify(flow);
+  if (!storageSet(pkceKey, rawFlow) || storageGet(pkceKey) !== rawFlow) throw new Error('Unable to prepare secure sign-in.');
+  const challenge = await pkceChallenge(verifier);
+  if (readAuthLifecycleRevision() !== lifecycleRevision || storageGet(pkceKey) !== rawFlow) {
+    clearPkceFlow(lifecycleRevision, rawFlow);
+    return null;
+  }
+  return { ...flow, rawFlow, challenge };
 };
 const renderAccountActions = (session = null) => {
   if (!siteNav) return;
@@ -474,9 +601,12 @@ const renderAccountActions = (session = null) => {
     const accountLabel = document.createElement('span'); accountLabel.className = 'account-label'; accountLabel.textContent = session.user?.email || 'Account';
     const logoutButton = document.createElement('button'); logoutButton.className = 'account-logout'; logoutButton.type = 'button'; logoutButton.textContent = 'Log out';
     logoutButton.addEventListener('click', async () => {
+      const logoutAccessToken = session.access_token;
       logoutButton.disabled = true;
-      try { await authRequest('/auth/v1/logout', { method: 'POST', accessToken: session.access_token }); } catch { /* Local logout remains safe if the network is unavailable. */ }
-      clearStoredSession(); renderAccountActions(); window.location.assign(siteHref('index.html'));
+      invalidateOrdinarySession();
+      renderAccountActions();
+      try { await authRequest('/auth/v1/logout', { method: 'POST', accessToken: logoutAccessToken }); } catch { /* Local logout remains safe if the network is unavailable. */ }
+      window.location.assign(siteHref('index.html'));
     });
     actions.append(accountLabel, logoutButton);
   } else {
@@ -488,13 +618,22 @@ const renderAccountActions = (session = null) => {
 };
 const restoreSession = async () => {
   if (!isAuthConfigured) return renderAccountActions();
-  const stored = readStoredSession();
+  const operation = captureAuthOperation();
+  const stored = readStoredSession(operation.lifecycleRevision);
   if (!stored) return renderAccountActions();
   try {
-    const session = stored.expires_at - Math.floor(Date.now() / 1000) <= AUTH_REFRESH_SKEW_SECONDS ? await refreshSession(stored) : await verifyAndStoreSession(stored);
-    renderAccountActions(session);
+    if (stored.session.expires_at - Math.floor(Date.now() / 1000) <= AUTH_REFRESH_SKEW_SECONDS) {
+      const refreshedSession = await refreshSession(stored.session, operation, stored.rawEnvelope);
+      if (refreshedSession && isCurrentAuthOperation(operation)) renderAccountActions(refreshedSession);
+      else if (isAuthoritativeStoredSession(operation, stored.rawEnvelope)) renderAccountActions();
+      return;
+    }
+    const verifiedSession = await verifySession(stored.session);
+    if (!isAuthoritativeStoredSession(operation, stored.rawEnvelope)) return;
+    renderAccountActions(verifiedSession);
   } catch (error) {
-    if (!error?.retryable) clearStoredSession();
+    if (!isAuthoritativeStoredSession(operation, stored.rawEnvelope)) return;
+    if (!error?.retryable) invalidateOrdinarySession();
     renderAccountActions();
   }
 };
@@ -504,15 +643,24 @@ const beginSocialLogin = async (provider, form) => {
   try {
     await authenticationInitialisation;
     if (!isAuthConfigured) { setAuthMessage(form, 'Account sign-in needs Supabase configuration.', 'error'); return; }
+    const operation = beginAuthReplacement();
+    if (!operation) { setAuthMessage(form, 'Sign-in cannot be completed in this browser session. Please check browser privacy settings and try again.', 'error'); return; }
     setAuthMessage(form, 'Redirecting to secure sign-in…');
-    const flow = await createPkceFlow('social');
+    const flow = await createPkceFlow('social', operation.lifecycleRevision);
+    if (!flow || !isCurrentAuthOperation(operation)) {
+      if (flow) clearPkceFlow(operation.lifecycleRevision, flow.rawFlow);
+      return;
+    }
     const url = new URL(`${supabaseUrl}/auth/v1/authorize`);
     url.searchParams.set('provider', provider === 'microsoft' ? 'azure' : 'google');
     url.searchParams.set('redirect_to', authCallbackUrl());
     url.searchParams.set('code_challenge', flow.challenge); url.searchParams.set('code_challenge_method', 's256');
+    url.searchParams.set('state', flow.state);
     if (provider === 'microsoft') url.searchParams.set('scopes', 'email');
     window.location.assign(url.href);
-  } catch { setAuthMessage(form, 'Unable to start secure sign-in. Please try again.', 'error'); }
+  } catch {
+    setAuthMessage(form, 'Unable to start secure sign-in. Please try again.', 'error');
+  }
   finally { releaseAuthInteraction(); }
 };
 const submitEmailAuth = async (form) => {
@@ -520,21 +668,48 @@ const submitEmailAuth = async (form) => {
   const email = String(values.get('email') || '').trim(); const password = String(values.get('password') || '');
   if (!email || !password) { setAuthMessage(form, 'Enter your email address and password.', 'error'); return; }
   if (!acquireAuthInteraction()) return;
+  let operation = null;
   try {
     await authenticationInitialisation;
     if (!isAuthConfigured) { setAuthMessage(form, 'Account sign-in needs Supabase configuration.', 'error'); return; }
+    operation = beginAuthReplacement();
+    if (!operation) { setAuthMessage(form, 'Sign-in cannot be completed in this browser session. Please check browser privacy settings and try again.', 'error'); return; }
     setAuthMessage(form, isSignup ? 'Creating your account…' : 'Signing you in…');
     let result;
     if (isSignup) {
-      const flow = await createPkceFlow('signup', true);
+      const flow = await createPkceFlow('signup', operation.lifecycleRevision);
+      if (!flow || !isCurrentAuthOperation(operation)) {
+        if (flow) clearPkceFlow(operation.lifecycleRevision, flow.rawFlow);
+        setAuthMessage(form, 'Sign-in cannot be completed in this browser session. Please check browser privacy settings and try again.', 'error');
+        return;
+      }
       const signupUrl = new URL('/auth/v1/signup', supabaseUrl);
       signupUrl.searchParams.set('redirect_to', authCallbackUrl());
       result = await authRequest(`${signupUrl.pathname}${signupUrl.search}`, { method: 'POST', body: { email, password, data: { full_name: String(values.get('name') || '').trim() }, code_challenge: flow.challenge, code_challenge_method: 's256' } });
     } else result = await authRequest('/auth/v1/token?grant_type=password', { method: 'POST', body: { email, password } });
-    if (result.access_token) { if (isSignup) clearPkceFlow(); await verifyAndStoreSession(result); window.location.assign(siteHref('index.html')); return; }
+    if (!isCurrentAuthOperation(operation)) {
+      setAuthMessage(form, 'Sign-in cannot be completed in this browser session. Please check browser privacy settings and try again.', 'error');
+      return;
+    }
+    if (result.access_token) {
+      const session = await verifyAndStoreSession(result, operation);
+      if (!session || !isCurrentAuthOperation(operation)) {
+        setAuthMessage(form, 'Sign-in cannot be completed in this browser session. Please check browser privacy settings and try again.', 'error');
+        return;
+      }
+      if (isSignup) {
+        const flow = readPkceFlow(operation.lifecycleRevision);
+        if (flow) clearPkceFlow(operation.lifecycleRevision, flow.rawFlow);
+      }
+      window.location.assign(siteHref('index.html'));
+      return;
+    }
     setAuthMessage(form, 'Check your email to verify your address before signing in.', 'success');
   } catch (error) {
-    if (form.dataset.accountForm === 'signup' && !error.retryable && readPkceFlow()?.purpose === 'signup') clearPkceFlow();
+    if (!isCurrentAuthOperation(operation)) {
+      setAuthMessage(form, 'Sign-in cannot be completed in this browser session. Please check browser privacy settings and try again.', 'error');
+      return;
+    }
     setAuthMessage(form, 'Unable to complete that request. Check your details and try again.', 'error');
   }
   finally { releaseAuthInteraction(); }
@@ -546,32 +721,44 @@ const completeAuthCallback = async () => {
   const parameters = callbackUrl.searchParams;
   const hasProviderError = parameters.has('error') || parameters.has('error_code') || parameters.has('error_description');
   const code = parameters.get('code');
-  const hasFragment = callbackUrl.hash.length > 1;
+  const state = parameters.get('state');
   history.replaceState({}, document.title, window.location.pathname);
-  if (hasProviderError || hasFragment) {
-    clearPkceFlow();
+  const lifecycleRevision = adoptAuthLifecycleRevision();
+  const storedFlow = readPkceFlow(lifecycleRevision);
+  if (!code || !storedFlow) {
+    callback.textContent = 'This sign-in link has expired. Please start again.';
+    return;
+  }
+  const { flow, rawFlow } = storedFlow;
+  const stateMatches = flow.purpose !== 'social' || (typeof state === 'string' && state === flow.state);
+  if (!stateMatches) {
+    callback.textContent = 'This sign-in could not be completed. Please return to Log in and try again.';
+    return;
+  }
+  if (hasProviderError) {
+    if (flow.purpose === 'social') clearPkceFlow(lifecycleRevision, rawFlow);
     callback.textContent = 'This sign-in could not be completed. Please return to Log in and try again.';
     return;
   }
   if (!isAuthConfigured) {
-    if (code) clearPkceFlow();
     callback.textContent = 'Authentication is not configured yet.';
     return;
   }
-  const flow = readPkceFlow();
-  if (!code || !flow) {
-    if (flow?.purpose !== 'signup') clearPkceFlow();
-    callback.textContent = 'This sign-in link has expired. Please start again.';
+  const operation = { generation: authSessionGeneration, lifecycleRevision };
+  if (!isCurrentAuthOperation(operation)) {
+    callback.textContent = 'This sign-in could not be completed. Please return to Log in and try again.';
     return;
   }
   callback.textContent = 'Finishing secure sign-in…';
   try {
     const session = await authRequest('/auth/v1/token?grant_type=pkce', { method: 'POST', body: { auth_code: code, code_verifier: flow.verifier } });
-    clearPkceFlow();
-    await verifyAndStoreSession(session);
+    if (!isCurrentAuthOperation(operation)) return;
+    const verifiedSession = await verifyAndStoreSession(session, operation);
+    if (!verifiedSession || !isCurrentAuthOperation(operation)) return;
+    clearPkceFlow(lifecycleRevision, rawFlow);
     window.location.replace(new URL(flow.returnPath, siteRootUrl).href);
   } catch (error) {
-    clearPkceFlow();
+    if (!isCurrentAuthOperation(operation)) return;
     callback.textContent = 'We could not verify this sign-in. Please return to Log in and try again.';
   }
 };
@@ -612,7 +799,7 @@ const completePasswordRecovery = async (form) => {
   };
   history.replaceState({}, document.title, window.location.pathname);
   recoverySession = null;
-  clearStoredSession();
+  invalidateOrdinarySession();
   renderAccountActions();
   setRecoveryFormState(form, false);
   if (!isAuthConfigured || candidate.type !== 'recovery' || candidate.token_type.toLowerCase() !== 'bearer') {
@@ -635,14 +822,20 @@ const submitPasswordUpdate = async (form) => {
   const confirmPassword = String(values.get('confirmPassword') || '');
   if (password.length < 8) { setAuthMessage(form, 'Use a password with at least eight characters.', 'error'); return; }
   if (password !== confirmPassword) { setAuthMessage(form, 'The new passwords do not match.', 'error'); return; }
-  if (!recoverySession || !acquireAuthInteraction()) return;
+  const activeRecoverySession = recoverySession;
+  if (!activeRecoverySession) {
+    setRecoveryFormState(form, false);
+    setAuthMessage(form, 'This recovery link is invalid or has expired. Request a new link to continue.', 'error');
+    return;
+  }
+  if (!acquireAuthInteraction()) return;
   setRecoveryFormState(form, false, true);
   try {
-    await authRequest('/auth/v1/user', { method: 'PUT', accessToken: recoverySession.access_token, body: { password } });
+    await authRequest('/auth/v1/user', { method: 'PUT', accessToken: activeRecoverySession.access_token, body: { password } });
     setAuthMessage(form, 'Your password has been updated. Return to Log in with your new password.', 'success');
-    try { await authRequest('/auth/v1/logout', { method: 'POST', accessToken: recoverySession.access_token }); } catch { /* Local cleanup still prevents reuse on this device. */ }
+    try { await authRequest('/auth/v1/logout', { method: 'POST', accessToken: activeRecoverySession.access_token }); } catch { /* Local cleanup still prevents reuse on this device. */ }
     recoverySession = null;
-    clearStoredSession();
+    invalidateOrdinarySession();
     renderAccountActions();
     setRecoveryFormState(form, false);
     window.setTimeout(() => window.location.replace(siteHref('login.html')), 1800);
@@ -679,12 +872,64 @@ authenticationInitialisation = authCallbackTarget
   ? completeAuthCallback().catch(() => { authCallbackTarget.textContent = 'We could not complete this sign-in. Please return to Log in and try again.'; })
   : passwordResetForm
     ? completePasswordRecovery(passwordResetForm).catch(() => { recoverySession = null; clearStoredSession(); setRecoveryFormState(passwordResetForm, false); setAuthMessage(passwordResetForm, 'This recovery link is invalid or has expired. Request a new link to continue.', 'error'); })
-    : restoreSession().catch(() => { clearStoredSession(); renderAccountActions(); });
+    : restoreSession().catch(() => { renderAccountActions(); });
 authenticationInitialisation = authenticationInitialisation.finally(() => {
   setAuthFormAvailability(isAuthConfigured);
   setRecoveryFormState(passwordRecoveryForm, isAuthConfigured);
 });
 
+const synchroniseStoredSessionChange = async (rawEnvelope, operation) => {
+  if (passwordResetForm) return;
+  const stored = parseStoredSessionEnvelope(operation?.lifecycleRevision, rawEnvelope);
+  if (!stored) {
+    if (isAuthoritativeStoredSession(operation, rawEnvelope)) renderAccountActions();
+    return;
+  }
+  try {
+    const session = await verifySession(stored.session);
+    if (!isAuthoritativeStoredSession(operation, rawEnvelope)) return;
+    renderAccountActions(session);
+  } catch (error) {
+    if (!isAuthoritativeStoredSession(operation, rawEnvelope)) return;
+    renderAccountActions();
+  }
+};
+
+window.addEventListener('storage', (event) => {
+  if (event.key === AUTH_LIFECYCLE_KEY) {
+    const currentRevision = readAuthLifecycleRevision();
+    if (event.newValue !== currentRevision || currentRevision === observedAuthLifecycleRevision) return;
+    observedAuthLifecycleRevision = currentRevision;
+    invalidateAuthSessionGeneration();
+    if (!passwordResetForm) renderAccountActions();
+    return;
+  }
+  const currentRevision = adoptAuthLifecycleRevision();
+  const currentSessionKey = sessionKeyForLifecycle(currentRevision);
+  if (!currentSessionKey || event.key !== currentSessionKey) return;
+  const currentRawEnvelope = storageGet(currentSessionKey);
+  if (event.newValue === null && currentRawEnvelope !== null) return;
+  if (event.newValue === null) {
+    if (!passwordResetForm) renderAccountActions();
+    return;
+  }
+  if (currentRawEnvelope !== event.newValue) return;
+  const operation = captureAuthOperation();
+  synchroniseStoredSessionChange(event.newValue, operation);
+});
+
+window.addEventListener('pageshow', (event) => {
+  if (!event.persisted) return;
+  invalidateAuthSessionGeneration();
+  recoverySession = null;
+  renderAccountActions();
+  if (passwordResetForm) {
+    setRecoveryFormState(passwordResetForm, false);
+    setAuthMessage(passwordResetForm, 'This recovery link is no longer active. Request a new link to continue.', 'error');
+    return;
+  }
+  restoreSession().catch(() => { renderAccountActions(); });
+});
 const motionQuery = window.matchMedia('(prefers-reduced-motion: no-preference)');
 if (motionQuery.matches && 'IntersectionObserver' in window) {
   const revealTargets = document.querySelectorAll('.content-section, .curated-card, .interior-card, .lifestyle-card, .affiliate-product-card');
