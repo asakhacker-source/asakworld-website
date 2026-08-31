@@ -59,3 +59,35 @@
   .analytics-consent-panel { right: 12px; bottom: 66px; width: calc(100vw - 24px); }
   .analytics-privacy-control { right: 12px; bottom: 12px; }
 }
+
+/* Visual-only integration with the ASARK futuristic interface. */
+.analytics-consent-panel {
+  width: min(350px, calc(100vw - 32px));
+  padding: 16px;
+  border-color: rgba(128, 232, 248, .42);
+  border-radius: 12px;
+  background: rgba(5, 15, 27, .9);
+  box-shadow: 0 18px 52px rgba(0, 18, 40, .45), inset 0 1px 0 rgba(150, 239, 255, .08);
+  backdrop-filter: blur(16px);
+}
+.analytics-consent-panel p { color: #dce9f4; font-size: 13px; }
+.analytics-consent-actions { gap: 8px; margin-top: 14px; }
+.analytics-consent-actions button, .analytics-privacy-control {
+  min-height: 38px;
+  border-color: rgba(128, 232, 248, .65);
+  border-radius: 7px;
+  color: #dffcff;
+}
+.analytics-consent-actions button:hover, .analytics-privacy-control:hover { background: rgba(104, 211, 255, .16); }
+.analytics-privacy-control { background: rgba(5, 15, 27, .9); box-shadow: 0 10px 28px rgba(0, 15, 35, .32); }
+
+/* Black-and-white semiconductor visual correction; behavior remains unchanged. */
+.analytics-consent-panel {
+  border-color: rgba(255, 255, 255, .16);
+  background: rgba(11, 13, 16, .96);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, .45);
+}
+.analytics-consent-panel p { color: #eceeed; }
+.analytics-consent-actions button, .analytics-privacy-control { border-color: rgba(255, 255, 255, .35); color: #fff; }
+.analytics-consent-actions button:hover, .analytics-privacy-control:hover { border-color: #55e6e6; background: rgba(85, 230, 230, .12); }
+.analytics-privacy-control { background: rgba(11, 13, 16, .96); box-shadow: 0 10px 28px rgba(0, 0, 0, .32); }
