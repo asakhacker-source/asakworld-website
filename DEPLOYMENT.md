@@ -2,7 +2,7 @@
 
 ## Production origin
 
-The approved public origin is `https://www.asark.publicvm.com/`. The GitHub Pages workflow and `CNAME` file deploy this static repository for that hostname. Configure the hosting, proxy, CDN, or dedicated redirect layer to redirect the alternate non-`www` host to `https://www.asark.publicvm.com/`; DNS alone does not issue HTTP redirects.
+The approved public origin is `https://asarkworld.com/`. The GitHub Pages workflow and `CNAME` file deploy this static repository for that hostname. Configure the hosting, proxy, CDN, or dedicated redirect layer to redirect the alternate non-`www` host to `https://asarkworld.com/`; DNS alone does not issue HTTP redirects.
 
 ## Pre-deployment checks
 
@@ -19,7 +19,7 @@ Email/password authentication is configured with the owner-supplied public Supab
 
 When Supabase is enabled, the production CSP must allow the exact configured Supabase project origin in `connect-src`; do not use a wildcard.
 
-Before deploying password recovery, add `https://www.asark.publicvm.com/reset-password.html` to the Supabase Auth Redirect URLs. This is a dashboard action, not a repository setting.
+Before deploying password recovery, add `https://asarkworld.com/reset-password.html` to the Supabase Auth Redirect URLs. This is a dashboard action, not a repository setting.
 
 ## HTTPS and security headers
 
@@ -39,7 +39,7 @@ Serve the site over HTTPS. GitHub Pages does not natively provide general per-si
 
 ## Cache and PWA
 
-Current deployment source versions are `style.css?v=64`, `site.js?v=78`, and service-worker cache `asark-app-v82`. Change versions only when their underlying CSS, JavaScript, service-worker behavior, or app-shell cache contents change.
+Current deployment source versions are `style.css?v=64`, `site.js?v=78`, and service-worker cache `asark-app-v83`. Change versions only when their underlying CSS, JavaScript, service-worker behavior, or app-shell cache contents change.
 
 ## Post-deployment smoke test
 

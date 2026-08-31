@@ -1,4 +1,4 @@
-const CACHE_NAME = 'asark-app-v82';
+const CACHE_NAME = 'asark-app-v83';
 const OFFLINE_URL = './offline.html';
 const APP_SHELL = [
   './', './index.html', './offline.html', './css/style.css?v=64', './js/site.js?v=78',
