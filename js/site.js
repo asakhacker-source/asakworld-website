@@ -74,63 +74,14 @@ const isProviderEnabled = (provider) => isAuthConfigured && ['google', 'microsof
 const homeUrl = siteRootUrl;
 
 
-let deferredInstallPrompt;
-let isInstalled = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-const installButton = document.createElement('button');
+const installButton = document.createElement('a');
 installButton.className = 'app-install';
-installButton.type = 'button';
-installButton.hidden = true;
 installButton.textContent = 'Install app';
-installButton.setAttribute('aria-label', 'Install ASARK app');
+installButton.href = '/downloads/ASARK-Android-v1.0.0.apk';
+installButton.download = 'ASARK-Android-v1.0.0.apk';
+installButton.setAttribute('aria-label', 'Download the official ASARK Android APK');
+installButton.title = 'Download the official ASARK Android APK';
 document.querySelector('.site-header')?.append(installButton);
-
-const isIosSafari = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
-const setInstallButton = () => {
-  if (isInstalled) {
-    installButton.hidden = true;
-    return;
-  }
-  if (deferredInstallPrompt) {
-    installButton.textContent = 'Install app';
-    installButton.setAttribute('aria-label', 'Install ASARK app');
-    installButton.hidden = false;
-    return;
-  }
-  if (isIosSafari) {
-    installButton.textContent = 'Add to Home Screen';
-    installButton.setAttribute('aria-label', 'Add ASARK to your iPhone or iPad home screen');
-    installButton.hidden = false;
-    return;
-  }
-  installButton.hidden = true;
-};
-
-window.addEventListener('beforeinstallprompt', (event) => {
-  event.preventDefault();
-  deferredInstallPrompt = event;
-  setInstallButton();
-});
-
-installButton.addEventListener('click', async () => {
-  if (deferredInstallPrompt) {
-    deferredInstallPrompt.prompt();
-    await deferredInstallPrompt.userChoice;
-    deferredInstallPrompt = undefined;
-    setInstallButton();
-    return;
-  }
-  if (isIosSafari) {
-    window.alert('To install ASARK, tap Share and choose Add to Home Screen.');
-  }
-});
-
-window.addEventListener('appinstalled', () => {
-  isInstalled = true;
-  deferredInstallPrompt = undefined;
-  setInstallButton();
-});
-
-setInstallButton();
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
