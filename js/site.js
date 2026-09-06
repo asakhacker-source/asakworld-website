@@ -240,6 +240,7 @@ if (currentPage === 'space.html') {
 
 const technologyBlogConnections = {
   'ai-technology.html': ['ai-title', 'Read the AI Technology Journal guide'],
+  'semiconductor.html': ['semiconductor-title', 'Read the Semiconductor Technology Journal guide'],
   'market-technology.html': ['market-title', 'Read the Market Technology Journal guide'],
   'animation-technology.html': ['animation-title', 'Read the Animation Technology Journal guide'],
   'space.html': ['space-title', 'Read the Space Technology Journal guide'],
