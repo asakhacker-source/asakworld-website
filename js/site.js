@@ -280,6 +280,30 @@ if (saveButton) {
   saveButton.addEventListener('click', () => { saveButton.textContent = 'Saved'; saveButton.disabled = true; });
 }
 
+const affiliateSidebarPages = new Set([
+  'index.html', 'about.html', 'ai-technology.html', 'ancient.html', 'animation-technology.html',
+  'architecture.html', 'art-design.html', 'blogs.html', 'computing.html', 'culture-future.html',
+  'explore.html', 'futuristic.html', 'graphics-card.html', 'hacker-setup.html',
+  'journal/ai-technology-future.html', 'journal/animation-technology-future.html',
+  'journal/market-technology-future.html', 'journal/semiconductor-technology-future.html',
+  'journal/space-technology-future.html', 'journal/vehicle-technology-future.html',
+  'market-technology.html', 'modern.html', 'processor.html',
+  'projects/beyond-the-shore.html', 'projects/contemporary-estate.html',
+  'projects/dining-and-kitchen.html', 'projects/glass-and-stone.html',
+  'projects/living-spaces.html', 'projects/material-stories.html', 'projects/minimal-estate.html',
+  'projects/modern-elegance.html', 'projects/new-classic.html', 'projects/private-villa.html',
+  'projects/quiet-luxury.html', 'projects/timeless-style.html', 'semiconductor.html',
+  'space.html', 'stories.html', 'technology.html', 'vehicle-technology.html', 'visual.html', 'vlsi.html'
+]);
+let affiliatePagePath = '';
+try { affiliatePagePath = decodeURIComponent(window.location.pathname).replace(/^\/+|\/+$/g, '') || 'index.html'; } catch { affiliatePagePath = ''; }
+if (affiliateSidebarPages.has(affiliatePagePath) && !document.querySelector('script[data-amazon-affiliate-products]')) {
+  const affiliateProductsScript = document.createElement('script');
+  affiliateProductsScript.src = `${siteHref('js/amazon-affiliate-products.js')}?v=8`;
+  affiliateProductsScript.dataset.amazonAffiliateProducts = 'true';
+  document.head.append(affiliateProductsScript);
+}
+
 const AUTH_SESSION_PREFIX = 'asark.auth.session.v3.';
 const OLD_AUTH_SESSION_V2_KEY = 'asark.auth.session.v2';
 const AUTH_PKCE_PREFIX = 'asark.auth.pkce.v2.';
