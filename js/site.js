@@ -151,28 +151,7 @@ document.querySelectorAll('.visual-card[data-card-link], .card[data-project-link
   });
 });
 
-const editorialRecommendations = {
-  'architecture.html': [['Architecture books', 'architecture coffee table books'], ['Outdoor lighting', 'architectural outdoor lighting'], ['Architectural model tools', 'architectural model making tools']],
-  'ancient.html': [['Ancient architecture books', 'ancient architecture books'], ['World history books', 'world history books'], ['Drawing notebooks', 'architect sketchbook']],
-  'modern.html': [['Modern architecture books', 'modern architecture books'], ['Architectural lighting', 'architectural lighting'], ['Design sketchbooks', 'architecture sketchbook']],
-  'futuristic.html': [['Future design books', 'futuristic design books'], ['Smart lighting', 'smart lighting'], ['3D printing tools', '3d printing tools']],
-  'hacker-setup.html': [['Mechanical keyboards', 'mechanical keyboard'], ['Monitor arms', 'monitor arm'], ['USB-C hubs', 'usb c hub']],
-  'technology.html': [['Technology books', 'technology books'], ['Smart-home hubs', 'smart home hub'], ['Portable SSDs', 'portable ssd']],
-  'ai-technology.html': [['AI books', 'artificial intelligence books'], ['Machine-learning books', 'machine learning books'], ['Python books', 'python programming books']],
-  'market-technology.html': [['Analytics books', 'data analytics books'], ['FinTech books', 'financial technology books'], ['Business technology books', 'business technology books']],
-  'animation-technology.html': [['Drawing tablets', 'drawing tablet'], ['Animation books', 'animation books'], ['Colour-calibrated monitors', 'color calibrated monitor']],
-  'vehicle-technology.html': [['Automotive engineering books', 'automotive engineering books'], ['EV technology books', 'electric vehicle technology books'], ['Emergency tyre inflators', 'portable tyre inflator']],
-  'space.html': [['Astronomy books', 'astronomy books'], ['Telescopes', 'beginner telescope'], ['Space-science books', 'space science books']],
-  'semiconductor.html': [['Electronics books', 'electronics books'], ['Circuit design kits', 'electronics circuit kit'], ['Precision tool kits', 'precision screwdriver set']],
-  'vlsi.html': [['VLSI books', 'vlsi design books'], ['Electronics books', 'semiconductor books'], ['Technical notebooks', 'engineering notebook']],
-  'processor.html': [['Computer architecture books', 'computer architecture books'], ['Cooling pads', 'laptop cooling pad'], ['USB-C hubs', 'usb c hub']],
-  'graphics-card.html': [['Graphics cards', 'graphics card'], ['Gaming monitors', 'gaming monitor'], ['GPU support brackets', 'gpu support bracket']],
-  'blogs.html': [['Technology books', 'technology books'], ['Reading lights', 'reading lamp'], ['Notebooks', 'notebook journal']]
-};
-
 const currentPage = activePage;
-const affiliateAllowedPages = new Set(['ai-technology.html', 'semiconductor.html', 'market-technology.html', 'animation-technology.html', 'space.html', 'vehicle-technology.html', 'blogs.html', 'curated.html']);
-const recommendedProducts = affiliateAllowedPages.has(currentPage) ? editorialRecommendations[currentPage] : null;
 
 if (currentPage === 'architecture.html') {
   const architectureContent = document.querySelector('.content-section');
@@ -258,19 +237,6 @@ if (technologyBlogConnection) {
   }
 }
 
-if (recommendedProducts && document.querySelector('main')) {
-  const recommendations = document.createElement('aside');
-  recommendations.className = 'page-affiliate';
-  recommendations.setAttribute('aria-label', 'ASARK recommendations');
-  const links = recommendedProducts.map(([label, query]) => {
-    const indiaUrl = new URL('https://www.amazon.in/s');
-    indiaUrl.searchParams.set('k', query);
-    indiaUrl.searchParams.set('tag', 'asark-21');
-    return `<a href="${indiaUrl.href}" target="_blank" rel="sponsored noopener noreferrer">${label} <span aria-hidden="true">↗</span></a>`;
-  }).join('');
-  recommendations.innerHTML = `<p class="eyebrow">ASARK recommends</p><h2>Selected for this collection.</h2><p class="page-affiliate-disclosure">As an Amazon Associate I earn from qualifying purchases.</p><div class="page-affiliate-links">${links}</div>`;
-  document.querySelector('.site-footer')?.before(recommendations);
-}
 const shareButton = document.querySelector('#share-button');
 if (navigator.share && shareButton) {
   shareButton.addEventListener('click', () => navigator.share({ title: document.title, url: window.location.href }));
@@ -293,13 +259,14 @@ const affiliateSidebarPages = new Set([
   'projects/living-spaces.html', 'projects/material-stories.html', 'projects/minimal-estate.html',
   'projects/modern-elegance.html', 'projects/new-classic.html', 'projects/private-villa.html',
   'projects/quiet-luxury.html', 'projects/timeless-style.html', 'semiconductor.html',
-  'space.html', 'stories.html', 'technology.html', 'vehicle-technology.html', 'visual.html', 'vlsi.html'
+  'space.html', 'stories.html', 'technology.html', 'vehicle-technology.html', 'visual.html', 'vlsi.html',
+  'what-is-vlsi.html'
 ]);
 let affiliatePagePath = '';
 try { affiliatePagePath = decodeURIComponent(window.location.pathname).replace(/^\/+|\/+$/g, '') || 'index.html'; } catch { affiliatePagePath = ''; }
 if (affiliateSidebarPages.has(affiliatePagePath) && !document.querySelector('script[data-amazon-affiliate-products]')) {
   const affiliateProductsScript = document.createElement('script');
-  affiliateProductsScript.src = `${siteHref('js/amazon-affiliate-products.js')}?v=8`;
+  affiliateProductsScript.src = `${siteHref('js/amazon-affiliate-products.js')}?v=10`;
   affiliateProductsScript.dataset.amazonAffiliateProducts = 'true';
   document.head.append(affiliateProductsScript);
 }

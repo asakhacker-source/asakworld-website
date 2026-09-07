@@ -264,8 +264,6 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .affiliate-disclosure { margin: -25px 0 30px; padding: 14px 16px; border: 1px solid rgba(217,173,50,.5); color: var(--muted); font-size: 12px; line-height: 1.65; }
 .affiliate-link { display: inline-flex; gap: 8px; margin-top: 20px; color: var(--gold); font-size: 10px; font-weight: 700; letter-spacing: 1.35px; text-decoration: none; text-transform: uppercase; }
 .affiliate-link:hover { color: #f5f1e8; }
-.page-affiliate { width: min(100% - 80px, 1180px); margin: 0 auto 100px; padding: 48px 54px; border: 1px solid var(--line); background: #12120f; }.page-affiliate .eyebrow { margin: 0; }.page-affiliate h2 { margin: 13px 0 10px; font: 400 clamp(2rem, 3.5vw, 3.5rem) var(--serif); }.page-affiliate-disclosure { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }.page-affiliate-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 27px; }.page-affiliate-links a { display: inline-flex; align-items: center; gap: 8px; min-height: 45px; padding: 0 18px; border: 1px solid var(--gold); color: var(--gold); font-size: 10px; font-weight: 700; letter-spacing: 1.1px; text-decoration: none; text-transform: uppercase; }.page-affiliate-links a:hover { background: var(--gold); color: #0b0a07; }
-@media (max-width: 600px) { .page-affiliate { width: min(100% - 32px, 1180px); margin-bottom: 70px; padding: 34px 26px; }.page-affiliate-links { display: grid; grid-template-columns: 1fr; }.page-affiliate-links a { justify-content: center; } }
 
 
 /* Editorial product recommendations */
@@ -565,13 +563,6 @@ body { background: radial-gradient(circle at 84% -10%, rgba(135, 246, 229, .09),
 .technology-card > div a { color: var(--signal); font-size: 10px; font-weight: 700; letter-spacing: 1px; text-decoration: none; text-transform: uppercase; }
 .technology-card > div a + a { color: var(--muted); }
 .technology-card > div a:hover { color: var(--text); }
-.technology-shop-panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .8fr); gap: clamp(28px, 5vw, 70px); margin-top: 78px; padding: clamp(30px, 5vw, 58px); border: 1px solid rgba(217, 173, 50, .42); background: linear-gradient(120deg, rgba(217, 173, 50, .1), transparent 55%), var(--surface); }
-.technology-shop-panel h2 { margin: 14px 0; font: 400 clamp(2.1rem, 4vw, 4rem)/.95 var(--serif); }
-.technology-shop-panel > div > p:last-child { max-width: 660px; margin: 0; color: var(--muted); line-height: 1.75; }
-.shop-panel-links { display: grid; align-content: center; gap: 10px; }
-.shop-panel-links a { display: flex; justify-content: space-between; padding: 17px 0; border-bottom: 1px solid rgba(217, 173, 50, .28); color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-decoration: none; text-transform: uppercase; }
-.shop-panel-links a::after { content: '↗'; }
-.shop-panel-links a:hover { color: var(--text); }
 .affiliate-note { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: 10px; }
 .blog-commerce-hero { margin-bottom: 30px; text-align: left; }
 .blog-commerce-hero h1 { margin-left: 0; }
@@ -589,7 +580,7 @@ body { background: radial-gradient(circle at 84% -10%, rgba(135, 246, 229, .09),
 .card-kicker { color: var(--gold) !important; font-size: 9px !important; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase; }
 @media (max-width: 1050px) { .commerce-hub .technology-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 900px) { .commerce-journal .blog-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 700px) { .hub-metrics { grid-template-columns: 1fr; }.hub-metrics div + div { padding-left: 0; border-left: 0; }.technology-shop-panel { grid-template-columns: 1fr; }.commerce-journal .blog-card-grid { grid-template-columns: 1fr; }.technology-hub-hero, .blog-commerce-hero { padding: 30px 24px; } }
+@media (max-width: 700px) { .hub-metrics { grid-template-columns: 1fr; }.hub-metrics div + div { padding-left: 0; border-left: 0; }.commerce-journal .blog-card-grid { grid-template-columns: 1fr; }.technology-hub-hero, .blog-commerce-hero { padding: 30px 24px; } }
 
 /* ASARK section landing pages */
 .section-hub { width: min(100% - 40px, 1280px); margin: 0 auto; padding: clamp(90px, 12vw, 150px) 0; }
@@ -726,7 +717,7 @@ body {
 .home-technology > header, .technology-intro, .section-hub-intro, .guide-hero, .blog-board-intro, .visual-library-intro {
   border-color: rgba(104, 221, 245, .2);
 }
-.card, .product, .visual-card, .visual-library-grid article, .technology-grid article, .section-hub-grid article, .blog-card-grid article, .affiliate-product-card, .page-affiliate, .technology-shop-panel, .guide-toc, .guide-workflow, .blog-connection, .explore-next-grid article {
+.card, .product, .visual-card, .visual-library-grid article, .technology-grid article, .section-hub-grid article, .blog-card-grid article, .affiliate-product-card, .guide-toc, .guide-workflow, .blog-connection, .explore-next-grid article {
   border-color: rgba(102, 222, 244, .2);
   background: linear-gradient(145deg, rgba(13, 29, 47, .82), rgba(6, 14, 27, .72));
   box-shadow: 0 18px 60px rgba(0, 62, 120, .08);
@@ -836,7 +827,7 @@ body { background: #050505; }
 .technology-hub-hero, .blog-commerce-hero { border-color: rgba(255, 255, 255, .1); background: #080a0d; box-shadow: none; }
 .technology-hub-hero::after, .blog-commerce-hero::after { border-color: rgba(85, 230, 230, .25); }
 
-.card, .product, .visual-card, .visual-library-grid article, .section-hub-grid article, .affiliate-product-card, .page-affiliate, .technology-shop-panel, .guide-toc, .guide-workflow, .blog-connection, .explore-next-grid article {
+.card, .product, .visual-card, .visual-library-grid article, .section-hub-grid article, .affiliate-product-card, .guide-toc, .guide-workflow, .blog-connection, .explore-next-grid article {
   border-color: rgba(255, 255, 255, .1);
   background: #0c0f13;
   box-shadow: none;
@@ -884,14 +875,14 @@ main .eyebrow, main .text-link, main .link, main .product a, main .affiliate-lin
 .home-about, .technology-page, .guide-page, .affiliate-article, .about-page, .interiors-page { background: #fff; box-shadow: 0 0 0 100vmax #fff; }
 .home-technology > header > p:last-child, .home-about p, .technology-page p, .section-hub p, .guide-page p, .blog-board p, .affiliate-article p, .visual-library p, .content-section p, .discover-section p, .visual-page p, .about-page p, .interiors-page p { color: #33404d; }
 
-main :is(.card, .product, .visual-card, .visual-library-grid article, .technology-grid article, .section-hub-grid article, .blog-card-grid article, .affiliate-product-card, .page-affiliate, .technology-shop-panel, .guide-toc, .guide-workflow, .blog-connection, .explore-next-grid article, .blog-directory nav a) {
+main :is(.card, .product, .visual-card, .visual-library-grid article, .technology-grid article, .section-hub-grid article, .blog-card-grid article, .affiliate-product-card, .guide-toc, .guide-workflow, .blog-connection, .explore-next-grid article, .blog-directory nav a) {
   border-color: rgba(0, 0, 0, .09);
   background: #fff;
   box-shadow: 0 8px 24px rgba(0, 0, 0, .045);
   color: #0a0c0f;
 }
-main :is(.card, .product, .visual-card, .visual-library-grid article, .technology-grid article, .section-hub-grid article, .blog-card-grid article, .affiliate-product-card, .page-affiliate, .technology-shop-panel, .guide-toc, .guide-workflow, .blog-connection, .explore-next-grid article, .blog-directory nav a) :is(h1, h2, h3) { color: #0a0c0f; }
-main :is(.card, .product, .visual-card, .visual-library-grid article, .technology-grid article, .section-hub-grid article, .blog-card-grid article, .affiliate-product-card, .page-affiliate, .technology-shop-panel, .guide-toc, .guide-workflow, .blog-connection, .explore-next-grid article, .blog-directory nav a) :is(p, li, small, span) { color: #5f6770; }
+main :is(.card, .product, .visual-card, .visual-library-grid article, .technology-grid article, .section-hub-grid article, .blog-card-grid article, .affiliate-product-card, .guide-toc, .guide-workflow, .blog-connection, .explore-next-grid article, .blog-directory nav a) :is(h1, h2, h3) { color: #0a0c0f; }
+main :is(.card, .product, .visual-card, .visual-library-grid article, .technology-grid article, .section-hub-grid article, .blog-card-grid article, .affiliate-product-card, .guide-toc, .guide-workflow, .blog-connection, .explore-next-grid article, .blog-directory nav a) :is(p, li, small, span) { color: #5f6770; }
 .technology-grid, .section-hub-grid, .blog-directory nav { background: rgba(0, 0, 0, .09); }
 .technology-hub-hero, .blog-commerce-hero { border-color: rgba(0, 0, 0, .1); background: #fff; box-shadow: 0 8px 24px rgba(0, 0, 0, .045); }
 .technology-hub-hero::after, .blog-commerce-hero::after { border-color: rgba(8, 125, 134, .22); }
@@ -900,7 +891,7 @@ main :is(.card, .product, .visual-card, .visual-library-grid article, .technolog
 .technology-hub-hero .btn, .blog-commerce-hero .btn { background: #050505; border-color: #050505; color: #fff; }
 .technology-hub-hero .btn-outline, .blog-commerce-hero .btn-outline { border-color: #252a30; color: #0a0c0f; }
 .technology-hub-hero .btn-outline:hover, .blog-commerce-hero .btn-outline:hover { background: #050505; color: #fff; }
-.technology-shop-panel, .page-affiliate, .affiliate-product-card { background: #fff; }
+.affiliate-product-card { background: #fff; }
 .guide-visual img, .technology-card img, .related-grid img, .blog-directory img, .technology-showcase img { border-color: rgba(0, 0, 0, .12); }
 .guide-toc a, .guide-content a, .blog-directory nav a::after, .section-hub-grid a, .technology-grid article > div a { color: #087d86; }
 .guide-content section, .affiliate-product-section, .explore-next, .blog-topic, .blog-post > section { border-color: rgba(0, 0, 0, .1); }
@@ -1094,7 +1085,7 @@ body:not(.home-page) main > :is(.interiors-hero, .curated-hero, .technology-hub-
 }
 body:not(.home-page) main :is(h1, h2, h3, h4) { color: #0a0b0d !important; }
 body:not(.home-page) main :is(p, li, dd, figcaption, small) { color: #4f565d !important; }
-body:not(.home-page) main :is(.card, .product, .visual-card, .technology-grid article, .section-hub-grid article, .blog-card-grid article, .visual-library-grid article, .guide-toc, .guide-workflow, .blog-connection, .explore-next-grid article, .affiliate-product-card, .page-affiliate, .technology-shop-panel, .account-panel) {
+body:not(.home-page) main :is(.card, .product, .visual-card, .technology-grid article, .section-hub-grid article, .blog-card-grid article, .visual-library-grid article, .guide-toc, .guide-workflow, .blog-connection, .explore-next-grid article, .affiliate-product-card, .account-panel) {
   background: #ffffff !important;
   background-image: none !important;
   border-color: rgba(0, 0, 0, .10) !important;

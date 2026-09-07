@@ -37,9 +37,13 @@
     'technology.html': 0
   });
   const MAIN_PAGE_CATEGORIES = Object.freeze(['AI', 'SEMICONDUCTOR', 'SPACE', 'MARKET', 'VEHICLE', 'ANIMATION', 'ARCHITECTURE']);
+  const PAGE_FEATURED_PRODUCTS = Object.freeze({
+    'what-is-vlsi.html': 'ai-intel-core-ultra-9-285k'
+  });
   const PAGE_CATEGORIES = Object.freeze({
     'ai-technology.html': 'AI', 'computing.html': 'AI', 'graphics-card.html': 'AI',
     'processor.html': 'SEMICONDUCTOR', 'semiconductor.html': 'SEMICONDUCTOR', 'vlsi.html': 'SEMICONDUCTOR',
+    'what-is-vlsi.html': 'SEMICONDUCTOR',
     'market-technology.html': 'MARKET', 'animation-technology.html': 'ANIMATION', 'architecture.html': 'ARCHITECTURE',
     'space.html': 'SPACE', 'vehicle-technology.html': 'VEHICLE',
     'journal/ai-technology-future.html': 'AI', 'journal/semiconductor-technology-future.html': 'SEMICONDUCTOR',
@@ -88,7 +92,12 @@
     const matches = validProducts.filter(({ product }) => product.category === category);
     return matches[MAIN_PAGE_OFFSETS[pagePath] % matches.length];
   }).filter(Boolean) : [];
-  const products = isMainPage ? mainPageProducts : (categoryProducts.length ? categoryProducts : generalProducts);
+  let products = isMainPage ? mainPageProducts : (categoryProducts.length ? categoryProducts : generalProducts);
+  const featuredProductId = PAGE_FEATURED_PRODUCTS[pagePath];
+  if (featuredProductId) {
+    const featuredProduct = validProducts.find(({ product }) => product.id === featuredProductId);
+    if (featuredProduct) products = [featuredProduct, ...products.filter(({ product }) => product.id !== featuredProductId)];
+  }
   if (isMainPage && products.length !== MAIN_PAGE_CATEGORIES.length) return;
   const main = document.querySelector('main');
   const footer = document.querySelector('.site-footer');
@@ -206,7 +215,7 @@
     console.warn('[ASARK affiliate] Recommendation artwork could not be loaded; the product link remains available.');
   }, { once: true });
   document.addEventListener('visibilitychange', () => { if (document.hidden) stopRotation(); else startRotation(); });
-  showProduct(isMainPage ? 0 : Math.floor(Math.random() * products.length));
+  showProduct(isMainPage || featuredProductId ? 0 : Math.floor(Math.random() * products.length));
   startRotation();
   };
 
