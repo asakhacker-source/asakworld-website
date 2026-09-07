@@ -1,0 +1,24 @@
+.asark-ad-native {
+  width: min(100% - 40px, 1180px);
+  margin: 0 auto;
+  padding: clamp(48px, 7vw, 88px) 0;
+  overflow: hidden;
+  text-align: center;
+}
+
+.asark-ad-native > div {
+  max-width: 100%;
+  margin-inline: auto;
+  overflow: hidden;
+}
+
+.asark-ad-native :is(img, iframe) {
+  max-width: 100%;
+}
+
+@media (max-width: 600px) {
+  .asark-ad-native {
+    width: min(100% - 32px, 1180px);
+    padding-block: 44px;
+  }
+}
