@@ -17,7 +17,7 @@ a { color: inherit; }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
 
 .site-header { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 28px; min-height: 76px; padding: 16px 5%; background: rgba(10, 10, 9, .94); border-bottom: 1px solid var(--line); backdrop-filter: blur(14px); }
-.logo { color: var(--gold); font-family: var(--serif); font-size: 29px; letter-spacing: 7px; text-decoration: none; }
+.logo { display: block; flex: 0 0 auto; width: clamp(220px, 22vw, 350px); height: 54px; overflow: hidden; background: url('../assets/asark-logo-header.png') left center / contain no-repeat; color: transparent; font-size: 0; text-decoration: none; }
 .menu-toggle { display: none; border: 1px solid var(--line); background: transparent; color: var(--text); padding: 10px 13px; font: inherit; letter-spacing: 1px; cursor: pointer; }
 .app-install { display: inline-flex; align-items: center; justify-content: center; min-height: 37px; border: 1px solid var(--gold); background: transparent; color: var(--gold); padding: 0 12px; cursor: pointer; font: 700 10px/1 var(--sans); letter-spacing: 1.1px; text-align: center; text-decoration: none; text-transform: uppercase; white-space: nowrap; }
 .app-install:hover { background: var(--gold); color: #0b0a07; }
@@ -49,7 +49,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 /* Desktop header: keep navigation and search on one horizontal line. */
 @media (min-width: 821px) {
   .site-header { display: flex; align-items: center; flex-wrap: nowrap; min-height: 76px; padding: 14px 3%; gap: clamp(10px, 1.1vw, 20px); overflow: visible; }
-  .logo { position: static; flex: 0 0 auto; }
+  .logo { position: static; height: 70px; }
   .site-nav { display: flex; flex: 1 1 auto; align-items: center; justify-content: flex-end; flex-wrap: nowrap; min-width: 0; gap: clamp(10px, 1.1vw, 20px); }
   .nav-links { flex: 0 0 auto; align-items: center; flex-wrap: nowrap; gap: clamp(10px, 1.1vw, 20px); overflow: visible; white-space: nowrap; }
   .nav-links-primary, .nav-links-secondary { justify-content: flex-start; padding: 0; }
