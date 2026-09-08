@@ -11,6 +11,42 @@ const dropdownSections = [
   ['technology.html', 'Technology', [['ai-technology.html', 'AI Technology'], ['semiconductor.html', 'Semiconductor & VLSI'], ['market-technology.html', 'Market Technology'], ['animation-technology.html', 'Animation Technology'], ['space.html', 'Space Technology'], ['vehicle-technology.html', 'Vehicle Technology'], ['computing.html', 'Computing']]]
 ];
 const activePage = window.location.pathname.split('/').pop() || 'index.html';
+const socialFooterExcludedPages = new Set(['login.html', 'signup.html', 'forgot-password.html', 'reset-password.html', 'auth-callback.html']);
+const siteFooter = document.querySelector('.site-footer');
+if (siteFooter && !socialFooterExcludedPages.has(activePage) && !siteFooter.querySelector('.footer-social')) {
+  const socialSection = document.createElement('div');
+  socialSection.className = 'footer-social';
+  socialSection.setAttribute('aria-label', 'Follow ASARK');
+
+  const socialHeading = document.createElement('p');
+  socialHeading.className = 'footer-social-heading';
+  socialHeading.textContent = 'Follow ASARK';
+
+  const socialLinks = document.createElement('div');
+  socialLinks.className = 'footer-social-links';
+
+  const linkedInLink = document.createElement('a');
+  linkedInLink.className = 'footer-social-link';
+  linkedInLink.href = 'https://www.linkedin.com/company/asarkworld/';
+  linkedInLink.target = '_blank';
+  linkedInLink.rel = 'noopener noreferrer';
+  linkedInLink.setAttribute('aria-label', 'Follow ASARK on LinkedIn');
+
+  const linkedInIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  linkedInIcon.setAttribute('viewBox', '0 0 24 24');
+  linkedInIcon.setAttribute('width', '18');
+  linkedInIcon.setAttribute('height', '18');
+  linkedInIcon.setAttribute('aria-hidden', 'true');
+  linkedInIcon.setAttribute('focusable', 'false');
+  const linkedInPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  linkedInPath.setAttribute('fill', 'currentColor');
+  linkedInPath.setAttribute('d', 'M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V8.98h3.42v1.57h.05c.48-.9 1.64-1.85 3.37-1.85 3.61 0 4.27 2.37 4.27 5.46v6.29zM5.32 7.41a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.1 20.45H3.54V8.98H7.1v11.47z');
+  linkedInIcon.append(linkedInPath);
+  linkedInLink.append(linkedInIcon, document.createTextNode('LinkedIn'));
+  socialLinks.append(linkedInLink);
+  socialSection.append(socialHeading, socialLinks);
+  siteFooter.prepend(socialSection);
+}
 const activeNavHref = activePage === 'index.html' && window.location.hash === '#about'
   ? 'index.html#about'
   : activePage;
