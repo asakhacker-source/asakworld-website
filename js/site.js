@@ -43,7 +43,27 @@ if (siteFooter && !socialFooterExcludedPages.has(activePage) && !siteFooter.quer
   linkedInPath.setAttribute('d', 'M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V8.98h3.42v1.57h.05c.48-.9 1.64-1.85 3.37-1.85 3.61 0 4.27 2.37 4.27 5.46v6.29zM5.32 7.41a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.1 20.45H3.54V8.98H7.1v11.47z');
   linkedInIcon.append(linkedInPath);
   linkedInLink.append(linkedInIcon, document.createTextNode('LinkedIn'));
-  socialLinks.append(linkedInLink);
+
+  const youtubeLink = document.createElement('a');
+  youtubeLink.className = 'footer-social-link';
+  youtubeLink.href = 'https://www.youtube.com/@ASARKWorld';
+  youtubeLink.target = '_blank';
+  youtubeLink.rel = 'noopener noreferrer';
+  youtubeLink.setAttribute('aria-label', 'Follow ASARK on YouTube');
+
+  const youtubeIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  youtubeIcon.setAttribute('viewBox', '0 0 24 24');
+  youtubeIcon.setAttribute('width', '18');
+  youtubeIcon.setAttribute('height', '18');
+  youtubeIcon.setAttribute('aria-hidden', 'true');
+  youtubeIcon.setAttribute('focusable', 'false');
+  const youtubePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  youtubePath.setAttribute('fill', 'currentColor');
+  youtubePath.setAttribute('d', 'M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z');
+  youtubeIcon.append(youtubePath);
+  youtubeLink.append(youtubeIcon, document.createTextNode('YouTube'));
+
+  socialLinks.append(linkedInLink, youtubeLink);
   socialSection.append(socialHeading, socialLinks);
   siteFooter.prepend(socialSection);
 }
