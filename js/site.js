@@ -192,7 +192,7 @@ document.querySelectorAll('.visual-card[data-card-link], .card[data-project-link
   const imageSource = image?.dataset.originalImage || image?.src || '';
   const imageKey = image ? Object.keys(imageProjects).find((key) => imageSource.includes(key)) : null;
   const cardTitle = card.querySelector('h3')?.textContent.trim() || '';
-  const destination = card.dataset.projectLink || projectDestinations[cardTitle] || (imageKey && imageProjects[imageKey]) || 'visual.html';
+  const destination = card.dataset.projectLink || projectDestinations[cardTitle] || (imageKey && imageProjects[imageKey]) || 'index.html';
   card.tabIndex = 0;
   card.setAttribute('role', 'link');
   card.addEventListener('click', (event) => {

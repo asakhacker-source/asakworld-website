@@ -43,4 +43,4 @@ Current deployment source versions are `style.css?v=67`, `site.js?v=78`, and ser
 
 ## Post-deployment smoke test
 
-Test Home, Technology, Journal, Visuals, Resources, About, one Journal article, one Technology guide, login, signup, offline behavior, the manifest, and the service worker. Confirm HTTPS, navigation, responsive layout, images, canonical URLs, and no console-breaking JavaScript errors. If Supabase is still unconfigured, login and signup should show their configuration message rather than submit credentials.
+Test Home, Technology, Journal, About, one Journal article, one Technology guide, login, signup, offline behavior, the manifest, and the service worker. Confirm HTTPS, navigation, responsive layout, images, canonical URLs, and no console-breaking JavaScript errors. If Supabase is still unconfigured, login and signup should show their configuration message rather than submit credentials.
