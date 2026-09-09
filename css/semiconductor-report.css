@@ -1,0 +1,285 @@
+/* Semiconductor Technology Report Styling */
+:root {
+    --report-bg: #0a0a09;
+    --report-surface: #141310;
+    --report-accent: #87f6ed;
+    --report-gold: #d9ad32;
+    --report-muted: #b9b4a9;
+    --report-border: rgba(135, 246, 229, 0.2);
+    --report-gradient: linear-gradient(145deg, rgba(26, 27, 24, 0.92), rgba(15, 15, 12, 0.98));
+}
+
+.report-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    font-family: var(--sans);
+}
+
+/* Section Styling */
+.report-section {
+    margin-bottom: 100px;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.report-section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.report-section-header h2 {
+    font-size: clamp(24px, 4vw, 32px);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text);
+    margin-bottom: 10px;
+    position: relative;
+    display: inline-block;
+}
+
+.report-section-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: var(--report-accent);
+}
+
+/* Hero Section */
+.report-hero {
+    text-align: center;
+    padding: 60px 0;
+}
+
+.report-hero h1 {
+    font-size: clamp(40px, 8vw, 72px);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    background: linear-gradient(to bottom, #fff, var(--report-muted));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.report-hero .subtitle {
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--report-muted);
+    max-width: 700px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+}
+
+/* Visual Cards Grid */
+.report-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.report-card {
+    background: var(--report-gradient);
+    border: 1px solid var(--report-border);
+    padding: 32px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.report-card:hover {
+    border-color: var(--report-accent);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.report-card .icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 20px;
+    color: var(--report-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--report-border);
+    border-radius: 50%;
+    font-size: 24px;
+}
+
+.report-card h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: #fff;
+}
+
+.report-card p {
+    font-size: 14px;
+    color: var(--report-muted);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Process Flow */
+.report-flow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 40px 0;
+    scrollbar-width: none;
+}
+
+.report-flow::-webkit-scrollbar { display: none; }
+
+.flow-step {
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+    position: relative;
+    padding: 20px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--report-border);
+    border-radius: 8px;
+}
+
+.flow-step h4 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+    color: var(--report-accent);
+}
+
+.flow-arrow {
+    font-size: 24px;
+    color: var(--report-border);
+}
+
+/* Core Tech Tiles */
+.tech-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.tech-tile {
+    padding: 20px;
+    border: 1px solid var(--report-border);
+    background: var(--report-surface);
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+.tech-tile:hover {
+    border-color: var(--report-gold);
+}
+
+.tech-tile h4 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    color: #fff;
+}
+
+.tech-tile p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--report-muted);
+}
+
+/* Metric-style Takeaways */
+.metric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+}
+
+.metric-card {
+    aspect-ratio: 1;
+    border: 2px solid var(--report-accent);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+    background: rgba(135, 246, 229, 0.05);
+    transform: scale(1.05);
+}
+
+.metric-card .val {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.metric-card .lbl {
+    font-size: 12px;
+    color: var(--report-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Featured Guide */
+.featured-guide-card {
+    background: linear-gradient(135deg, #1a1a17, #0a0a09);
+    border: 1px solid var(--report-gold);
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 40px;
+    align-items: center;
+}
+
+.featured-guide-content h3 {
+    font-size: 32px;
+    margin-bottom: 16px;
+}
+
+.featured-guide-content p {
+    margin-bottom: 24px;
+    color: var(--report-muted);
+}
+
+.featured-guide-img img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .report-flow {
+        flex-direction: column;
+    }
+    .flow-arrow {
+        transform: rotate(90deg);
+        margin: 10px 0;
+    }
+    .featured-guide-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .featured-guide-content {
+        order: 2;
+    }
+    .featured-guide-img {
+        order: 1;
+    }
+}
