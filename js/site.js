@@ -93,13 +93,6 @@ document.querySelectorAll('.nav-submenu-toggle').forEach((toggle) => {
   document.addEventListener('click', (event) => { if (!dropdown?.contains(event.target)) close(); });
 });
 
-// Keep every visible editorial image on ASARK within the supplied AI image collection.
-const architectureImages = [
-  ['Architecture/Ancient World/Gemini_Generated_Image_(1).webp', 1472, 704], ['Architecture/Ancient World/Gemini_Generated_Image_(2).webp', 1472, 704], ['Architecture/Ancient World/Gemini_Generated_Image_(3).webp', 1472, 704],
-  ['Architecture/Modern World/Gemini_Generated_Image_(4).webp', 1472, 704], ['Architecture/Modern World/Gemini_Generated_Image_(5).webp', 1472, 704], ['Architecture/Modern World/Gemini_Generated_Image_(6).webp', 1472, 704],
-  ['Architecture/Futuristic World/Gemini_Generated_Image_(7).webp', 1472, 704], ['Architecture/Futuristic World/Gemini_Generated_Image_(8).webp', 1472, 704], ['Architecture/Futuristic World/Gemini_Generated_Image_(9).webp', 1472, 704],
-  ['Architecture/Hacker Setup/Gemini_Generated_Image_(10).webp', 1024, 1024], ['Architecture/Hacker Setup/Gemini_Generated_Image_(11).webp', 1024, 1024]
-];
 const authConfig = window.ASARK_AUTH || {};
 const configuredSupabaseUrl = typeof authConfig.supabaseUrl === 'string' ? authConfig.supabaseUrl : '';
 const supabaseAnonKey = typeof authConfig.supabaseAnonKey === 'string' ? authConfig.supabaseAnonKey : '';
@@ -209,20 +202,6 @@ document.querySelectorAll('.visual-card[data-card-link], .card[data-project-link
 
 const currentPage = activePage;
 
-if (currentPage === 'architecture.html') {
-  const architectureContent = document.querySelector('.content-section');
-  if (architectureContent) {
-    const architectureGallery = document.createElement('section');
-    architectureGallery.className = 'architecture-gallery';
-    architectureGallery.setAttribute('aria-labelledby', 'architecture-gallery-title');
-    const galleryCards = architectureImages.map(([imagePath, width, height], index) =>
-      `<figure><img data-ai-image-fixed loading="lazy" src="ai images/${imagePath}" width="${width}" height="${height}" alt="AI-generated architectural visual study ${index + 1}"><figcaption>ASARK visual study ${String(index + 1).padStart(2, '0')}</figcaption></figure>`
-    ).join('');
-    architectureGallery.innerHTML = `<header><p class="eyebrow">ASARK visual archive</p><h2 id="architecture-gallery-title">Architecture visual collection</h2><p>All supplied AI-generated visual studies are collected here.</p></header><div>${galleryCards}</div>`;
-    architectureContent.append(architectureGallery);
-  }
-}
-
 if (currentPage === 'technology.html') {
   const technologyGrid = document.querySelector('.technology-grid');
   if (technologyGrid) {
@@ -304,7 +283,7 @@ if (saveButton) {
 
 const affiliateSidebarPages = new Set([
   'index.html', 'about.html', 'ai-technology.html', 'ancient.html', 'animation-technology.html',
-  'architecture.html', 'art-design.html', 'blogs.html', 'computing.html', 'culture-future.html',
+  'art-design.html', 'blogs.html', 'computing.html', 'culture-future.html',
   'explore.html', 'futuristic.html', 'graphics-card.html', 'hacker-setup.html',
   'journal/ai-technology-future.html', 'journal/animation-technology-future.html',
   'journal/market-technology-future.html', 'journal/semiconductor-technology-future.html',
