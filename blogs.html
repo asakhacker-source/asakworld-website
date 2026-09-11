@@ -3,194 +3,477 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><meta name="description" content="Read ASARK's practical technology journal for AI, market, animation, space and vehicle technology, plus curated tools to explore each field.">
-  <title>Technology Journal | ASARK</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <meta name="description" content="Browse ASARK journal articles, guides and analysis on AI, computing, semiconductors, VLSI, space, vehicle technology, market technology and animation.">
+  <title>ASARK Journal | AI, VLSI, Space, Computing & Future Technology</title>
   <link rel="canonical" href="https://asarkworld.com/blogs.html">
   <link rel="stylesheet" href="css/style.css?v=75">
-<link rel="stylesheet" href="css/analytics-consent.css?v=1">
+  <link rel="stylesheet" href="css/analytics-consent.css?v=1">
   <link rel="manifest" href="manifest.webmanifest">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="ASARK">
-<meta property="og:title" content="Technology Journal | ASARK">
-<meta property="og:description" content="Read ASARK's practical technology journal for AI, market, animation, space and vehicle technology, plus curated tools to explore each field.">
-<meta property="og:url" content="https://asarkworld.com/blogs.html">
-<meta property="og:image" content="https://asarkworld.com/assets/icon-512.webp">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Technology Journal | ASARK">
-<meta name="twitter:description" content="Read ASARK's practical technology journal for AI, market, animation, space and vehicle technology, plus curated tools to explore each field.">
-<meta name="twitter:image" content="https://asarkworld.com/assets/icon-512.webp">
-<script type="application/ld+json">{"@context":"https://schema.org","url":"https://asarkworld.com/blogs.html","description":"Read ASARK\u0027s practical technology journal for AI, market, animation, space and vehicle technology, plus curated tools to explore each field.","name":"Technology Journal | ASARK","@type":"Blog"}</script>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ASARK">
+  <meta property="og:title" content="ASARK Journal | AI, VLSI, Space, Computing & Future Technology">
+  <meta property="og:description" content="Browse ASARK journal articles, guides and analysis on AI, computing, semiconductors, VLSI, space, vehicle technology, market technology and animation.">
+  <meta property="og:url" content="https://asarkworld.com/blogs.html">
+  <meta property="og:image" content="https://asarkworld.com/assets/icon-512.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ASARK Journal | AI, VLSI, Space, Computing & Future Technology">
+  <meta name="twitter:description" content="Browse ASARK journal articles, guides and analysis on AI, computing, semiconductors, VLSI, space, vehicle technology, market technology and animation.">
+  <meta name="twitter:image" content="https://asarkworld.com/assets/icon-512.webp">
+  <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"CollectionPage","name":"ASARK Journal | AI, VLSI, Space, Computing & Future Technology","url":"https://asarkworld.com/blogs.html","description":"Browse ASARK journal articles, guides and analysis on AI, computing, semiconductors, VLSI, space, vehicle technology, market technology and animation.","publisher":{"@type":"Organization","name":"ASARK"}}
+  </script>
+  <style>
+    body.journal-page { background: #071018; color: #eef4f8; }
+    .journal-library {
+      width: min(100% - 28px, 1280px);
+      margin: 0 auto;
+      padding: clamp(24px, 4vw, 56px) 0 clamp(72px, 8vw, 112px);
+    }
+    .journal-hero {
+      position: relative;
+      border: 1px solid rgba(215, 180, 90, 0.32);
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(115, 164, 255, 0.12), rgba(167, 139, 250, 0.12), rgba(12,18,28,0.95));
+      box-shadow: 0 28px 60px rgba(0,0,0,0.38);
+      padding: clamp(24px, 3vw, 48px);
+      overflow: hidden;
+    }
+    .journal-breadcrumb {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: #d7b45a;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+    .journal-hero h1 {
+      margin: 20px 0 16px;
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+      color: #f6f8fb;
+    }
+    .journal-hero-copy {
+      max-width: 760px;
+      color: #afc1d0;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin: 0;
+    }
+    .journal-search {
+      margin-top: 26px;
+      max-width: 760px;
+    }
+    .journal-search label {
+      display: block;
+      margin-bottom: 10px;
+      color: #d7b45a;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .journal-search input {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 14px;
+      padding: 1rem 1.10rem;
+      background: rgba(10,16,23,0.85);
+      color: #edf4f9;
+      font-size: 1rem;
+    }
+    .journal-search input:focus {
+      outline: none;
+      border-color: rgba(135, 206, 250, 0.78);
+      box-shadow: 0 0 0 4px rgba(135, 206, 250, 0.14);
+    }
+    .journal-toolbar {
+      margin-top: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 6px;
+    }
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .filter-button {
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 999px;
+      background: rgba(13,21,29,0.85);
+      color: #bfd0de;
+      padding: 0.74rem 1rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+    .filter-button:hover,
+    .filter-button:focus-visible {
+      border-color: rgba(135, 206, 250, 0.7);
+      color: #ebf7ff;
+      outline: none;
+      transform: translateY(-1px);
+    }
+    .filter-button[aria-pressed="true"] {
+      background: linear-gradient(135deg, rgba(215,180,90,0.2), rgba(131,180,255,0.15));
+      border-color: rgba(215,180,90,0.9);
+      color: #fff1be;
+    }
+    .article-count {
+      color: #afc1d0;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .journal-section {
+      margin-top: clamp(36px, 5vw, 64px);
+    }
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .section-head h2 {
+      margin: 0;
+      color: #f2f7fb;
+      font-size: clamp(1.5rem, 2vw, 2.2rem);
+      letter-spacing: -0.04em;
+    }
+    .featured-grid,
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 22px;
+    }
+    .featured-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .article-card,
+    .featured-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(13,20,28,1), rgba(17,26,34,1));
+      overflow: hidden;
+      box-shadow: 0 24px 45px rgba(2,7,12,0.38);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .article-card:hover,
+    .featured-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(135, 206, 250, 0.4);
+    }
+    .card-media {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, rgba(135, 206, 250, 0.14), rgba(167, 139, 250, 0.14));
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .card-fallback {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f4dda1;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, rgba(215,180,90,0.16), rgba(135,206,250,0.08));
+    }
+    .card-body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 20px 20px 18px;
+    }
+    .category-tag {
+      display: inline-flex;
+      width: fit-content;
+      padding: 0.42rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(135, 206, 250, 0.1);
+      border: 1px solid rgba(135, 206, 250, 0.26);
+      color: #bfe3ff;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .card-title {
+      margin: 12px 0 10px;
+      color: #edf4fb;
+      font-size: clamp(1.08rem, 1.4vw, 1.5rem);
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+    }
+    .card-summary {
+      margin: 0;
+      color: #afc1d0;
+      line-height: 1.6;
+      font-size: 0.95rem;
+      flex: 1;
+    }
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 18px;
+      font-weight: 700;
+      color: #f1d588;
+      text-decoration: none;
+    }
+    .card-link:hover,
+    .card-link:focus-visible {
+      color: #fce7b0;
+      text-decoration: underline;
+      outline: none;
+    }
+    .no-results {
+      display: none;
+      margin-top: 18px;
+      padding: 24px;
+      border: 1px dashed rgba(255,255,255,0.18);
+      border-radius: 16px;
+      background: rgba(13,20,28,0.8);
+      text-align: center;
+      color: #afc1d0;
+    }
+    .no-results.visible {
+      display: block;
+    }
+    @media (max-width: 1100px) {
+      .featured-grid,
+      .article-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 760px) {
+      .journal-library { width: min(100% - 20px, 1280px); }
+      .journal-toolbar { align-items: flex-start; flex-direction: column; }
+      .filter-group {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        width: 100%;
+        padding-bottom: 4px;
+      }
+      .filter-button { white-space: nowrap; }
+      .featured-grid,
+      .article-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body class="journal-page">
   <header class="site-header">
-<a class="logo" href="index.html">ASARK</a>
-<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
-<nav class="site-nav" id="site-nav" aria-label="Main navigation">
-</nav>
-</header>
-  <main class="blog-board commerce-journal">
-    <header class="blog-board-intro blog-commerce-hero">
-      <p class="eyebrow">ASARK Technology Journal</p>
-      <h1>Ideas worth understanding before you buy, build or invest.</h1>
-      <p>Clear, visual guides to the technologies shaping everyday life—paired with useful resources for continuing your exploration.</p>
-      <div class="hub-actions">
-<a class="btn" href="#ai-technology">Start reading</a>
-<a class="btn-outline" href="technology.html">Visit technology hub</a>
-</div>
-    </header>
-    <nav class="journal-topic-nav" aria-label="Technology journal topics">
-<a href="#ai-technology">AI</a>
-<a href="#semiconductor-technology">Semiconductors</a>
-<a href="#market-technology">Markets</a>
-<a href="#animation-technology">Animation</a>
-<a href="#space-technology">Space</a>
-<a href="#vehicle-technology">Vehicles</a>
-</nav>
-<div class="journal-card-grid">
-    <section class="blog-topic" id="ai-technology" aria-labelledby="ai-title">
-<figure><img src="ai images/Technology/AI Technology/ai-technology-overview.webp" alt="Artificial intelligence and neural network technology" width="1536" height="1024"><figcaption>Artificial intelligence systems</figcaption></figure>
-<header>
-<p class="eyebrow">01 · Intelligence</p>
-<h2 id="ai-title">AI Technology</h2>
-<p>Understand machine learning, assistants, human-centred healthcare and responsible AI.</p>
-</header>
-<div class="blog-card-grid">
-<article>
-<p class="card-kicker">Field guide</p>
-<h3>How machines learn from data</h3>
-<p>Patterns, training data and neural networks explained without the noise.</p>
-<a href="journal/ai-technology-future.html">Read the AI Journal article →</a>
-</article>
-<article>
-<p class="card-kicker">Practical desk</p>
-<h3>Build an informed foundation</h3>
-<p>Start with useful, accessible resources before choosing your next tool.</p>
-<a href="ai-technology.html">Explore the AI guide →</a>
-</article>
-</div>
-</section>
-    <section class="blog-topic" id="semiconductor-technology" aria-labelledby="semiconductor-title">
-<figure><img src="assets/images/technology/semiconductor-engineering-lifecycle.webp" alt="Semiconductor engineering, chip design and wafer technology" width="1408" height="768" loading="lazy" decoding="async"><figcaption>Semiconductor engineering</figcaption></figure>
-<header>
-<p class="eyebrow">02 · Computing</p>
-<h2 id="semiconductor-title">Semiconductor Technology</h2>
-<p>Follow the controlled materials, transistor structures, design tools and manufacturing systems behind modern chips.</p>
-</header>
-<div class="blog-card-grid">
-<article>
-<p class="card-kicker">Field guide</p>
-<h3>From silicon to the future of chips</h3>
-<p>Band structure, VLSI, fabrication, packaging, power devices and responsible supply chains explained clearly.</p>
-<a href="journal/semiconductor-technology-future.html">Read the Semiconductor Technology article →</a>
-</article>
-<article>
-<p class="card-kicker">Practical desk</p>
-<h3>Build the hardware foundation</h3>
-<p>Explore processors, graphics, VLSI and computing through connected guides.</p>
-<a href="semiconductor.html">Explore the Semiconductor guide →</a>
-</article>
-</div>
-</section>
-    <section class="blog-topic" id="market-technology" aria-labelledby="market-title">
-<figure><img src="assets/images/technology/market-global-financial-markets.webp" alt="Financial market technology and analytics systems" width="1408" height="768" loading="lazy" decoding="async"><figcaption>Market technology systems</figcaption></figure>
-<header>
-<p class="eyebrow">03 · Commerce</p>
-<h2 id="market-title">Market Technology</h2>
-<p>Explore digital commerce, secure payments and the data systems that support informed decisions.</p>
-</header>
-<div class="blog-card-grid">
-<article>
-<p class="card-kicker">Field guide</p>
-<h3>Read market infrastructure clearly</h3>
-<p>Exchanges, payments, data, AI and operational resilience explained without investment advice.</p>
-<a href="journal/market-technology-future.html">Read the Market Technology article →</a>
-</article>
-<article>
-<p class="card-kicker">Practical desk</p>
-<h3>Organise better decisions</h3>
-<p>Useful reading and work tools for founders, students and lifelong learners.</p>
-<a href="market-technology.html">Explore the Market Technology guide →</a>
-</article>
-</div>
-</section>
-    <section class="blog-topic" id="animation-technology" aria-labelledby="animation-title">
-<figure><img src="ai images/Technology/Animation Technology/animation-technology-feature.webp" alt="Digital animation and CGI production technology" width="1672" height="941" loading="lazy" decoding="async"><figcaption>Animation production technology</figcaption></figure>
-<header>
-<p class="eyebrow">04 · Creative tools</p>
-<h2 id="animation-title">Animation Technology</h2>
-<p>Follow the tools and workflows that turn stories into expressive motion and visual learning.</p>
-</header>
-<div class="blog-card-grid">
-<article>
-<p class="card-kicker">Field guide</p>
-<h3>From sketch to rendered world</h3>
-<p>Modelling, rigging, lighting and rendering each play a distinct role in production.</p>
-<a href="journal/animation-technology-future.html">Read the Animation Journal article →</a>
-</article>
-<article>
-<p class="card-kicker">Practical desk</p>
-<h3>Make space to create</h3>
-<p>Choose tools that support your process, from drawing through colour-critical finishing.</p>
-<a href="animation-technology.html">Explore the Animation guide →</a>
-</article>
-</div>
-</section>
-    <section class="blog-topic" id="space-technology" aria-labelledby="space-title">
-<figure><img src="ai images/Technology/Space Technology/space-technology-feature.webp" alt="Spacecraft and advanced space technology" width="1536" height="1024" loading="lazy" decoding="async"><figcaption>Space systems and exploration</figcaption></figure>
-<header>
-<p class="eyebrow">05 · Exploration</p>
-<h2 id="space-title">Space Technology</h2>
-<p>See how satellites, launch vehicles, research and robotics expand what we know about Earth and the universe.</p>
-</header>
-<div class="blog-card-grid">
-<article>
-<p class="card-kicker">Field guide</p>
-<h3>Satellites in everyday life</h3>
-<p>Navigation, communication and weather observation rely on systems orbiting far above us.</p>
-<a href="journal/space-technology-future.html">Read the Space Journal article →</a>
-</article>
-<article>
-<p class="card-kicker">Practical desk</p>
-<h3>Keep looking up</h3>
-<p>Explore the science and engineering behind the night sky with accessible resources.</p>
-<a href="space.html">Explore the Space guide →</a>
-</article>
-</div>
-</section>
-    <section class="blog-topic" id="vehicle-technology" aria-labelledby="vehicle-title">
-<figure><img src="assets/images/technology/vehicle-technology-feature.webp" alt="Advanced electric and autonomous vehicle technology" width="1536" height="1024" loading="lazy" decoding="async"><figcaption>Electric and connected mobility</figcaption></figure>
-<header>
-<p class="eyebrow">06 · Mobility</p>
-<h2 id="vehicle-title">Vehicle Technology</h2>
-<p>Discover electric powertrains, connected systems and driver assistance technology transforming travel.</p>
-</header>
-<div class="blog-card-grid">
-<article>
-<p class="card-kicker">Field guide</p>
-<h3>The electric vehicle system</h3>
-<p>Batteries, motors, charging and software work together to redefine practical mobility.</p>
-<a href="journal/vehicle-technology-future.html">Read the Vehicle Technology article →</a>
-</article>
-<article>
-<p class="card-kicker">Practical desk</p>
-<h3>Drive prepared</h3>
-<p>Simple, useful accessories can make everyday journeys safer and more organised.</p>
-<a href="vehicle-technology.html">Explore the Vehicle guide →</a>
-</article>
-</div>
-</section>
-</div>
+    <a class="logo" href="index.html">ASARK</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation"></nav>
+  </header>
+
+  <main class="journal-library">
+    <section class="journal-hero" aria-labelledby="journal-title">
+      <div class="journal-breadcrumb"><span>ASARK</span><span>Journal</span></div>
+      <p class="eyebrow">Technology articles, guides & analysis</p>
+      <h1 id="journal-title">ASARK Journal</h1>
+      <p class="journal-hero-copy">Articles, guides and analysis across AI, computing, semiconductors, space, vehicles and emerging technology.</p>
+
+      <div class="journal-search">
+        <label for="journal-search">Search articles</label>
+        <input id="journal-search" type="search" placeholder="Search articles..." aria-label="Search articles" />
+      </div>
+    </section>
+
+    <div class="journal-toolbar">
+      <div class="filter-group" aria-label="Article filters">
+        <button class="filter-button" type="button" data-category="ALL" aria-pressed="true">All</button>
+        <button class="filter-button" type="button" data-category="AI" aria-pressed="false">AI</button>
+        <button class="filter-button" type="button" data-category="COMPUTING" aria-pressed="false">Computing</button>
+        <button class="filter-button" type="button" data-category="SEMICONDUCTOR &amp; VLSI" aria-pressed="false">Semiconductor &amp; VLSI</button>
+        <button class="filter-button" type="button" data-category="SPACE" aria-pressed="false">Space</button>
+        <button class="filter-button" type="button" data-category="VEHICLE" aria-pressed="false">Vehicle</button>
+        <button class="filter-button" type="button" data-category="MARKET" aria-pressed="false">Market</button>
+        <button class="filter-button" type="button" data-category="ANIMATION" aria-pressed="false">Animation</button>
+      </div>
+      <div class="article-count" id="article-count" aria-live="polite">Showing 19 articles</div>
+    </div>
+
+    <section class="journal-section">
+      <div class="section-head">
+        <h2>Featured</h2>
+      </div>
+      <div class="featured-grid" id="featured-grid"></div>
+    </section>
+
+    <section class="journal-section">
+      <div class="section-head">
+        <h2>All Articles</h2>
+      </div>
+      <div class="article-grid" id="article-grid"></div>
+      <div class="no-results" id="no-results">No matching articles found.</div>
+    </section>
   </main>
+
   <footer class="site-footer">&copy; 2026 ASARK &middot; <a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a> &middot; <a href="contact.html">Contact</a> &middot; <a href="about.html">About</a> &middot; Technology, Design &amp; The Future</footer>
-<script src="js/auth-config.js">
-</script>
-<script src="js/site.js?v=90">
-</script>
-<script defer src="js/analytics-consent.js?v=1">
-</script>
+
+  <script src="js/auth-config.js"></script>
+  <script src="js/site.js?v=90"></script>
+  <script defer src="js/analytics-consent.js?v=1"></script>
+  <script>
+    const articles = [
+      { category: 'AI', title: 'AI Technology', summary: 'A practical overview of how AI systems are built, where they are used, and why responsible development matters.', href: 'ai-technology.html', image: 'ai images/Technology/AI Technology/ai-technology-overview.webp' },
+      { category: 'AI', title: 'How Autonomous AI Systems Evolved', summary: 'A compact look at agentic AI, inference-time compute, persistent memory and the systems shaping modern AI workflows.', href: 'evolution-of-autonomous-ai-systems.html', image: 'ai images/Technology/AI Technology/ai-technology-overview.webp' },
+      { category: 'AI', title: 'AI Technology: How Intelligent Systems Are Changing the Future', summary: 'The ASARK Journal guide to AI foundations, application areas and the technical questions that matter most.', href: 'journal/ai-technology-future.html', image: 'ai images/Technology/AI Technology/ai-technology-overview.webp' },
+      { category: 'COMPUTING', title: 'Computing', summary: 'A broader look at modern computing systems, architectures and the design choices behind faster, more capable technology.', href: 'computing.html', image: 'ai images/Technology/technology-showcase-grid.webp' },
+      { category: 'COMPUTING', title: 'Processor Technology', summary: 'An accessible guide to processor design, core performance and how compute decisions affect real-world devices.', href: 'processor.html', image: 'assets/images/technology/semiconductor-device-architecture.webp' },
+      { category: 'COMPUTING', title: 'Graphics Card Technology', summary: 'Explore graphics cards, GPU pipelines and the role of accelerated compute in gaming, AI and creative work.', href: 'graphics-card.html', image: 'assets/images/technology/semiconductor-ai-accelerator-fpga.webp' },
+      { category: 'SEMICONDUCTOR & VLSI', title: 'Semiconductor Technology', summary: 'A visual report on semiconductor engineering, chip design, fabrication, packaging and the future of integrated circuits.', href: 'semiconductor.html', image: 'assets/images/technology/semiconductor-engineering-lifecycle.webp' },
+      { category: 'SEMICONDUCTOR & VLSI', title: 'VLSI', summary: 'A practical breakdown of VLSI systems, RTL-to-GDS flows, physical design and the mindset behind large-scale chip development.', href: 'vlsi.html', image: 'assets/images/technology/semiconductor-vlsi-layout.webp' },
+      { category: 'SEMICONDUCTOR & VLSI', title: 'What is VLSI?', summary: 'A complete guide to VLSI concepts, CMOS design, verification, scale and the engineering decisions behind modern chips.', href: 'what-is-vlsi.html', image: 'assets/images/technology/semiconductor-wafer-testing-lab.webp' },
+      { category: 'SEMICONDUCTOR & VLSI', title: 'Semiconductor Technology Future', summary: 'The ASARK Journal deep dive into semiconductors, from physics fundamentals to fabrication, packaging and responsible innovation.', href: 'journal/semiconductor-technology-future.html', image: 'assets/images/technology/semiconductor-engineering-lifecycle.webp' },
+      { category: 'SPACE', title: 'Space Technology', summary: 'A grounded guide to satellites, launch systems, robotics, Earth observation and the systems that support exploration.', href: 'space.html', image: 'ai images/Technology/Space Technology/space-technology-feature.webp' },
+      { category: 'SPACE', title: 'Commercial Space Infrastructure', summary: 'A research-style look at orbital infrastructure, commercial platforms and the systems that will shape future space economies.', href: 'commercial-space-infrastructure.html', image: 'ai images/Technology/Space Technology/space-technology-feature.webp' },
+      { category: 'SPACE', title: 'The Future of Space Technology', summary: 'The ASARK Journal guide to satellites, launch systems, space communications and how lunar, orbital and planetary systems connect.', href: 'journal/space-technology-future.html', image: 'ai images/Technology/Space Technology/space-technology-feature.webp' },
+      { category: 'VEHICLE', title: 'Vehicle Technology', summary: 'Explore EVs, batteries, charging infrastructure, software-defined vehicles and the systems behind future mobility.', href: 'vehicle-technology.html', image: 'assets/images/technology/vehicle-technology-feature.webp' },
+      { category: 'VEHICLE', title: 'Vehicle Technology: EVs, Software and the Future of Mobility', summary: 'The ASARK Journal exploration of electric mobility, autonomy, software layers and the infrastructure that makes sustainable transport possible.', href: 'journal/vehicle-technology-future.html', image: 'assets/images/technology/vehicle-technology-feature.webp' },
+      { category: 'MARKET', title: 'Market Technology', summary: 'A practical guide to market infrastructure, analytics, secure payments, AI and the systems behind digital commerce.', href: 'market-technology.html', image: 'assets/images/technology/market-global-financial-markets.webp' },
+      { category: 'MARKET', title: 'The Future of Market Technology', summary: 'The ASARK Journal guide to exchanges, order books, data flows, cybersecurity, regulation and responsible financial infrastructure.', href: 'journal/market-technology-future.html', image: 'assets/images/technology/market-global-financial-markets.webp' },
+      { category: 'ANIMATION', title: 'Animation Technology', summary: 'Learn how animation tools, rendering systems and creative workflows bring visual stories and complex ideas to life.', href: 'animation-technology.html', image: 'ai images/Technology/Animation Technology/animation-technology-feature.webp' },
+      { category: 'ANIMATION', title: 'Animation Technology: From Digital Art to Real-Time Worlds', summary: 'The ASARK Journal exploration of motion, rendering, graphics pipelines and the production systems behind modern visual storytelling.', href: 'journal/animation-technology-future.html', image: 'ai images/Technology/Animation Technology/animation-technology-feature.webp' }
+    ];
+
+    const featuredHrefs = [
+      'journal/ai-technology-future.html',
+      'journal/semiconductor-technology-future.html',
+      'journal/space-technology-future.html',
+      'journal/vehicle-technology-future.html'
+    ];
+
+    const articleGrid = document.getElementById('article-grid');
+    const featuredGrid = document.getElementById('featured-grid');
+    const articleCount = document.getElementById('article-count');
+    const noResults = document.getElementById('no-results');
+    const searchInput = document.getElementById('journal-search');
+    const filterButtons = [...document.querySelectorAll('.filter-button')];
+
+    let activeCategory = 'ALL';
+
+    function createCard(article, featured) {
+      const card = document.createElement('article');
+      card.className = featured ? 'featured-card' : 'article-card';
+
+      const media = document.createElement('div');
+      media.className = 'card-media';
+
+      if (article.image) {
+        const img = document.createElement('img');
+        img.src = article.image;
+        img.alt = article.title;
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        media.appendChild(img);
+      } else {
+        const fallback = document.createElement('div');
+        fallback.className = 'card-fallback';
+        fallback.textContent = article.category;
+        media.appendChild(fallback);
+      }
+
+      const body = document.createElement('div');
+      body.className = 'card-body';
+
+      const tag = document.createElement('span');
+      tag.className = 'category-tag';
+      tag.textContent = article.category;
+
+      const title = document.createElement('h3');
+      title.className = 'card-title';
+      title.textContent = article.title;
+
+      const summary = document.createElement('p');
+      summary.className = 'card-summary';
+      summary.textContent = article.summary;
+
+      const link = document.createElement('a');
+      link.className = 'card-link';
+      link.href = article.href;
+      link.textContent = 'Read Article →';
+
+      body.append(tag, title, summary, link);
+      card.append(media, body);
+      return card;
+    }
+
+    function matchesSearch(article, query) {
+      const haystack = `${article.title} ${article.category} ${article.summary} ${article.href}`.toLowerCase();
+      return haystack.includes(query);
+    }
+
+    function renderArticles() {
+      const query = searchInput.value.trim().toLowerCase();
+
+      const visibleArticles = articles.filter(article => {
+        const matchesCategory = activeCategory === 'ALL' || article.category === activeCategory;
+        return matchesCategory && matchesSearch(article, query);
+      });
+
+      const featuredArticles = featuredHrefs
+        .map(href => articles.find(article => article.href === href))
+        .filter(Boolean)
+        .filter(article => {
+          const matchesCategory = activeCategory === 'ALL' || article.category === activeCategory;
+          return matchesCategory && matchesSearch(article, query);
+        });
+
+      articleGrid.innerHTML = '';
+      featuredGrid.innerHTML = '';
+
+      featuredArticles.slice(0, 4).forEach(article => {
+        featuredGrid.appendChild(createCard(article, true));
+      });
+
+      visibleArticles.forEach(article => {
+        articleGrid.appendChild(createCard(article, false));
+      });
+
+      articleCount.textContent = `Showing ${visibleArticles.length} article${visibleArticles.length === 1 ? '' : 's'}`;
+      noResults.classList.toggle('visible', visibleArticles.length === 0);
+    }
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        activeCategory = button.dataset.category;
+        filterButtons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+        renderArticles();
+      });
+    });
+
+    searchInput.addEventListener('input', renderArticles);
+    renderArticles();
+  </script>
 </body>
 </html>
