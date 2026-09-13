@@ -177,6 +177,8 @@
       overflow: hidden;
       box-shadow: 0 24px 45px rgba(2,7,12,0.38);
       transition: transform 0.2s ease, border-color 0.2s ease;
+      text-decoration: none;
+      color: inherit;
     }
     .article-card:hover,
     .featured-card:hover {
@@ -266,6 +268,11 @@
       text-align: center;
       color: #afc1d0;
     }
+
+    .article-card.is-hidden,
+    .featured-card.is-hidden,
+    .article-card[hidden],
+    .featured-card[hidden] { display: none; }
     .no-results.visible {
       display: block;
     }
@@ -326,14 +333,223 @@
       <div class="section-head">
         <h2>Featured</h2>
       </div>
-      <div class="featured-grid" id="featured-grid"></div>
+      <div class="featured-grid" id="featured-grid">
+      <a class="featured-card" data-category="AI" data-title="AI Technology: How Intelligent Systems Are Changing the Future" data-summary="The ASARK Journal guide to AI foundations, application areas and the technical questions that matter most." data-href="journal/ai-technology-future.html" href="journal/ai-technology-future.html">
+        <div class="card-media"><img src="ai images/Technology/AI Technology/ai-technology-overview.webp" alt="AI Technology: How Intelligent Systems Are Changing the Future" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">AI</span>
+          <h3 class="card-title">AI Technology: How Intelligent Systems Are Changing the Future</h3>
+          <p class="card-summary">The ASARK Journal guide to AI foundations, application areas and the technical questions that matter most.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="featured-card" data-category="SEMICONDUCTOR &amp; VLSI" data-title="Semiconductor Technology Future" data-summary="The ASARK Journal deep dive into semiconductors, from physics fundamentals to fabrication, packaging and responsible innovation." data-href="journal/semiconductor-technology-future.html" href="journal/semiconductor-technology-future.html">
+        <div class="card-media"><img src="assets/images/technology/semiconductor-engineering-lifecycle.webp" alt="Semiconductor Technology Future" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">SEMICONDUCTOR &amp; VLSI</span>
+          <h3 class="card-title">Semiconductor Technology Future</h3>
+          <p class="card-summary">The ASARK Journal deep dive into semiconductors, from physics fundamentals to fabrication, packaging and responsible innovation.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="featured-card" data-category="SPACE" data-title="The Future of Space Technology" data-summary="The ASARK Journal guide to satellites, launch systems, space communications and how lunar, orbital and planetary systems connect." data-href="journal/space-technology-future.html" href="journal/space-technology-future.html">
+        <div class="card-media"><img src="ai images/Technology/Space Technology/space-technology-feature.webp" alt="The Future of Space Technology" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">SPACE</span>
+          <h3 class="card-title">The Future of Space Technology</h3>
+          <p class="card-summary">The ASARK Journal guide to satellites, launch systems, space communications and how lunar, orbital and planetary systems connect.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="featured-card" data-category="VEHICLE" data-title="Vehicle Technology: EVs, Software and the Future of Mobility" data-summary="The ASARK Journal exploration of electric mobility, autonomy, software layers and the infrastructure that makes sustainable transport possible." data-href="journal/vehicle-technology-future.html" href="journal/vehicle-technology-future.html">
+        <div class="card-media"><img src="assets/images/technology/vehicle-technology-feature.webp" alt="Vehicle Technology: EVs, Software and the Future of Mobility" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">VEHICLE</span>
+          <h3 class="card-title">Vehicle Technology: EVs, Software and the Future of Mobility</h3>
+          <p class="card-summary">The ASARK Journal exploration of electric mobility, autonomy, software layers and the infrastructure that makes sustainable transport possible.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+    </div>
     </section>
 
     <section class="journal-section">
       <div class="section-head">
         <h2>All Articles</h2>
       </div>
-      <div class="article-grid" id="article-grid"></div>
+      <div class="article-grid" id="article-grid">
+      <a class="article-card" data-category="AI" data-title="AI Technology" data-summary="A practical overview of how AI systems are built, where they are used, and why responsible development matters." data-href="ai-technology.html" href="ai-technology.html">
+        <div class="card-media"><img src="ai images/Technology/AI Technology/ai-technology-overview.webp" alt="AI Technology" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">AI</span>
+          <h3 class="card-title">AI Technology</h3>
+          <p class="card-summary">A practical overview of how AI systems are built, where they are used, and why responsible development matters.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="article-card" data-category="AI" data-title="How Autonomous AI Systems Evolved" data-summary="A compact look at agentic AI, inference-time compute, persistent memory and the systems shaping modern AI workflows." data-href="evolution-of-autonomous-ai-systems.html" href="evolution-of-autonomous-ai-systems.html">
+        <div class="card-media"><img src="ai images/Technology/AI Technology/ai-technology-overview.webp" alt="How Autonomous AI Systems Evolved" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">AI</span>
+          <h3 class="card-title">How Autonomous AI Systems Evolved</h3>
+          <p class="card-summary">A compact look at agentic AI, inference-time compute, persistent memory and the systems shaping modern AI workflows.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="article-card" data-category="AI" data-title="AI Technology: How Intelligent Systems Are Changing the Future" data-summary="The ASARK Journal guide to AI foundations, application areas and the technical questions that matter most." data-href="journal/ai-technology-future.html" href="journal/ai-technology-future.html">
+        <div class="card-media"><img src="ai images/Technology/AI Technology/ai-technology-overview.webp" alt="AI Technology: How Intelligent Systems Are Changing the Future" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">AI</span>
+          <h3 class="card-title">AI Technology: How Intelligent Systems Are Changing the Future</h3>
+          <p class="card-summary">The ASARK Journal guide to AI foundations, application areas and the technical questions that matter most.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="article-card" data-category="COMPUTING" data-title="Computing" data-summary="A broader look at modern computing systems, architectures and the design choices behind faster, more capable technology." data-href="computing.html" href="computing.html">
+        <div class="card-media"><img src="ai images/Technology/technology-showcase-grid.webp" alt="Computing" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">COMPUTING</span>
+          <h3 class="card-title">Computing</h3>
+          <p class="card-summary">A broader look at modern computing systems, architectures and the design choices behind faster, more capable technology.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="article-card" data-category="COMPUTING" data-title="Processor Technology" data-summary="An accessible guide to processor design, core performance and how compute decisions affect real-world devices." data-href="processor.html" href="processor.html">
+        <div class="card-media"><img src="assets/images/technology/semiconductor-device-architecture.webp" alt="Processor Technology" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">COMPUTING</span>
+          <h3 class="card-title">Processor Technology</h3>
+          <p class="card-summary">An accessible guide to processor design, core performance and how compute decisions affect real-world devices.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="article-card" data-category="COMPUTING" data-title="Graphics Card Technology" data-summary="Explore graphics cards, GPU pipelines and the role of accelerated compute in gaming, AI and creative work." data-href="graphics-card.html" href="graphics-card.html">
+        <div class="card-media"><img src="assets/images/technology/semiconductor-ai-accelerator-fpga.webp" alt="Graphics Card Technology" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">COMPUTING</span>
+          <h3 class="card-title">Graphics Card Technology</h3>
+          <p class="card-summary">Explore graphics cards, GPU pipelines and the role of accelerated compute in gaming, AI and creative work.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="article-card" data-category="SEMICONDUCTOR &amp; VLSI" data-title="Semiconductor Technology" data-summary="A visual report on semiconductor engineering, chip design, fabrication, packaging and the future of integrated circuits." data-href="semiconductor.html" href="semiconductor.html">
+        <div class="card-media"><img src="assets/images/technology/semiconductor-engineering-lifecycle.webp" alt="Semiconductor Technology" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">SEMICONDUCTOR &amp; VLSI</span>
+          <h3 class="card-title">Semiconductor Technology</h3>
+          <p class="card-summary">A visual report on semiconductor engineering, chip design, fabrication, packaging and the future of integrated circuits.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="article-card" data-category="SEMICONDUCTOR &amp; VLSI" data-title="VLSI" data-summary="A practical breakdown of VLSI systems, RTL-to-GDS flows, physical design and the mindset behind large-scale chip development." data-href="vlsi.html" href="vlsi.html">
+        <div class="card-media"><img src="assets/images/technology/semiconductor-vlsi-layout.webp" alt="VLSI" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">SEMICONDUCTOR &amp; VLSI</span>
+          <h3 class="card-title">VLSI</h3>
+          <p class="card-summary">A practical breakdown of VLSI systems, RTL-to-GDS flows, physical design and the mindset behind large-scale chip development.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="article-card" data-category="SEMICONDUCTOR &amp; VLSI" data-title="What is VLSI?" data-summary="A complete guide to VLSI concepts, CMOS design, verification, scale and the engineering decisions behind modern chips." data-href="what-is-vlsi.html" href="what-is-vlsi.html">
+        <div class="card-media"><img src="assets/images/technology/semiconductor-wafer-testing-lab.webp" alt="What is VLSI?" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">SEMICONDUCTOR &amp; VLSI</span>
+          <h3 class="card-title">What is VLSI?</h3>
+          <p class="card-summary">A complete guide to VLSI concepts, CMOS design, verification, scale and the engineering decisions behind modern chips.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="article-card" data-category="SEMICONDUCTOR &amp; VLSI" data-title="Semiconductor Technology Future" data-summary="The ASARK Journal deep dive into semiconductors, from physics fundamentals to fabrication, packaging and responsible innovation." data-href="journal/semiconductor-technology-future.html" href="journal/semiconductor-technology-future.html">
+        <div class="card-media"><img src="assets/images/technology/semiconductor-engineering-lifecycle.webp" alt="Semiconductor Technology Future" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">SEMICONDUCTOR &amp; VLSI</span>
+          <h3 class="card-title">Semiconductor Technology Future</h3>
+          <p class="card-summary">The ASARK Journal deep dive into semiconductors, from physics fundamentals to fabrication, packaging and responsible innovation.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="article-card" data-category="SPACE" data-title="Space Technology" data-summary="A grounded guide to satellites, launch systems, robotics, Earth observation and the systems that support exploration." data-href="space.html" href="space.html">
+        <div class="card-media"><img src="ai images/Technology/Space Technology/space-technology-feature.webp" alt="Space Technology" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">SPACE</span>
+          <h3 class="card-title">Space Technology</h3>
+          <p class="card-summary">A grounded guide to satellites, launch systems, robotics, Earth observation and the systems that support exploration.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="article-card" data-category="SPACE" data-title="Commercial Space Infrastructure" data-summary="A research-style look at orbital infrastructure, commercial platforms and the systems that will shape future space economies." data-href="commercial-space-infrastructure.html" href="commercial-space-infrastructure.html">
+        <div class="card-media"><img src="ai images/Technology/Space Technology/space-technology-feature.webp" alt="Commercial Space Infrastructure" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">SPACE</span>
+          <h3 class="card-title">Commercial Space Infrastructure</h3>
+          <p class="card-summary">A research-style look at orbital infrastructure, commercial platforms and the systems that will shape future space economies.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="article-card" data-category="SPACE" data-title="The Future of Space Technology" data-summary="The ASARK Journal guide to satellites, launch systems, space communications and how lunar, orbital and planetary systems connect." data-href="journal/space-technology-future.html" href="journal/space-technology-future.html">
+        <div class="card-media"><img src="ai images/Technology/Space Technology/space-technology-feature.webp" alt="The Future of Space Technology" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">SPACE</span>
+          <h3 class="card-title">The Future of Space Technology</h3>
+          <p class="card-summary">The ASARK Journal guide to satellites, launch systems, space communications and how lunar, orbital and planetary systems connect.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="article-card" data-category="VEHICLE" data-title="Vehicle Technology" data-summary="Explore EVs, batteries, charging infrastructure, software-defined vehicles and the systems behind future mobility." data-href="vehicle-technology.html" href="vehicle-technology.html">
+        <div class="card-media"><img src="assets/images/technology/vehicle-technology-feature.webp" alt="Vehicle Technology" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">VEHICLE</span>
+          <h3 class="card-title">Vehicle Technology</h3>
+          <p class="card-summary">Explore EVs, batteries, charging infrastructure, software-defined vehicles and the systems behind future mobility.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="article-card" data-category="VEHICLE" data-title="Vehicle Technology: EVs, Software and the Future of Mobility" data-summary="The ASARK Journal exploration of electric mobility, autonomy, software layers and the infrastructure that makes sustainable transport possible." data-href="journal/vehicle-technology-future.html" href="journal/vehicle-technology-future.html">
+        <div class="card-media"><img src="assets/images/technology/vehicle-technology-feature.webp" alt="Vehicle Technology: EVs, Software and the Future of Mobility" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">VEHICLE</span>
+          <h3 class="card-title">Vehicle Technology: EVs, Software and the Future of Mobility</h3>
+          <p class="card-summary">The ASARK Journal exploration of electric mobility, autonomy, software layers and the infrastructure that makes sustainable transport possible.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="article-card" data-category="MARKET" data-title="Market Technology" data-summary="A practical guide to market infrastructure, analytics, secure payments, AI and the systems behind digital commerce." data-href="market-technology.html" href="market-technology.html">
+        <div class="card-media"><img src="assets/images/technology/market-global-financial-markets.webp" alt="Market Technology" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">MARKET</span>
+          <h3 class="card-title">Market Technology</h3>
+          <p class="card-summary">A practical guide to market infrastructure, analytics, secure payments, AI and the systems behind digital commerce.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="article-card" data-category="MARKET" data-title="The Future of Market Technology" data-summary="The ASARK Journal guide to exchanges, order books, data flows, cybersecurity, regulation and responsible financial infrastructure." data-href="journal/market-technology-future.html" href="journal/market-technology-future.html">
+        <div class="card-media"><img src="assets/images/technology/market-global-financial-markets.webp" alt="The Future of Market Technology" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">MARKET</span>
+          <h3 class="card-title">The Future of Market Technology</h3>
+          <p class="card-summary">The ASARK Journal guide to exchanges, order books, data flows, cybersecurity, regulation and responsible financial infrastructure.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="article-card" data-category="ANIMATION" data-title="Animation Technology" data-summary="Learn how animation tools, rendering systems and creative workflows bring visual stories and complex ideas to life." data-href="animation-technology.html" href="animation-technology.html">
+        <div class="card-media"><img src="ai images/Technology/Animation Technology/animation-technology-feature.webp" alt="Animation Technology" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">ANIMATION</span>
+          <h3 class="card-title">Animation Technology</h3>
+          <p class="card-summary">Learn how animation tools, rendering systems and creative workflows bring visual stories and complex ideas to life.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+      <a class="article-card" data-category="ANIMATION" data-title="Animation Technology: From Digital Art to Real-Time Worlds" data-summary="The ASARK Journal exploration of motion, rendering, graphics pipelines and the production systems behind modern visual storytelling." data-href="journal/animation-technology-future.html" href="journal/animation-technology-future.html">
+        <div class="card-media"><img src="ai images/Technology/Animation Technology/animation-technology-feature.webp" alt="Animation Technology: From Digital Art to Real-Time Worlds" loading="lazy" decoding="async"></div>
+        <div class="card-body">
+          <span class="category-tag">ANIMATION</span>
+          <h3 class="card-title">Animation Technology: From Digital Art to Real-Time Worlds</h3>
+          <p class="card-summary">The ASARK Journal exploration of motion, rendering, graphics pipelines and the production systems behind modern visual storytelling.</p>
+          <span class="card-link">Read Article →</span>
+        </div>
+      </a>
+    </div>
       <div class="no-results" id="no-results">No matching articles found.</div>
     </section>
   </main>
@@ -344,136 +560,51 @@
   <script src="js/site.js?v=90"></script>
   <script defer src="js/analytics-consent.js?v=1"></script>
   <script>
-    const articles = [
-      { category: 'AI', title: 'AI Technology', summary: 'A practical overview of how AI systems are built, where they are used, and why responsible development matters.', href: 'ai-technology.html', image: 'ai images/Technology/AI Technology/ai-technology-overview.webp' },
-      { category: 'AI', title: 'How Autonomous AI Systems Evolved', summary: 'A compact look at agentic AI, inference-time compute, persistent memory and the systems shaping modern AI workflows.', href: 'evolution-of-autonomous-ai-systems.html', image: 'ai images/Technology/AI Technology/ai-technology-overview.webp' },
-      { category: 'AI', title: 'AI Technology: How Intelligent Systems Are Changing the Future', summary: 'The ASARK Journal guide to AI foundations, application areas and the technical questions that matter most.', href: 'journal/ai-technology-future.html', image: 'ai images/Technology/AI Technology/ai-technology-overview.webp' },
-      { category: 'COMPUTING', title: 'Computing', summary: 'A broader look at modern computing systems, architectures and the design choices behind faster, more capable technology.', href: 'computing.html', image: 'ai images/Technology/technology-showcase-grid.webp' },
-      { category: 'COMPUTING', title: 'Processor Technology', summary: 'An accessible guide to processor design, core performance and how compute decisions affect real-world devices.', href: 'processor.html', image: 'assets/images/technology/semiconductor-device-architecture.webp' },
-      { category: 'COMPUTING', title: 'Graphics Card Technology', summary: 'Explore graphics cards, GPU pipelines and the role of accelerated compute in gaming, AI and creative work.', href: 'graphics-card.html', image: 'assets/images/technology/semiconductor-ai-accelerator-fpga.webp' },
-      { category: 'SEMICONDUCTOR & VLSI', title: 'Semiconductor Technology', summary: 'A visual report on semiconductor engineering, chip design, fabrication, packaging and the future of integrated circuits.', href: 'semiconductor.html', image: 'assets/images/technology/semiconductor-engineering-lifecycle.webp' },
-      { category: 'SEMICONDUCTOR & VLSI', title: 'VLSI', summary: 'A practical breakdown of VLSI systems, RTL-to-GDS flows, physical design and the mindset behind large-scale chip development.', href: 'vlsi.html', image: 'assets/images/technology/semiconductor-vlsi-layout.webp' },
-      { category: 'SEMICONDUCTOR & VLSI', title: 'What is VLSI?', summary: 'A complete guide to VLSI concepts, CMOS design, verification, scale and the engineering decisions behind modern chips.', href: 'what-is-vlsi.html', image: 'assets/images/technology/semiconductor-wafer-testing-lab.webp' },
-      { category: 'SEMICONDUCTOR & VLSI', title: 'Semiconductor Technology Future', summary: 'The ASARK Journal deep dive into semiconductors, from physics fundamentals to fabrication, packaging and responsible innovation.', href: 'journal/semiconductor-technology-future.html', image: 'assets/images/technology/semiconductor-engineering-lifecycle.webp' },
-      { category: 'SPACE', title: 'Space Technology', summary: 'A grounded guide to satellites, launch systems, robotics, Earth observation and the systems that support exploration.', href: 'space.html', image: 'ai images/Technology/Space Technology/space-technology-feature.webp' },
-      { category: 'SPACE', title: 'Commercial Space Infrastructure', summary: 'A research-style look at orbital infrastructure, commercial platforms and the systems that will shape future space economies.', href: 'commercial-space-infrastructure.html', image: 'ai images/Technology/Space Technology/space-technology-feature.webp' },
-      { category: 'SPACE', title: 'The Future of Space Technology', summary: 'The ASARK Journal guide to satellites, launch systems, space communications and how lunar, orbital and planetary systems connect.', href: 'journal/space-technology-future.html', image: 'ai images/Technology/Space Technology/space-technology-feature.webp' },
-      { category: 'VEHICLE', title: 'Vehicle Technology', summary: 'Explore EVs, batteries, charging infrastructure, software-defined vehicles and the systems behind future mobility.', href: 'vehicle-technology.html', image: 'assets/images/technology/vehicle-technology-feature.webp' },
-      { category: 'VEHICLE', title: 'Vehicle Technology: EVs, Software and the Future of Mobility', summary: 'The ASARK Journal exploration of electric mobility, autonomy, software layers and the infrastructure that makes sustainable transport possible.', href: 'journal/vehicle-technology-future.html', image: 'assets/images/technology/vehicle-technology-feature.webp' },
-      { category: 'MARKET', title: 'Market Technology', summary: 'A practical guide to market infrastructure, analytics, secure payments, AI and the systems behind digital commerce.', href: 'market-technology.html', image: 'assets/images/technology/market-global-financial-markets.webp' },
-      { category: 'MARKET', title: 'The Future of Market Technology', summary: 'The ASARK Journal guide to exchanges, order books, data flows, cybersecurity, regulation and responsible financial infrastructure.', href: 'journal/market-technology-future.html', image: 'assets/images/technology/market-global-financial-markets.webp' },
-      { category: 'ANIMATION', title: 'Animation Technology', summary: 'Learn how animation tools, rendering systems and creative workflows bring visual stories and complex ideas to life.', href: 'animation-technology.html', image: 'ai images/Technology/Animation Technology/animation-technology-feature.webp' },
-      { category: 'ANIMATION', title: 'Animation Technology: From Digital Art to Real-Time Worlds', summary: 'The ASARK Journal exploration of motion, rendering, graphics pipelines and the production systems behind modern visual storytelling.', href: 'journal/animation-technology-future.html', image: 'ai images/Technology/Animation Technology/animation-technology-feature.webp' }
-    ];
-
-    const featuredHrefs = [
-      'journal/ai-technology-future.html',
-      'journal/semiconductor-technology-future.html',
-      'journal/space-technology-future.html',
-      'journal/vehicle-technology-future.html'
-    ];
-
-    const articleGrid = document.getElementById('article-grid');
     const featuredGrid = document.getElementById('featured-grid');
+    const articleGrid = document.getElementById('article-grid');
     const articleCount = document.getElementById('article-count');
     const noResults = document.getElementById('no-results');
     const searchInput = document.getElementById('journal-search');
     const filterButtons = [...document.querySelectorAll('.filter-button')];
+    const articleCards = [...articleGrid.querySelectorAll('.article-card')];
+    const featuredCards = [...featuredGrid.querySelectorAll('.featured-card')];
 
     let activeCategory = 'ALL';
 
-    function createCard(article, featured) {
-      const card = document.createElement('article');
-      card.className = featured ? 'featured-card' : 'article-card';
-
-      const media = document.createElement('div');
-      media.className = 'card-media';
-
-      if (article.image) {
-        const img = document.createElement('img');
-        img.src = article.image;
-        img.alt = article.title;
-        img.loading = 'lazy';
-        img.decoding = 'async';
-        media.appendChild(img);
-      } else {
-        const fallback = document.createElement('div');
-        fallback.className = 'card-fallback';
-        fallback.textContent = article.category;
-        media.appendChild(fallback);
-      }
-
-      const body = document.createElement('div');
-      body.className = 'card-body';
-
-      const tag = document.createElement('span');
-      tag.className = 'category-tag';
-      tag.textContent = article.category;
-
-      const title = document.createElement('h3');
-      title.className = 'card-title';
-      title.textContent = article.title;
-
-      const summary = document.createElement('p');
-      summary.className = 'card-summary';
-      summary.textContent = article.summary;
-
-      const link = document.createElement('a');
-      link.className = 'card-link';
-      link.href = article.href;
-      link.textContent = 'Read Article →';
-
-      body.append(tag, title, summary, link);
-      card.append(media, body);
-      return card;
+    function cardMatches(card, query) {
+      const category = card.dataset.category || '';
+      const matchesCategory = activeCategory === 'ALL' || category === activeCategory;
+      const haystack = `${card.dataset.title || ''} ${category} ${card.dataset.summary || ''} ${card.dataset.href || ''}`.toLowerCase();
+      return matchesCategory && haystack.includes(query);
     }
 
-    function matchesSearch(article, query) {
-      const haystack = `${article.title} ${article.category} ${article.summary} ${article.href}`.toLowerCase();
-      return haystack.includes(query);
-    }
-
-    function renderArticles() {
+    function filterArticles() {
       const query = searchInput.value.trim().toLowerCase();
-
-      const visibleArticles = articles.filter(article => {
-        const matchesCategory = activeCategory === 'ALL' || article.category === activeCategory;
-        return matchesCategory && matchesSearch(article, query);
+      let visible = 0;
+      articleCards.forEach((card) => {
+        const show = cardMatches(card, query);
+        card.hidden = !show;
+        card.classList.toggle('is-hidden', !show);
+        if (show) visible += 1;
       });
-
-      const featuredArticles = featuredHrefs
-        .map(href => articles.find(article => article.href === href))
-        .filter(Boolean)
-        .filter(article => {
-          const matchesCategory = activeCategory === 'ALL' || article.category === activeCategory;
-          return matchesCategory && matchesSearch(article, query);
-        });
-
-      articleGrid.innerHTML = '';
-      featuredGrid.innerHTML = '';
-
-      featuredArticles.slice(0, 4).forEach(article => {
-        featuredGrid.appendChild(createCard(article, true));
+      featuredCards.forEach((card) => {
+        const show = cardMatches(card, query);
+        card.hidden = !show;
+        card.classList.toggle('is-hidden', !show);
       });
-
-      visibleArticles.forEach(article => {
-        articleGrid.appendChild(createCard(article, false));
-      });
-
-      articleCount.textContent = `Showing ${visibleArticles.length} article${visibleArticles.length === 1 ? '' : 's'}`;
-      noResults.classList.toggle('visible', visibleArticles.length === 0);
+      articleCount.textContent = `Showing ${visible} article${visible === 1 ? '' : 's'}`;
+      noResults.classList.toggle('visible', visible === 0);
     }
 
     filterButtons.forEach(button => {
       button.addEventListener('click', () => {
         activeCategory = button.dataset.category;
         filterButtons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-        renderArticles();
+        filterArticles();
       });
     });
 
-    searchInput.addEventListener('input', renderArticles);
-    renderArticles();
+    searchInput.addEventListener('input', filterArticles);
   </script>
 </body>
 </html>
