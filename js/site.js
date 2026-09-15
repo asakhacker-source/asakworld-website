@@ -202,16 +202,6 @@ document.querySelectorAll('.visual-card[data-card-link], .card[data-project-link
 
 const currentPage = activePage;
 
-if (currentPage === 'technology.html') {
-  const technologyGrid = document.querySelector('.technology-grid');
-  if (technologyGrid) {
-    const technologyShowcase = document.createElement('figure');
-    technologyShowcase.className = 'technology-showcase';
-    technologyShowcase.innerHTML = '<img src="ai images/Technology/technology-showcase-grid.webp" alt="Visual overview of artificial intelligence, market, animation, space and vehicle technology" data-ai-image-fixed width="1536" height="1024"><figcaption>Explore twenty connected innovations across AI, market, animation, space and vehicle technology.</figcaption>';
-    technologyGrid.before(technologyShowcase);
-  }
-}
-
 const visualFilters = document.querySelectorAll('[data-filter]');
 const visualCards = document.querySelectorAll('.visual-library-grid [data-category]');
 if (visualFilters.length && visualCards.length) {
@@ -273,9 +263,9 @@ if (saveButton) {
 const affiliateSidebarPages = new Set([
   'index.html', 'about.html', 'ai-technology.html', 'ancient.html', 'art-design.html', 'blogs.html', 'computing.html', 'culture-future.html',
   'explore.html', 'futuristic.html', 'graphics-card.html', 'hacker-setup.html',
-  'journal/ai-technology-future.html', 'journal/animation-technology-future.html',
+  'journal/ai-technology-future.html',
   'journal/market-technology-future.html', 'journal/semiconductor-technology-future.html',
-  'journal/space-technology-future.html', 'journal/vehicle-technology-future.html',
+  'journal/space-technology-future.html',
   'market-technology.html', 'modern.html', 'processor.html',
   'projects/beyond-the-shore.html', 'projects/contemporary-estate.html',
   'projects/dining-and-kitchen.html', 'projects/glass-and-stone.html',

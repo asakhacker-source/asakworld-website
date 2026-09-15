@@ -16,12 +16,6 @@
     { id: 'market-martech-playbook', asin: null, category: 'MARKET', title: 'The MarTech Playbook: 10 Practical Frameworks for Data, Automation & AI to Build Scalable, ROI-Driven Marketing Strategies', url: 'https://link.amazon/B01XYYZYJ', image: 'assets/images/affiliate/amazon-market.webp', alt: 'Original ASARK illustration for the market category.', approvedAffiliateLink: true, originalArtwork: true },
     { id: 'market-wizards', asin: null, category: 'MARKET', title: 'Market Wizards: Interviews with Top Traders', url: 'https://link.amazon/B04GWCixU', image: 'assets/images/affiliate/amazon-market.webp', alt: 'Original ASARK illustration for the market category.', approvedAffiliateLink: true, originalArtwork: true },
     { id: 'market-algo-trading-cheat-codes', asin: null, category: 'MARKET', title: 'Algo Trading Cheat Codes: Techniques for Traders to Quickly and Efficiently Develop Better Algorithmic Trading Systems', url: 'https://link.amazon/B0iuNZmkg', image: 'assets/images/affiliate/amazon-market.webp', alt: 'Original ASARK illustration for the market category.', approvedAffiliateLink: true, originalArtwork: true },
-    { id: 'vehicle-polar-x1-ev-charger', asin: null, category: 'VEHICLE', title: 'Polar X1 | 11kW Smart EV Charger | 3-Phase | Wall-Mount, 5m TPU Cable | Display, App, Bluetooth, RFID and OTA Updates', url: 'https://link.amazon/B0cs6Ow1r', image: 'assets/images/affiliate/amazon-vehicle.webp', alt: 'Original ASARK illustration for the vehicle category.', approvedAffiliateLink: true, originalArtwork: true },
-    { id: 'vehicle-obdeleven-3', asin: null, category: 'VEHICLE', title: 'OBDeleven 3 OBD II Diagnostic Scanner for VW, Audi, Skoda, BMW, Mercedes, Mini, Toyota, Seat and Cupra', url: 'https://link.amazon/B0cu6ryVS', image: 'assets/images/affiliate/amazon-vehicle.webp', alt: 'Original ASARK illustration for the vehicle category.', approvedAffiliateLink: true, originalArtwork: true },
-    { id: 'vehicle-eox-portable-ev-charger', asin: null, category: 'VEHICLE', title: 'EOX® 3.6kW Portable Universal Car EV Charger | 16A Type 2 AC | 3-Pin Indian Plug | Adjustable Power | LED Display', url: 'https://link.amazon/B01SHujIY', image: 'assets/images/affiliate/amazon-vehicle.webp', alt: 'Original ASARK illustration for the vehicle category.', approvedAffiliateLink: true, originalArtwork: true },
-    { id: 'animation-xppen-artist-pro-16', asin: null, category: 'ANIMATION', title: 'XPPen Artist Pro 16 (Gen 2) 16-Inch Drawing Display with X3 Pro Stylus and Bluetooth Express Key Remote', url: 'https://link.amazon/B0ieL06kX', image: 'assets/images/affiliate/amazon-animation.webp', alt: 'Original ASARK illustration for the animation category.', approvedAffiliateLink: true, originalArtwork: true },
-    { id: 'animation-dj-laser-light', asin: null, category: 'ANIMATION', title: 'DJ Laser Light for Party, 3D Animation Laser Machine with Manual Graffiti, Text Playback and Personalized Programming', url: 'https://link.amazon/B0aX3Ivrm', image: 'assets/images/affiliate/amazon-animation.webp', alt: 'Original ASARK illustration for the animation category.', approvedAffiliateLink: true, originalArtwork: true },
-    { id: 'animation-animators-eye', asin: null, category: 'ANIMATION', title: 'The Animator’s Eye: Adding Life to Animation With Timing, Layout, Design, Color and Sound', url: 'https://link.amazon/B01jmwTbD', image: 'assets/images/affiliate/amazon-animation.webp', alt: 'Original ASARK illustration for the animation category.', approvedAffiliateLink: true, originalArtwork: true },
     { id: 'architecture-isomars-a2-drafting-kit', asin: null, category: 'ARCHITECTURE', title: 'Isomars A2 Technical Drawing & Drafting Kit with Board & Tools', url: 'https://link.amazon/B0gOPHXao', image: 'assets/images/affiliate/amazon-architecture.webp', alt: 'Original ASARK illustration for the architecture category.', approvedAffiliateLink: true, originalArtwork: true },
     { id: 'architecture-underprivileged-classes', asin: null, category: 'ARCHITECTURE', title: 'Reading the Architecture of the Underprivileged Classes', url: 'https://link.amazon/B02NBvnCZ', image: 'assets/images/affiliate/amazon-architecture.webp', alt: 'Original ASARK illustration for the architecture category.', approvedAffiliateLink: true, originalArtwork: true },
     { id: 'architecture-wooden-house-puzzle', asin: null, category: 'ARCHITECTURE', title: '3D Wooden House Puzzle Japanese Architecture Miniature Model Kit – 58-Piece Laser-Cut MDF DIY Craft', url: 'https://link.amazon/B06uuyqNK', image: 'assets/images/affiliate/amazon-architecture.webp', alt: 'Original ASARK illustration for the architecture category.', approvedAffiliateLink: true, originalArtwork: true }
@@ -36,7 +30,7 @@
     'blogs.html': 2,
     'technology.html': 0
   });
-  const MAIN_PAGE_CATEGORIES = Object.freeze(['AI', 'SEMICONDUCTOR', 'SPACE', 'MARKET', 'VEHICLE', 'ANIMATION', 'ARCHITECTURE']);
+  const MAIN_PAGE_CATEGORIES = Object.freeze(['AI', 'SEMICONDUCTOR', 'SPACE', 'MARKET', 'ARCHITECTURE']);
   const PAGE_FEATURED_PRODUCTS = Object.freeze({
     'what-is-vlsi.html': 'ai-intel-core-ultra-9-285k'
   });
@@ -44,11 +38,11 @@
     'ai-technology.html': 'AI', 'computing.html': 'AI', 'graphics-card.html': 'AI',
     'processor.html': 'SEMICONDUCTOR', 'semiconductor.html': 'SEMICONDUCTOR', 'vlsi.html': 'SEMICONDUCTOR',
     'what-is-vlsi.html': 'SEMICONDUCTOR',
-    'market-technology.html': 'MARKET', 'animation-technology.html': 'ANIMATION', 'architecture.html': 'ARCHITECTURE',
-    'space.html': 'SPACE', 'vehicle-technology.html': 'VEHICLE',
+    'market-technology.html': 'MARKET', 'architecture.html': 'ARCHITECTURE',
+    'space.html': 'SPACE',
     'journal/ai-technology-future.html': 'AI', 'journal/semiconductor-technology-future.html': 'SEMICONDUCTOR',
-    'journal/market-technology-future.html': 'MARKET', 'journal/animation-technology-future.html': 'ANIMATION',
-    'journal/space-technology-future.html': 'SPACE', 'journal/vehicle-technology-future.html': 'VEHICLE'
+    'journal/market-technology-future.html': 'MARKET',
+    'journal/space-technology-future.html': 'SPACE'
   });
 
   const normalisePath = () => {
