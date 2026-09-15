@@ -8,7 +8,7 @@ const primarySections = [
   ['index.html', 'Home'], ['blogs.html', 'Journal'], ['about.html', 'About']
 ];
 const dropdownSections = [
-  ['technology.html', 'Technology', [['ai-technology.html', 'AI Technology'], ['semiconductor.html', 'Semiconductor & VLSI'], ['market-technology.html', 'Market Technology'], ['animation-technology.html', 'Animation Technology'], ['space.html', 'Space Technology'], ['vehicle-technology.html', 'Vehicle Technology'], ['computing.html', 'Computing']]]
+  ['technology.html', 'Technology', [['ai-technology.html', 'AI Technology'], ['semiconductor.html', 'Semiconductor & VLSI'], ['market-technology.html', 'Market Technology'], ['space.html', 'Space Technology'], ['computing.html', 'Computing']]]
 ];
 const activePage = window.location.pathname.split('/').pop() || 'index.html';
 const socialFooterExcludedPages = new Set(['login.html', 'signup.html', 'forgot-password.html', 'reset-password.html', 'auth-callback.html']);
@@ -232,15 +232,6 @@ if (currentPage === 'ai-technology.html') {
   }
 }
 
-if (currentPage === 'animation-technology.html') {
-  const technologyGrid = document.querySelector('.technology-grid');
-  if (technologyGrid) {
-    const animationOverview = document.createElement('figure');
-    animationOverview.className = 'animation-technology-overview';
-    animationOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/Animation Technology/animation-technology-feature.webp" alt="Animation Technology infographic featuring 3D animation, AI tools, virtual reality, motion capture and visual storytelling" width="1672" height="941"><figcaption>Animation Technology: creative tools that bring ideas to life through motion, immersive worlds and visual storytelling.</figcaption>';
-    technologyGrid.before(animationOverview);
-  }
-}
 
 if (currentPage === 'space.html') {
   const spaceGrid = document.querySelector('.content-section .grid');
@@ -256,9 +247,7 @@ const technologyBlogConnections = {
   'ai-technology.html': ['ai-title', 'Read the AI Technology Journal guide'],
   'semiconductor.html': ['semiconductor-title', 'Read the Semiconductor Technology Journal guide'],
   'market-technology.html': ['market-title', 'Read the Market Technology Journal guide'],
-  'animation-technology.html': ['animation-title', 'Read the Animation Technology Journal guide'],
-  'space.html': ['space-title', 'Read the Space Technology Journal guide'],
-  'vehicle-technology.html': ['vehicle-title', 'Read the Vehicle Technology Journal guide']
+  'space.html': ['space-title', 'Read the Space Technology Journal guide']
 };
 const technologyBlogConnection = technologyBlogConnections[currentPage];
 if (technologyBlogConnection) {
@@ -282,8 +271,7 @@ if (saveButton) {
 }
 
 const affiliateSidebarPages = new Set([
-  'index.html', 'about.html', 'ai-technology.html', 'ancient.html', 'animation-technology.html',
-  'art-design.html', 'blogs.html', 'computing.html', 'culture-future.html',
+  'index.html', 'about.html', 'ai-technology.html', 'ancient.html', 'art-design.html', 'blogs.html', 'computing.html', 'culture-future.html',
   'explore.html', 'futuristic.html', 'graphics-card.html', 'hacker-setup.html',
   'journal/ai-technology-future.html', 'journal/animation-technology-future.html',
   'journal/market-technology-future.html', 'journal/semiconductor-technology-future.html',
@@ -294,7 +282,7 @@ const affiliateSidebarPages = new Set([
   'projects/living-spaces.html', 'projects/material-stories.html', 'projects/minimal-estate.html',
   'projects/modern-elegance.html', 'projects/new-classic.html', 'projects/private-villa.html',
   'projects/quiet-luxury.html', 'projects/timeless-style.html', 'semiconductor.html',
-  'space.html', 'stories.html', 'technology.html', 'vehicle-technology.html', 'visual.html', 'vlsi.html',
+  'space.html', 'stories.html', 'technology.html', 'visual.html', 'vlsi.html',
   'what-is-vlsi.html'
 ]);
 let affiliatePagePath = '';
