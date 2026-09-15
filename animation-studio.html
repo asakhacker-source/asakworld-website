@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="ASARK Animation Studio — a local browser-based motion design workspace.">
+  <title>ASARK Animation Studio | Browser-Based Animation Tool</title><link rel="canonical" href="https://asarkworld.com/animation-studio.html"><link rel="stylesheet" href="css/animation-studio.css">
+</head>
+<body class="asark-studio-body">
+<main id="studio" class="studio" aria-label="ASARK Animation Studio">
+  <header class="studio-topbar"><div class="studio-brand"><span>ASARK</span><strong>Animation Studio</strong></div><div class="studio-actions">
+    <button data-action="new">New project</button><button data-action="save">Save</button><label class="file-button">Load<input id="load-project" type="file" accept="application/json,.json"></label>
+    <button data-action="undo">Undo</button><button data-action="redo">Redo</button><button data-action="play">Play</button><button data-action="pause">Pause</button><button data-action="restart">Restart</button><label class="toggle-label">Loop <input id="loop" type="checkbox" checked></label><button data-action="export">Export WebM</button>
+  </div></header>
+  <section class="studio-workspace">
+    <aside class="studio-tools" aria-label="Object tools"><h2>Tools</h2><button data-tool="select" class="is-active">Select</button><button data-tool="text">Text</button><button data-tool="rect">Rectangle</button><button data-tool="circle">Circle</button><button data-tool="line">Line</button><label class="file-button">Image<input id="image-upload" type="file" accept="image/*"></label><button data-action="duplicate">Duplicate</button><button data-action="delete" class="danger">Delete</button></aside>
+    <section class="studio-canvas-area"><div class="stage-frame"><div id="stage" class="stage" role="application" aria-label="Animation stage. Select and drag objects to reposition them."><p class="empty-stage">Add an object to begin</p></div></div><p id="studio-status" role="status" aria-live="polite">Ready. Projects stay in this browser unless you save them.</p></section>
+    <aside class="studio-inspector" aria-label="Selected object inspector"><h2>Inspector</h2><p id="selection-name">No object selected</p><div id="inspector-controls" hidden>
+      <div class="field-grid"><label>X <input data-prop="x" type="number"></label><label>Y <input data-prop="y" type="number"></label><label>Width <input data-prop="width" type="number" min="1"></label><label>Height <input data-prop="height" type="number" min="1"></label><label>Rotation <input data-prop="rotation" type="number"></label><label>Scale <input data-prop="scale" type="number" min=".1" step=".1"></label><label>Opacity <input data-prop="opacity" type="range" min="0" max="1" step=".05"></label><label>Fill <input data-prop="fill" type="color"></label></div>
+      <label id="text-field">Text <input data-prop="text" type="text"></label><label id="font-field">Font size <input data-prop="fontSize" type="number" min="8"></label>
+      <div class="inspector-actions"><button data-action="front">Bring front</button><button data-action="back">Send back</button><button data-action="keyframe">Add keyframe</button></div>
+      <div class="preset-controls" aria-label="Motion presets"><span>Motion presets</span><button data-preset="Fade In">Fade In</button><button data-preset="Fade Out">Fade Out</button><button data-preset="Slide Left">Slide Left</button><button data-preset="Slide Right">Slide Right</button><button data-preset="Slide Up">Slide Up</button><button data-preset="Slide Down">Slide Down</button><button data-preset="Zoom In">Zoom In</button><button data-preset="Zoom Out">Zoom Out</button><button data-preset="Spin">Spin</button><button data-preset="Bounce">Bounce</button></div>
+    </div><div class="project-fields"><h3>Project</h3><label>Duration <input id="duration" type="number" min="1" max="60" step=".5" value="5"> sec</label><label>FPS <input id="fps" type="number" min="12" max="60" value="30"></label></div></aside>
+  </section>
+  <section class="timeline-panel" aria-label="Animation timeline"><div class="timeline-controls"><strong>Timeline</strong><span id="time-readout">0.00 / 5.00 s</span><button data-action="keyframe">Add keyframe</button></div><div id="timeline" class="timeline"><div class="timeline-ruler"></div><div id="timeline-tracks" class="timeline-tracks"></div><div id="playhead" class="playhead" aria-hidden="true"></div></div></section>
+  <section class="studio-help"><h2>How it works</h2><p>Add an object, select it, and set keyframes at different points in time. The Studio linearly interpolates position, rotation, scale and opacity between those keyframes. Save projects as local JSON; images are embedded only in the saved project data. WebM export depends on your browser’s native MediaRecorder support. GIF export deferred.</p></section>
+</main><script src="js/animation-studio.js"></script></body></html>
