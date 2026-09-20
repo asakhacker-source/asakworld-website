@@ -112,3 +112,10 @@
 @media (prefers-reduced-motion: reduce) {
   .asark-amazon-widget .asark-amazon-panel { transition: none; }
 }
+
+/* Commercial companion: deliberately quieter than the AI interface. */
+.asark-amazon-widget .asark-amazon-launcher { border-radius: 10px; border-color: rgba(223, 182, 79, .55); background: #111d2c; box-shadow: 0 10px 26px rgba(0, 7, 18, .35); }
+.asark-amazon-widget .asark-amazon-panel { border-radius: 18px; border-color: rgba(223, 182, 79, .38); background: linear-gradient(155deg, #112238, #0a1726); box-shadow: 0 24px 58px rgba(0, 5, 15, .58); }
+.asark-amazon-widget .asark-amazon-header { border-color: rgba(223, 182, 79, .20); background: rgba(255, 255, 255, .025); }
+.asark-amazon-widget .asark-amazon-header h2, .asark-amazon-widget .asark-amazon-link { color: #e9c96d; }
+.asark-amazon-widget .asark-amazon-image { border-radius: 12px; }

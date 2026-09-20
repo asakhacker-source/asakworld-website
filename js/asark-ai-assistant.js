@@ -151,6 +151,7 @@
 
     bindEvents() {
       this.dom.launcher.addEventListener('click', () => this.setPanelOpen(true));
+      document.querySelectorAll('[data-asark-ai-open]').forEach((trigger) => trigger.addEventListener('click', () => this.setPanelOpen(true)));
       [this.dom.minimize, this.dom.close].forEach((button) => button.addEventListener('click', () => this.setPanelOpen(false)));
       document.addEventListener('asark-amazon:opening', () => {
         if (window.matchMedia('(max-width: 900px)').matches && this.dom.panel.classList.contains('open')) this.setPanelOpen(false, false);

@@ -115,3 +115,19 @@ body.asark-ai-privacy-open .asark-ai-widget .asark-ai-panel { bottom: calc(226px
   .asark-ai-widget .asark-ai-panel,
   .asark-ai-widget .asark-ai-typing > span:not(.asark-ai-typing-label) { transition: none; animation: none; }
 }
+
+/* AI product treatment: luminous feedback is reserved for the assistant. */
+.asark-ai-widget .asark-ai-launcher {
+  border-color: rgba(49, 215, 255, .62);
+  background: linear-gradient(135deg, #0a1a2b, #0d2236);
+  box-shadow: 0 12px 30px rgba(0, 5, 14, .42), 0 0 18px rgba(49, 215, 255, .10);
+}
+.asark-ai-widget .asark-ai-launcher:hover, .asark-ai-widget .asark-ai-launcher:focus-visible { border-color: #24d3a2; background: linear-gradient(135deg, #0d2236, #102a40); }
+.asark-ai-widget .asark-ai-panel { border-color: rgba(70, 205, 255, .36); border-radius: 20px; background: linear-gradient(160deg, #0a1a2b, #06111f 70%, #0d2236); box-shadow: 0 28px 68px rgba(0, 4, 12, .62), 0 0 28px rgba(49, 215, 255, .08); }
+.asark-ai-widget .asark-ai-header { border-color: rgba(70, 180, 255, .24); background: linear-gradient(100deg, rgba(37, 140, 255, .1), rgba(49, 215, 255, .06)); }
+.asark-ai-widget .asark-ai-header-info h2 { color: #f7fbff; font-family: var(--sans, Arial, sans-serif); letter-spacing: -.02em; }
+.asark-ai-widget .asark-ai-message-user { background: linear-gradient(135deg, #258cff, #31d7ff); color: #041321; }
+.asark-ai-widget .asark-ai-message-assistant { border-left: 2px solid #31d7ff; border-color: rgba(70, 180, 255, .24); background: #0d2236; color: #d6e2ef; }
+.asark-ai-widget .asark-ai-suggestion:hover, .asark-ai-widget .asark-ai-suggestion:focus-visible { border-color: #24d3a2; background: rgba(36, 211, 162, .08); }
+.asark-ai-widget .asark-ai-button-primary { border-color: #31d7ff; background: linear-gradient(110deg, #258cff, #31d7ff, #24d3a2); color: #041321; }
+.asark-ai-widget .asark-ai-input:focus { outline-color: #31d7ff; }

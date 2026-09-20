@@ -39,7 +39,7 @@ body:has(main.technology-page) main.technology-page.technology-reference-page {
   border-radius: 16px;
   background:
     radial-gradient(circle at 88% 18%, rgba(66, 221, 255, 0.16), transparent 34%),
-    linear-gradient(135deg, #0c143f, #171650 58%, #111b55);
+    linear-gradient(135deg, #0d2236, #06111f 58%, #102a40);
 }
 
 .technology-page .tech-hero .eyebrow,
@@ -98,8 +98,8 @@ body:has(main.technology-page) main.technology-page.technology-reference-page {
 }
 
 .technology-page .hub-actions .btn {
-  border-color: #7047ff;
-  background: linear-gradient(90deg, #2f4bff, #7047ff);
+  border-color: #31d7ff;
+  background: linear-gradient(90deg, #258cff, #31d7ff);
   color: #fff;
 }
 
@@ -189,7 +189,7 @@ body:has(main.technology-page) main.technology-page.technology-reference-page {
   padding: clamp(14px, 2vw, 22px);
   border: 1px solid rgba(155, 170, 255, 0.2);
   border-radius: 16px;
-  background: linear-gradient(145deg, #141d5b, #0b123b) !important;
+  background: linear-gradient(145deg, #0d2236, #0a1a2b) !important;
   box-shadow: none !important;
 }
 
@@ -264,7 +264,7 @@ body:has(main.technology-page) main.technology-page.technology-reference-page {
   overflow: hidden;
   border: 1px solid rgba(155, 170, 255, 0.22);
   border-radius: 12px;
-  background: linear-gradient(180deg, #141d5b, #0b123b);
+  background: linear-gradient(180deg, #0d2236, #0a1a2b);
   color: inherit;
   text-decoration: none;
 }
@@ -378,3 +378,48 @@ body:has(main.technology-page) main.technology-page.technology-reference-page {
     grid-template-columns: 1fr;
   }
 }
+
+/* Premium directory refinement: shared ASARK surface language, with restrained domain colour. */
+body:has(main.technology-page), body:has(main.technology-page) main { background: var(--asark-bg) !important; }
+body:has(main.technology-page) main.technology-page { width: min(calc(100% - 40px), var(--asark-container)); padding-block: 32px var(--asark-section-space); }
+.technology-page .tech-hero, .technology-page .tech-overview, .technology-page .tech-module {
+  border-color: var(--asark-border);
+  border-radius: var(--asark-radius-lg);
+  background: linear-gradient(135deg, rgba(17, 39, 60, .96), rgba(9, 24, 41, .98)) !important;
+  box-shadow: var(--asark-shadow);
+}
+.technology-page .tech-hero { min-height: 380px; background: radial-gradient(circle at 88% 18%, rgba(75, 199, 232, .18), transparent 30%), linear-gradient(135deg, #102841, #0a1b2d 68%) !important; }
+.technology-page .tech-hero h1, .technology-page .tech-module h2, .technology-page .tech-reports h2, .technology-page .tech-landscape h2 { font-family: var(--sans); font-weight: 700; }
+.technology-page .tech-hero .eyebrow, .technology-page .tech-module .eyebrow, .technology-page .tech-overview .eyebrow, .technology-page .tech-reports .eyebrow, .technology-page .tech-landscape .eyebrow, .technology-page .tech-nav span, .technology-page .tech-report-grid span, .technology-page .tech-landscape-grid span { color: var(--asark-accent) !important; }
+.technology-page .tech-hero p, .technology-page .tech-module p, .technology-page .tech-reports > p, .technology-page .tech-landscape > p, .technology-page .tech-landscape-grid p { color: var(--asark-text-muted) !important; }
+.technology-page .hub-actions .btn { border-color: var(--asark-accent); background: var(--asark-accent); color: #06111d; }
+.technology-page .tech-media, .technology-page .tech-hero-visual { border-color: var(--asark-border); border-radius: var(--asark-radius-md); }
+.technology-page .tech-nav a, .technology-page .tech-report-grid a, .technology-page .tech-landscape-grid article { border-color: var(--asark-border); border-radius: var(--asark-radius-md); background: linear-gradient(145deg, rgba(19, 38, 59, .9), rgba(9, 24, 41, .96)); }
+.technology-page .tech-nav a:hover, .technology-page .tech-report-grid a:hover { border-color: var(--asark-accent); transform: translateY(-2px); }
+@media (max-width: 760px) { body:has(main.technology-page) main.technology-page { width: min(calc(100% - 24px), var(--asark-container)); } }
+
+/* Technology directory: align its later-loaded component layer to the shared palette. */
+body:has(main.technology-page), body:has(main.technology-page) main { background: #06111f !important; }
+.technology-page .tech-hero, .technology-page .tech-overview, .technology-page .tech-module {
+  border-color: rgba(70, 180, 255, .24) !important;
+  background: linear-gradient(135deg, rgba(13, 34, 54, .96), rgba(9, 24, 41, .98)) !important;
+}
+.technology-page .tech-hero { background: radial-gradient(circle at 88% 18%, rgba(49, 215, 255, .14), transparent 30%), linear-gradient(135deg, #102a40, #06111f 68%) !important; }
+.technology-page .tech-hero .eyebrow, .technology-page .tech-module .eyebrow, .technology-page .tech-overview .eyebrow,
+.technology-page .tech-reports .eyebrow, .technology-page .tech-landscape .eyebrow,
+.technology-page .tech-nav span, .technology-page .tech-report-grid span, .technology-page .tech-landscape-grid span { color: #31d7ff !important; }
+.technology-page .tech-nav a, .technology-page .tech-report-grid a, .technology-page .tech-landscape-grid article { border-color: rgba(70, 180, 255, .24); background: linear-gradient(145deg, #0d2236, #0a1a2b); }
+.technology-page .tech-nav a:hover, .technology-page .tech-report-grid a:hover { border-color: #31d7ff; }
+.technology-page section[id] { scroll-margin-top: 90px; }
+
+/* The directory uses the same clinical white surfaces as the rest of ASARK. */
+body:has(main.technology-page), body:has(main.technology-page) main { background: #ffffff !important; color: #111625 !important; }
+body:has(main.technology-page) main.technology-page :is(.tech-hero, .tech-overview, .tech-module, .tech-nav a, .tech-report-grid a, .tech-landscape-grid article) {
+  border-color: #e5e7eb !important;
+  background: #f8fafc !important;
+  box-shadow: none !important;
+  color: #111625 !important;
+}
+body:has(main.technology-page) main.technology-page :is(h1, h2, h3, h4, p, li, span, small) { color: #111625 !important; text-shadow: none !important; }
+body:has(main.technology-page) main.technology-page :is(.eyebrow, .tech-nav span, .tech-report-grid span, .tech-landscape-grid span, a) { color: #2563eb !important; }
+body:has(main.technology-page) main.technology-page .hub-actions .btn { background: #2563eb !important; border-color: #2563eb !important; color: #ffffff !important; }

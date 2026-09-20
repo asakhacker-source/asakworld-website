@@ -1167,3 +1167,39 @@
     flex-direction: column;
   }
 }
+
+/* AI editorial layer: data-rich, but still an educational report. */
+.ai-technology-page, .ai-report { background: var(--asark-bg); }
+.ai-hero, .ai-report .panel, .ai-report .guide, .ai-report .chart-panel {
+  border-color: var(--asark-border) !important;
+  border-radius: var(--asark-radius-lg) !important;
+  background: linear-gradient(145deg, rgba(18, 34, 58, .96), rgba(16, 23, 48, .96)) !important;
+  box-shadow: var(--asark-shadow);
+}
+.ai-hero { background: radial-gradient(circle at 82% 12%, rgba(37, 140, 255, .18), transparent 25%), linear-gradient(135deg, #102a40, #06111f) !important; }
+.ai-hero h1, .ai-report h2, .ai-report h3 { font-family: var(--sans); }
+.ai-hero .eyebrow, .ai-report .eyebrow { color: var(--asark-ai-accent) !important; }
+.ai-report .cards > *, .ai-report .models-grid > *, .ai-report .apps > *, .ai-report .flow > * { border-color: rgba(141, 123, 224, .25); border-radius: var(--asark-radius-md); }
+@media (prefers-reduced-motion: reduce) { .ai-hero, .ai-report * { animation: none !important; } }
+
+/* AI report palette: blue / cyan / teal accents with no purple surfaces. */
+.ai-hero, .ai-report .panel, .ai-report .guide, .ai-report .chart-panel {
+  border-color: rgba(70, 180, 255, .24) !important;
+  background: linear-gradient(145deg, rgba(13, 34, 54, .96), rgba(6, 17, 31, .98)) !important;
+}
+.ai-hero { background: radial-gradient(circle at 82% 12%, rgba(37, 140, 255, .18), transparent 28%), linear-gradient(135deg, #0d2236, #06111f) !important; }
+.ai-hero .eyebrow, .ai-report .eyebrow { color: #31d7ff !important; }
+.ai-report .cards > *, .ai-report .models-grid > *, .ai-report .apps > *, .ai-report .flow > * { border-color: rgba(70, 180, 255, .24); }
+
+/* Light report surfaces keep AI diagrams and explanatory copy readable. */
+body.page-ai-technology, body.page-ai-technology main.ai-report { background: #ffffff !important; color: #111625 !important; }
+body.page-ai-technology .ai-hero,
+body.page-ai-technology .ai-report :is(.panel, .guide, .chart-panel, .cards > *, .models-grid > *, .apps > *, .flow > *, .trend, .dashboard > section) {
+  border-color: #e5e7eb !important;
+  background: #f8fafc !important;
+  box-shadow: none !important;
+  color: #111625 !important;
+}
+body.page-ai-technology .ai-hero :is(h1, h2, h3, p),
+body.page-ai-technology .ai-report :is(h1, h2, h3, h4, p, li, small, span, label) { color: #111625 !important; text-shadow: none !important; }
+body.page-ai-technology .ai-report :is(.eyebrow, a) { color: #2563eb !important; }

@@ -29,3 +29,16 @@
 #boolean-calculator code,#boolean-calculator li { overflow-wrap:anywhere; }
 #boolean-calculator [hidden] { display:none!important; }
 @media(max-width:768px) { #boolean-calculator .logic-grid { grid-template-columns:minmax(0,1fr); } #boolean-calculator .logic-card { padding:14px; } }
+
+/* Calculator remains a clear, inset data panel on the white semiconductor guide. */
+#boolean-calculator { border-color: #e5e7eb; background: #f3f4f6; color: #111625; }
+#boolean-calculator :is(h2, h3, h4, p, label, caption, td) { color: #111625; }
+#boolean-calculator .logic-card, #boolean-calculator .logic-reference article { border-color: #e5e7eb; background: #ffffff; }
+#boolean-calculator button, #boolean-calculator select, #boolean-calculator textarea { border-color: #cbd5e1; background: #ffffff; color: #111625; }
+#boolean-calculator button[aria-pressed="true"] { border-color: #2563eb; background: #2563eb; color: #ffffff; }
+#boolean-calculator output { border-left-color: #2563eb; background: #ffffff; color: #111625; }
+#boolean-calculator th { border-color: #e5e7eb; background: #eaf0f8; color: #0f172a; }
+#boolean-calculator td { border-color: #e5e7eb; }
+#boolean-calculator summary { color: #2563eb; }
+#boolean-calculator :is(button, select, textarea):focus-visible { outline-color: #2563eb; }
+#boolean-calculator .logic-error { color: #b91c1c; }
