@@ -16,21 +16,15 @@
     { id: 'market-martech-playbook', asin: null, category: 'MARKET', title: 'The MarTech Playbook: 10 Practical Frameworks for Data, Automation & AI to Build Scalable, ROI-Driven Marketing Strategies', url: 'https://link.amazon/B01XYYZYJ', image: 'assets/images/affiliate/amazon-market.webp', alt: 'Original ASARK illustration for the market category.', approvedAffiliateLink: true, originalArtwork: true },
     { id: 'market-wizards', asin: null, category: 'MARKET', title: 'Market Wizards: Interviews with Top Traders', url: 'https://link.amazon/B04GWCixU', image: 'assets/images/affiliate/amazon-market.webp', alt: 'Original ASARK illustration for the market category.', approvedAffiliateLink: true, originalArtwork: true },
     { id: 'market-algo-trading-cheat-codes', asin: null, category: 'MARKET', title: 'Algo Trading Cheat Codes: Techniques for Traders to Quickly and Efficiently Develop Better Algorithmic Trading Systems', url: 'https://link.amazon/B0iuNZmkg', image: 'assets/images/affiliate/amazon-market.webp', alt: 'Original ASARK illustration for the market category.', approvedAffiliateLink: true, originalArtwork: true },
-    { id: 'architecture-isomars-a2-drafting-kit', asin: null, category: 'ARCHITECTURE', title: 'Isomars A2 Technical Drawing & Drafting Kit with Board & Tools', url: 'https://link.amazon/B0gOPHXao', image: 'assets/images/affiliate/amazon-architecture.webp', alt: 'Original ASARK illustration for the architecture category.', approvedAffiliateLink: true, originalArtwork: true },
-    { id: 'architecture-underprivileged-classes', asin: null, category: 'ARCHITECTURE', title: 'Reading the Architecture of the Underprivileged Classes', url: 'https://link.amazon/B02NBvnCZ', image: 'assets/images/affiliate/amazon-architecture.webp', alt: 'Original ASARK illustration for the architecture category.', approvedAffiliateLink: true, originalArtwork: true },
-    { id: 'architecture-wooden-house-puzzle', asin: null, category: 'ARCHITECTURE', title: '3D Wooden House Puzzle Japanese Architecture Miniature Model Kit – 58-Piece Laser-Cut MDF DIY Craft', url: 'https://link.amazon/B06uuyqNK', image: 'assets/images/affiliate/amazon-architecture.webp', alt: 'Original ASARK illustration for the architecture category.', approvedAffiliateLink: true, originalArtwork: true }
   ]);
 
-  const ROTATION_INTERVAL_MS = 12000;
-  const FADE_DURATION_MS = 250;
   const GENERAL_CATEGORY = 'GENERAL';
   const MAIN_PAGE_OFFSETS = Object.freeze({
     'index.html': 0,
-    'visual.html': 1,
     'blogs.html': 2,
     'technology.html': 0
   });
-  const MAIN_PAGE_CATEGORIES = Object.freeze(['AI', 'SEMICONDUCTOR', 'SPACE', 'MARKET', 'ARCHITECTURE']);
+  const MAIN_PAGE_CATEGORIES = Object.freeze(['AI', 'SEMICONDUCTOR', 'SPACE', 'MARKET']);
   const PAGE_FEATURED_PRODUCTS = Object.freeze({
     'what-is-vlsi.html': 'ai-intel-core-ultra-9-285k'
   });
@@ -38,184 +32,20 @@
     'ai-technology.html': 'AI', 'computing.html': 'AI', 'graphics-card.html': 'AI',
     'processor.html': 'SEMICONDUCTOR', 'semiconductor.html': 'SEMICONDUCTOR', 'vlsi.html': 'SEMICONDUCTOR',
     'what-is-vlsi.html': 'SEMICONDUCTOR',
-    'market-technology.html': 'MARKET', 'architecture.html': 'ARCHITECTURE',
-    'space.html': 'SPACE',
+    'market-technology.html': 'MARKET',
+    'space.html': 'SPACE', 'commercial-space-infrastructure.html': 'SPACE',
+    'evolution-of-autonomous-ai-systems.html': 'AI',
     'journal/ai-technology-future.html': 'AI', 'journal/semiconductor-technology-future.html': 'SEMICONDUCTOR',
     'journal/market-technology-future.html': 'MARKET',
     'journal/space-technology-future.html': 'SPACE'
   });
 
-  const normalisePath = () => {
-    try { return decodeURIComponent(location.pathname).replace(/^\/+|\/+$/g, '') || 'index.html'; }
-    catch { return 'index.html'; }
-  };
-  const scriptUrl = new URL(document.currentScript.src);
-  const siteRoot = new URL('../', scriptUrl);
-  const affiliateImageRoot = new URL('assets/images/affiliate/', siteRoot).pathname;
-  const AFFILIATE_HOSTS = new Set(['link.amazon']);
-  const approvedAffiliateUrl = (value) => {
-    if (typeof value !== 'string') return null;
-    try {
-      const url = new URL(value);
-      return url.protocol === 'https:' && !url.username && !url.password && AFFILIATE_HOSTS.has(url.hostname) ? url : null;
-    } catch { return null; }
-  };
-  const approvedArtworkUrl = (value) => {
-    if (typeof value !== 'string') return null;
-    try {
-      const url = new URL(value, siteRoot);
-      return url.origin === siteRoot.origin && !url.search && !url.hash && url.pathname.startsWith(affiliateImageRoot) ? url : null;
-    } catch { return null; }
-  };
-  const versionedArtworkUrl = (url) => {
-    const versionedUrl = new URL(url.href);
-    versionedUrl.searchParams.set('v', '8');
-    return versionedUrl.href;
-  };
-  const renderAffiliateSidebar = () => {
-  const validProducts = AMAZON_AFFILIATE_PRODUCTS.map((product) => ({ product, affiliateUrl: approvedAffiliateUrl(product?.url), artworkUrl: approvedArtworkUrl(product?.image) }))
-    .filter(({ product, affiliateUrl, artworkUrl }) => product && typeof product.id === 'string' && product.id.trim() && typeof product.title === 'string' && product.title.trim() && product.approvedAffiliateLink === true && product.originalArtwork === true && affiliateUrl && artworkUrl);
-  if (!validProducts.length) return;
-
-  const pagePath = normalisePath();
-  const pageCategory = PAGE_CATEGORIES[pagePath] || GENERAL_CATEGORY;
-  const categoryProducts = validProducts.filter(({ product }) => product.category === pageCategory);
-  const generalProducts = validProducts.filter(({ product }) => !product.category || product.category === GENERAL_CATEGORY);
-  const isMainPage = Object.prototype.hasOwnProperty.call(MAIN_PAGE_OFFSETS, pagePath);
-  const mainPageProducts = isMainPage ? MAIN_PAGE_CATEGORIES.map((category) => {
-    const matches = validProducts.filter(({ product }) => product.category === category);
-    return matches[MAIN_PAGE_OFFSETS[pagePath] % matches.length];
-  }).filter(Boolean) : [];
-  let products = isMainPage ? mainPageProducts : (categoryProducts.length ? categoryProducts : generalProducts);
-  const featuredProductId = PAGE_FEATURED_PRODUCTS[pagePath];
-  if (featuredProductId) {
-    const featuredProduct = validProducts.find(({ product }) => product.id === featuredProductId);
-    if (featuredProduct) products = [featuredProduct, ...products.filter(({ product }) => product.id !== featuredProductId)];
-  }
-  if (isMainPage && products.length !== MAIN_PAGE_CATEGORIES.length) return;
-  const main = document.querySelector('main');
-  const footer = document.querySelector('.site-footer');
-  if (!main || !footer || document.querySelector('[data-amazon-affiliate-catalog]')) return;
-
-  if (!document.querySelector('link[data-amazon-affiliate-styles]')) {
-    const stylesheet = document.createElement('link');
-    stylesheet.rel = 'stylesheet';
-    stylesheet.href = new URL('../css/amazon-affiliate-sidebar.css?v=7', scriptUrl).href;
-    stylesheet.dataset.amazonAffiliateStyles = '';
-    document.head.append(stylesheet);
-  }
-
-  const createProductLink = (entry, layoutClass, loading) => {
-    const productLink = document.createElement('a');
-    productLink.className = layoutClass;
-    productLink.href = entry.affiliateUrl.href;
-    productLink.target = '_blank';
-    productLink.rel = 'sponsored nofollow noopener noreferrer';
-    const image = document.createElement('img');
-    image.className = 'amazon-affiliate-image';
-    image.src = versionedArtworkUrl(entry.artworkUrl);
-    image.alt = entry.product.alt;
-    image.loading = loading;
-    image.decoding = 'async';
-    image.width = 1254;
-    image.height = 1254;
-    const artworkNote = document.createElement('span');
-    artworkNote.className = 'amazon-affiliate-artwork-note';
-    artworkNote.textContent = 'Original ASARK category illustration';
-    const title = document.createElement('span');
-    title.className = 'amazon-affiliate-title';
-    title.textContent = entry.product.title.trim();
-    const cta = document.createElement('span');
-    cta.className = 'amazon-affiliate-cta';
-    cta.textContent = 'View on Amazon';
-    productLink.append(image, artworkNote, title, cta);
-    return productLink;
-  };
-
-  if (!products.length) return;
-  const isHomePage = pagePath === 'index.html';
-  let layout;
-  let homeMount = null;
-  if (isHomePage) {
-    homeMount = document.querySelector('[data-amazon-affiliate-mount="home"]');
-    if (!homeMount) {
-      console.warn('[ASARK affiliate] Homepage mount [data-amazon-affiliate-mount="home"] was not found.');
-      return;
-    }
-    layout = homeMount.closest('.amazon-affiliate-layout--post-hero');
-    if (!layout) {
-      console.warn('[ASARK affiliate] Homepage mount is outside the post-hero layout.');
-      return;
-    }
-  } else {
-    layout = document.createElement('div');
-    layout.className = 'amazon-affiliate-layout';
-    main.before(layout);
-    layout.append(main);
-  }
-  const sidebar = document.createElement('aside');
-  sidebar.className = 'amazon-affiliate-sidebar';
-  sidebar.dataset.amazonAffiliateCatalog = isMainPage ? 'main' : 'category';
-  sidebar.setAttribute('aria-label', 'Recommended Amazon product');
-  const label = document.createElement('p');
-  label.className = 'amazon-affiliate-label';
-  label.textContent = 'Recommended on Amazon';
-  const productLink = createProductLink(products[0], 'amazon-affiliate-product-link', 'eager');
-  const image = productLink.querySelector('.amazon-affiliate-image');
-  const title = productLink.querySelector('.amazon-affiliate-title');
-  const cta = productLink.querySelector('.amazon-affiliate-cta');
-  cta.textContent = 'View on Amazon →';
-  const disclosure = document.createElement('p');
-  disclosure.className = 'amazon-affiliate-disclosure';
-  disclosure.textContent = 'As an Amazon Associate, ASARK may earn from qualifying purchases.';
-  sidebar.append(label, productLink, disclosure);
-  if (isHomePage) {
-    sidebar.id = homeMount.id;
-    homeMount.replaceWith(sidebar);
-  } else {
-    layout.append(sidebar);
-  }
-
-  let currentIndex = -1;
-  let rotationTimer = null;
-  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const showProduct = (nextIndex) => {
-    const entry = products[nextIndex];
-    if (!entry) return;
-    const update = () => {
-      productLink.href = entry.affiliateUrl.href;
-      image.src = versionedArtworkUrl(entry.artworkUrl);
-      image.alt = entry.product.alt;
-      title.textContent = entry.product.title.trim();
-      sidebar.classList.remove('is-changing');
-      currentIndex = nextIndex;
-    };
-    if (currentIndex < 0 || reducedMotion) { update(); return; }
-    sidebar.classList.add('is-changing');
-    window.setTimeout(update, FADE_DURATION_MS);
-  };
-  const nextProduct = () => showProduct((currentIndex + 1) % products.length);
-  const startRotation = () => {
-    if (reducedMotion || products.length < 2 || rotationTimer || document.hidden) return;
-    rotationTimer = window.setInterval(nextProduct, ROTATION_INTERVAL_MS);
-  };
-  const stopRotation = () => {
-    if (!rotationTimer) return;
-    window.clearInterval(rotationTimer);
-    rotationTimer = null;
-  };
-  image.addEventListener('error', () => {
-    image.hidden = true;
-    console.warn('[ASARK affiliate] Recommendation artwork could not be loaded; the product link remains available.');
-  }, { once: true });
-  document.addEventListener('visibilitychange', () => { if (document.hidden) stopRotation(); else startRotation(); });
-  showProduct(isMainPage || featuredProductId ? 0 : Math.floor(Math.random() * products.length));
-  startRotation();
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', renderAffiliateSidebar, { once: true });
-  } else {
-    renderAffiliateSidebar();
-  }
+  window.ASARK_AMAZON_AFFILIATE_CATALOG = Object.freeze({
+    products: AMAZON_AFFILIATE_PRODUCTS,
+    pageCategories: PAGE_CATEGORIES,
+    mainPageOffsets: MAIN_PAGE_OFFSETS,
+    mainPageCategories: MAIN_PAGE_CATEGORIES,
+    featuredProducts: PAGE_FEATURED_PRODUCTS,
+    generalCategory: GENERAL_CATEGORY
+  });
 })();

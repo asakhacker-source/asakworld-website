@@ -132,7 +132,7 @@ installButton.setAttribute('aria-label', 'Download the official ASARK Android AP
 installButton.title = 'Download the official ASARK Android APK';
 document.querySelector('.site-header')?.append(installButton);
 
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && !['localhost', '127.0.0.1'].includes(window.location.hostname)) {
   window.addEventListener('load', () => {
     const manifest = document.querySelector('link[rel="manifest"]');
     const serviceWorkerUrl = manifest
@@ -149,75 +149,14 @@ if (menuToggle && siteNav) {
   });
 }
 
-const imageProjects = {
-  '1600585154340': 'projects/contemporary-estate.html',
-  '1618221195710': 'projects/quiet-luxury.html',
-  '1600607688969': 'projects/glass-and-stone.html',
-  '1496747611176': 'projects/modern-elegance.html',
-  '1483985988355': 'projects/new-classic.html',
-  '1549298916': 'projects/timeless-style.html',
-  '1567899378494': 'projects/beyond-the-shore.html',
-  '1600585154526': 'projects/private-villa.html',
-  '1600047509807': 'projects/minimal-estate.html',
-  '1616486338812': 'projects/material-stories.html',
-  '1600210492486': 'projects/living-spaces.html',
-  '1615529162924': 'projects/dining-and-kitchen.html'
-};
-
-const projectDestinations = {
-  'Contemporary Estate': 'projects/contemporary-estate.html',
-  'Quiet Luxury': 'projects/quiet-luxury.html',
-  'Glass and Stone': 'projects/glass-and-stone.html',
-  'Modern Elegance': 'projects/modern-elegance.html',
-  'The New Classic': 'projects/new-classic.html',
-  'Timeless Style': 'projects/timeless-style.html',
-  'Beyond the Shore': 'projects/beyond-the-shore.html',
-  'Private Villa': 'projects/private-villa.html',
-  'Minimal Estate': 'projects/minimal-estate.html',
-  'Material Stories': 'projects/material-stories.html',
-  'Living Spaces': 'projects/living-spaces.html',
-  'Dining and Kitchen': 'projects/dining-and-kitchen.html'
-};
-
-document.querySelectorAll('.visual-card[data-card-link], .card[data-project-link]').forEach((card) => {
-  const image = card.querySelector('img');
-  if (!card.matches('.visual-card') && !card.dataset.projectLink && !image) return;
-  const imageSource = image?.dataset.originalImage || image?.src || '';
-  const imageKey = image ? Object.keys(imageProjects).find((key) => imageSource.includes(key)) : null;
-  const cardTitle = card.querySelector('h3')?.textContent.trim() || '';
-  const destination = card.dataset.projectLink || projectDestinations[cardTitle] || (imageKey && imageProjects[imageKey]) || 'index.html';
-  card.tabIndex = 0;
-  card.setAttribute('role', 'link');
-  card.addEventListener('click', (event) => {
-    if (event.target.closest('a, button')) return;
-    window.location.href = destination;
-  });
-  card.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      window.location.href = destination;
-    }
-  });
-});
-
 const currentPage = activePage;
-
-const visualFilters = document.querySelectorAll('[data-filter]');
-const visualCards = document.querySelectorAll('.visual-library-grid [data-category]');
-if (visualFilters.length && visualCards.length) {
-  visualFilters.forEach((button) => button.addEventListener('click', () => {
-    const filter = button.dataset.filter;
-    visualFilters.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-    visualCards.forEach((card) => { card.hidden = filter !== 'all' && card.dataset.category !== filter; });
-  }));
-}
 
 if (currentPage === 'ai-technology.html') {
   const technologyGrid = document.querySelector('.technology-grid');
   if (technologyGrid) {
     const aiOverview = document.createElement('figure');
     aiOverview.className = 'ai-technology-overview';
-    aiOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/AI Technology/ai-technology-overview.webp" alt="AI technology overview showing machine learning, AI assistants, healthcare, education and responsible AI" width="1536" height="1024"><figcaption>AI-generated overview: building a smarter future with responsible artificial intelligence.</figcaption>';
+    aiOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="assets/images/technology/Gemini_Generated_Image_70y7in70y7in70y7.webp" alt="AI technology overview showing machine learning, AI assistants, healthcare, education and responsible AI" width="1536" height="1024"><figcaption>AI-generated overview: building a smarter future with responsible artificial intelligence.</figcaption>';
     technologyGrid.before(aiOverview);
   }
 }
@@ -228,7 +167,7 @@ if (currentPage === 'space.html') {
   if (spaceGrid) {
     const spaceOverview = document.createElement('figure');
     spaceOverview.className = 'space-technology-overview';
-    spaceOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="ai images/Technology/Space Technology/space-technology-feature.webp" alt="Space Technology infographic featuring satellites, launch vehicles, planetary exploration, astronomy and space research" width="1536" height="1024"><figcaption>Space Technology: exploring beyond boundaries through satellites, launch systems, research and planetary exploration.</figcaption>';
+    spaceOverview.innerHTML = '<img data-ai-image-fixed loading="lazy" src="assets/images/technology/space-commercial-leo.webp" alt="Space Technology infographic featuring satellites, launch vehicles, planetary exploration, astronomy and space research" width="1536" height="1024"><figcaption>Space Technology: exploring beyond boundaries through satellites, launch systems, research and planetary exploration.</figcaption>';
     spaceGrid.before(spaceOverview);
   }
 }
@@ -236,7 +175,7 @@ if (currentPage === 'space.html') {
 const technologyBlogConnections = {
   'ai-technology.html': ['ai-title', 'Read the AI Technology Journal guide'],
   'semiconductor.html': ['semiconductor-title', 'Read the Semiconductor Technology Journal guide'],
-  'market-technology.html': ['market-title', 'Read the Market Technology Journal guide'],
+  'market-technology.html': ['market-title', 'Read the Market Journal guide'],
   'space.html': ['space-title', 'Read the Space Technology Journal guide']
 };
 const technologyBlogConnection = technologyBlogConnections[currentPage];
@@ -258,30 +197,6 @@ if (navigator.share && shareButton) {
 const saveButton = document.querySelector('#save-button');
 if (saveButton) {
   saveButton.addEventListener('click', () => { saveButton.textContent = 'Saved'; saveButton.disabled = true; });
-}
-
-const affiliateSidebarPages = new Set([
-  'index.html', 'about.html', 'ai-technology.html', 'ancient.html', 'art-design.html', 'blogs.html', 'computing.html', 'culture-future.html',
-  'explore.html', 'futuristic.html', 'graphics-card.html', 'hacker-setup.html',
-  'journal/ai-technology-future.html',
-  'journal/market-technology-future.html', 'journal/semiconductor-technology-future.html',
-  'journal/space-technology-future.html',
-  'market-technology.html', 'modern.html', 'processor.html',
-  'projects/beyond-the-shore.html', 'projects/contemporary-estate.html',
-  'projects/dining-and-kitchen.html', 'projects/glass-and-stone.html',
-  'projects/living-spaces.html', 'projects/material-stories.html', 'projects/minimal-estate.html',
-  'projects/modern-elegance.html', 'projects/new-classic.html', 'projects/private-villa.html',
-  'projects/quiet-luxury.html', 'projects/timeless-style.html', 'semiconductor.html',
-  'space.html', 'stories.html', 'technology.html', 'visual.html', 'vlsi.html',
-  'what-is-vlsi.html'
-]);
-let affiliatePagePath = '';
-try { affiliatePagePath = decodeURIComponent(window.location.pathname).replace(/^\/+|\/+$/g, '') || 'index.html'; } catch { affiliatePagePath = ''; }
-if (affiliateSidebarPages.has(affiliatePagePath) && !document.querySelector('script[data-amazon-affiliate-products]')) {
-  const affiliateProductsScript = document.createElement('script');
-  affiliateProductsScript.src = `${siteHref('js/amazon-affiliate-products.js')}?v=10`;
-  affiliateProductsScript.dataset.amazonAffiliateProducts = 'true';
-  document.head.append(affiliateProductsScript);
 }
 
 const AUTH_SESSION_PREFIX = 'asark.auth.session.v3.';
@@ -901,4 +816,16 @@ if (motionQuery.matches && 'IntersectionObserver' in window) {
     });
   }, { threshold: 0.12 });
   revealTargets.forEach((element) => observer.observe(element));
+}
+// Development must never remain controlled by a production-style cache-first worker.
+if (['localhost', '127.0.0.1'].includes(window.location.hostname) && 'serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(async (registrations) => {
+    const workerPath = new URL(siteHref('service-worker.js')).pathname;
+    const isAsarkWorker = (worker) => worker && new URL(worker.scriptURL).pathname === workerPath;
+    const wasControlled = isAsarkWorker(navigator.serviceWorker.controller);
+    const removed = await Promise.all(registrations
+      .filter((registration) => isAsarkWorker(registration.active || registration.waiting || registration.installing))
+      .map((registration) => registration.unregister()));
+    if (wasControlled && removed.some(Boolean)) window.location.reload();
+  }).catch((error) => console.warn('[ASARK] Could not release the local service worker:', error));
 }

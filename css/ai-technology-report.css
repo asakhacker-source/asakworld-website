@@ -8,6 +8,7 @@
 }
 
 .ai-report {
+  container-type: inline-size;
   min-width: 0;
   padding: 5px clamp(12px, 2vw, 28px) 45px;
   background: radial-gradient(circle at 50% 0, #092b60, transparent 30%), #020a18;
@@ -15,15 +16,66 @@
   font-family: var(--sans);
 }
 
-.amazon-affiliate-layout {
-  gap: clamp(18px, 2vw, 28px);
+.page-ai-technology .panel {
+  container: ai-panel-content / inline-size;
 }
 
-.amazon-affiliate-layout > .amazon-affiliate-sidebar {
-  top: 84px;
-  margin: 18px 0 48px;
-  padding: 18px;
-  max-height: calc(100vh - 96px);
+@container ai-panel-content (max-width: 440px) {
+  .ai-report .capability-wheel,
+  .ai-report .model-map {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+  .ai-report .capability-wheel::before,
+  .ai-report .capability-wheel::after { display: none; }
+  .ai-report .wheel-center,
+  .ai-report .map-center,
+  .ai-report .wheel-segment,
+  .ai-report .map-branch {
+    position: static;
+    width: auto;
+    height: auto;
+    transform: none;
+    border-radius: 8px;
+    overflow-wrap: anywhere;
+  }
+  .ai-report .wheel-center,
+  .ai-report .map-center { grid-column: 1 / -1; padding: 14px; }
+  .ai-report .pie-panel { grid-template-columns: minmax(0, 1fr); }
+  .ai-report .micro-metric-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ai-report .journey-timeline { flex-direction: column; align-items: stretch; }
+  .ai-report .journey-connector { flex: none; width: 1px; height: 12px; margin: auto; }
+}
+
+@container (max-width: 600px) {
+  .ai-report .ecosystem-flow { grid-template-columns: minmax(0, 1fr); }
+  .ai-report .eco-arrow { transform: rotate(90deg); }
+  .ai-report .bar-row { grid-template-columns: 58px minmax(0, 1fr) 62px; }
+}
+
+.page-ai-technology .bar-row { grid-template-columns: 58px minmax(0, 1fr) 62px; }
+.page-ai-technology .pie-panel { grid-template-columns: minmax(0, 1fr); }
+.page-ai-technology .micro-metric-row,
+.page-ai-technology .metric-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+@media (max-width: 360px) {
+  .page-ai-technology .ai-hero h1 { font-size: 34px; }
+}
+
+/* Respond to the article's available width alongside the recommendation. */
+@container (max-width: 850px) {
+  .ai-report .ai-hero, .ai-report .dashboard { grid-template-columns: minmax(0, 1fr); }
+  .ai-report .ai-hero figure { margin-bottom: 22px; }
+  .ai-report .cards, .ai-report .models-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ai-report .chart-stack, .ai-report .pie-panel { grid-template-columns: minmax(0, 1fr); }
 }
 
 .ai-hero,
@@ -39,7 +91,7 @@
   display: grid;
   grid-template-columns: .82fr 1.18fr;
   min-height: 300px;
-  background: linear-gradient(90deg, #020b1bf5, #031027d4 43%, #030c1d26), url('../ai images/Technology/AI Technology/ai-technology-overview.webp') center/cover;
+  background: linear-gradient(90deg, #020b1bf5, #031027d4 43%, #030c1d26), url('../assets/images/technology/Gemini_Generated_Image_70y7in70y7in70y7.webp') center/cover;
 }
 
 .ai-hero > div {

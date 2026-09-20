@@ -20,28 +20,6 @@ body:has(main.technology-page) main.technology-page.technology-reference-page {
   container-type: inline-size;
 }
 
-body:has(main.technology-page) .amazon-affiliate-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
-  gap: clamp(20px, 2.4vw, 36px);
-  align-items: start;
-  width: min(calc(100% - 32px), 1600px);
-  margin: 0 auto;
-  background: #080d2a !important;
-}
-
-body:has(main.technology-page) .amazon-affiliate-layout > main.technology-page {
-  min-width: 0;
-  width: 100%;
-}
-
-body:has(main.technology-page) .amazon-affiliate-layout > .amazon-affiliate-sidebar {
-  width: 300px;
-  max-width: 300px;
-  margin: 20px 0 48px;
-  justify-self: stretch;
-}
-
 .technology-page .tech-hero,
 .technology-page .tech-overview,
 .technology-page .tech-module,
@@ -341,20 +319,6 @@ body:has(main.technology-page) .amazon-affiliate-layout > .amazon-affiliate-side
   .technology-page .tech-report-grid,
   .technology-page .tech-landscape-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 1050px) {
-  body:has(main.technology-page) .amazon-affiliate-layout {
-    display: flex;
-    flex-direction: column;
-    width: min(calc(100% - 24px), 1600px);
-  }
-
-  body:has(main.technology-page) .amazon-affiliate-layout > .amazon-affiliate-sidebar {
-    width: min(100%, 300px);
-    max-width: none;
-    margin: 0 auto 48px;
   }
 }
 

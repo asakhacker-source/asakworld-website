@@ -1,15 +1,25 @@
-const CACHE_NAME = 'asark-app-v102';
+const CACHE_NAME = 'asark-app-v103';
 const OFFLINE_URL = './offline.html';
+const LOCAL_DEVELOPMENT = ['localhost', '127.0.0.1'].includes(self.location.hostname);
 const APP_SHELL = [
-  './', './index.html', './offline.html', './css/style.css?v=75', './js/site.js?v=91',
-  './manifest.webmanifest', './assets/asark-mark.svg', './assets/icon-192.png', './assets/icon-512.png'
+  './', './index.html', './offline.html', './css/style.css?v=76', './js/site.js?v=92',
+  './manifest.webmanifest', './assets/asark-mark.svg', './assets/icon-192.png', './assets/icon-512.png',
+  './css/asark-amazon-widget.css?v=1', './js/amazon-affiliate-products.js?v=12', './js/asark-amazon-widget.js?v=1'
 ];
 
 self.addEventListener('install', (event) => {
+  if (LOCAL_DEVELOPMENT) {
+    event.waitUntil(self.skipWaiting());
+    return;
+  }
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', (event) => {
+  if (LOCAL_DEVELOPMENT) {
+    event.waitUntil(self.clients.claim());
+    return;
+  }
   event.waitUntil(caches.keys()
     .then((keys) => Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))))
     .then(() => self.clients.claim()));
@@ -25,6 +35,10 @@ function cacheCompleteResponse(event, request, response) {
 }
 
 self.addEventListener('fetch', (event) => {
+  if (LOCAL_DEVELOPMENT) {
+    event.respondWith(fetch(event.request, { cache: 'no-store' }));
+    return;
+  }
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin) return;

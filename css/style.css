@@ -299,7 +299,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .offline-page > p:not(.eyebrow) { max-width: 520px; margin: 24px auto 32px; color: var(--muted); line-height: 1.75; }
 
 .visual-search { position: relative; display: block; flex: 1; }
-.visual-search::before { position: absolute; z-index: 1; top: 50%; left: 16px; color: var(--gold); content: 'âŒ•'; font: 24px/1 var(--serif); transform: translateY(-54%); }
+.visual-search::before { position: absolute; z-index: 1; top: 50%; left: 16px; color: var(--gold); content: 'Ã¢Å’â€¢'; font: 24px/1 var(--serif); transform: translateY(-54%); }
 .visual-search input { width: 100%; min-height: 50px; padding: 0 18px 0 45px; border: 1px solid var(--line); border-radius: 2px; outline: 0; background: var(--surface); color: var(--text); font: 12px var(--sans); letter-spacing: .3px; }
 .visual-search input::placeholder { color: #918b80; }
 .visual-search input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(217, 173, 50, .12); }
@@ -400,7 +400,7 @@ body { background: radial-gradient(circle at 84% -10%, rgba(135, 246, 229, .09),
 .home-technology-grid h3 { margin: 15px 0 12px; font: 400 clamp(1.7rem, 2.6vw, 2.35rem)/1 var(--serif); }
 .home-technology-grid span { color: var(--muted); line-height: 1.65; }
 .home-technology-grid a { margin-top: auto; padding-top: 24px; color: var(--signal); font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-decoration: none; text-transform: uppercase; }
-.home-technology-grid a::after { padding-left: 8px; content: '→'; }
+.home-technology-grid a::after { padding-left: 8px; content: 'â†’'; }
 .home-technology-grid article:hover { border-color: rgba(135, 246, 229, .55); transform: translateY(-3px); }
 @media (max-width: 900px) { .home-technology-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .home-technology { width: min(100% - 32px, 1280px); }.home-technology-grid { grid-template-columns: 1fr; }.home-technology-grid article > div { min-height: 0; } }
@@ -527,7 +527,7 @@ body { background: radial-gradient(circle at 84% -10%, rgba(135, 246, 229, .09),
 .blog-directory > div > p:not(.eyebrow) { color: var(--muted); line-height: 1.75; }
 .blog-directory nav { display: grid; gap: 1px; margin-top: 28px; border: 1px solid var(--line); background: var(--line); }
 .blog-directory nav a { display: flex; align-items: center; justify-content: space-between; min-height: 54px; padding: 0 18px; background: var(--surface); color: var(--text); font-size: 11px; letter-spacing: 1px; text-decoration: none; text-transform: uppercase; }
-.blog-directory nav a::after { color: var(--signal, var(--gold)); content: '→'; }
+.blog-directory nav a::after { color: var(--signal, var(--gold)); content: 'â†’'; }
 .blog-directory nav a:hover { background: rgba(135, 246, 229, .12); color: var(--signal, var(--gold)); }
 .technology-showcase { margin: 58px 0 0; }
 .technology-reference-page {
@@ -837,6 +837,7 @@ body { background: radial-gradient(circle at 84% -10%, rgba(135, 246, 229, .09),
 .blog-connection .eyebrow { flex: 0 0 auto; margin: 0; }
 .blog-connection h2 { margin: 0; font: 400 clamp(1.7rem, 3vw, 2.5rem)/1 var(--serif); }
 .blog-connection > p:not(.eyebrow) { flex: 1; margin: 0; color: var(--muted); line-height: 1.6; }
+.blog-connection .btn,
 .blog-connection .btn-outline { flex: 0 0 auto; }
 @media (max-width: 760px) { .blog-connection { align-items: flex-start; flex-direction: column; }.blog-connection > p:not(.eyebrow) { flex: auto; } }
 @media (max-width: 760px) { .technology-page { width: min(100% - 32px, 1280px); }.technology-grid { grid-template-columns: 1fr; }.technology-grid article { min-height: 0; }.technology-grid h2 { margin-top: 30px; } }
@@ -872,7 +873,7 @@ body { background: radial-gradient(circle at 84% -10%, rgba(135, 246, 229, .09),
 .commerce-journal .blog-topic { scroll-margin-top: 90px; }
 .commerce-journal .blog-card-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: none; border: 0; background: transparent; gap: 16px; }
 .commerce-journal .blog-card-grid article { display: flex; min-width: 0; min-height: 0; flex-direction: column; padding: 0; border: 1px solid rgba(135, 246, 229, .2); background: linear-gradient(145deg, rgba(24, 27, 25, .96), rgba(15, 16, 14, .96)); overflow: hidden; }
-.journal-card-image { width: 100%; aspect-ratio: 1.24; border-bottom: 1px solid rgba(135, 246, 229, .22); background-image: url('../ai images/Technology/technology-innovations-grid.webp'); background-position: var(--image-x) var(--image-y); background-repeat: no-repeat; background-size: 400% 500%; }
+.journal-card-image { width: 100%; aspect-ratio: 1.24; border-bottom: 1px solid rgba(135, 246, 229, .22); background-image: url('../assets/images/technology/semiconductor-device-architecture.webp'); background-position: var(--image-x) var(--image-y); background-repeat: no-repeat; background-size: 400% 500%; }
 .journal-card-copy { display: flex; min-height: 166px; flex-direction: column; padding: 18px; }
 .commerce-journal .blog-card-grid h3 { margin: 15px 0 9px; font: 400 clamp(1.15rem, 1.55vw, 1.45rem)/1.05 var(--serif); }
 .commerce-journal .blog-card-grid p { margin-left: 0; margin-right: 0; }
@@ -1732,8 +1733,7 @@ body.journal-page:has(.blog-board) .journal-topic-nav {
   background: linear-gradient(145deg, var(--report-panel), var(--report-panel-deep)) !important;
 }
 
-.affiliate-sidebar,
-.amazon-affiliate-sidebar {
+.affiliate-sidebar {
   border-color: rgba(181, 138, 255, .34) !important;
   background: linear-gradient(155deg, #151950, #090d2b) !important;
 }
@@ -1844,7 +1844,6 @@ body:has(.account-page) .account-form input {
   color: #fff !important;
 }
 
-.amazon-affiliate-layout { background: var(--report-navy) !important; }
 
 body .technology-page .technology-hub-hero,
 body .blog-board .blog-commerce-hero,
@@ -1879,8 +1878,6 @@ body:not(.home-page) main.about-page > .about-hero {
 }
 
 /* Homepage and About contrast repair: remove legacy white-canvas bleed. */
-body.home-page .amazon-affiliate-layout--post-hero,
-body.home-page .amazon-affiliate-layout--post-hero > .home-white-canvas,
 body.home-page .home-white-canvas,
 body.home-page .home-white-canvas > section,
 body.home-page .home-white-canvas > section:nth-child(even) {
@@ -1974,4 +1971,8 @@ body:has(main.about-page) .about-standards { width: min(100%, 1240px); }
     grid-template-columns: 1fr;
     padding: 42px 24px;
   }
+}
+
+@media (max-width: 360px) {
+  .guide-page .guide-hero h1 { overflow-wrap: anywhere; }
 }

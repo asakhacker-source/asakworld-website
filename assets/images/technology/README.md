@@ -6,7 +6,6 @@ Required filenames:
 
 - `semiconductor-technology-feature.webp`
 - `market-technology-feature.webp`
-- `vehicle-technology-feature.webp`
 
 Use WebP at a recommended source size of 1536 × 1024 (3:2). Use only ASARK-owned or approved generated imagery. Verify the visual content and intrinsic dimensions before HTML integration, preserve aspect ratio, and use truthful alt text. Identify AI-generated conceptual visuals clearly; do not present them as real photographs.
 

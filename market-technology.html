@@ -1,15 +1,127 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="A practical hub for market data, transaction systems, digital platforms, resilience and auditability."><title>Technology Market Systems | ASARK</title><link rel="canonical" href="https://asarkworld.com/market-technology.html"><link rel="stylesheet" href="css/style.css?v=75"><link rel="stylesheet" href="css/analytics-consent.css?v=1"></head>
-<body><header class="site-header"><a class="logo" href="index.html">ASARK</a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button><nav class="site-nav" id="site-nav" aria-label="Main navigation"></nav></header>
-<main class="guide-page"><header class="guide-hero"><p class="eyebrow">ASARK Technology Hub</p><h1>Technology Market Systems</h1><p>Understand the infrastructure that connects data, applications, transactions, operations and auditable records.</p></header><article class="guide-content">
-<h2>What market technology systems are</h2><p>Market technology is the infrastructure that lets organisations exchange information, initiate instructions, process transactions and make operational decisions. It includes data services, digital platforms, payment rails, analytics tools, security controls and the people who handle exceptions. A polished interface is only the visible edge of a larger system whose records, timing and recovery processes determine whether users can rely on it.</p>
-<h2>Data feeds and data infrastructure</h2><p>Data feeds carry events from sources into applications. Reference data gives those events stable meaning by identifying instruments, accounts, products or organisations. Historical data supports review and testing, while real-time streams support current operations. Before systems can compare or combine these inputs, they often normalize formats, units, identifiers and timestamps. Without that work, two records that describe the same event can appear unrelated or contradictory.</p>
-<h2>Digital platforms and APIs</h2><p>APIs connect data providers, applications, platforms, transaction systems and analytics tools. They specify how a request is authenticated, what information is returned and how an error is expressed. A useful API is more than an endpoint: it has stable versions, clear limits, documented fields and a way to distinguish a temporary interruption from a completed action. These details let separate systems coordinate without silently guessing at each other’s state.</p>
-<h2>Payments and transaction processing</h2><p>A transaction begins when a person or system initiates an instruction. Validation checks permissions, format and relevant controls; routing sends the instruction to the appropriate service; records describe its state; and settlement or completion establishes the outcome under the applicable rules. Reconciliation compares records held by different parties and investigates differences. This is not financial advice: it is the operational sequence that helps a digital service explain what happened.</p>
-<h2>Analytics and decision support</h2><p>Analytics combines structured records, event streams and historical context to help people understand activity. Dashboards can show status, models can identify patterns, and alerts can draw attention to unusual conditions. Their value depends on scope: a model should not be treated as a final authority when its input is incomplete, delayed or outside the conditions it was designed to handle. Good decision support exposes data freshness, assumptions and routes for human review.</p>
-<h2>Automation and operational workflows</h2><p>Workflow automation is useful for repeatable tasks such as validation, routing, notification and monitoring. Event-driven processing can respond when a state changes rather than waiting for a manual check. However, automation needs exception handling. A system must preserve enough context for an operator to investigate a failed instruction, duplicate event or unavailable dependency. Operations become safer when ordinary work is automated but unusual cases remain visible and accountable.</p>
-<h2>Latency, data quality and resilience</h2><p>Stale data, missing fields, inconsistent timestamps and delayed processing can make an apparently correct system misleading. Latency is therefore a quality concern, not only a speed concern. Resilient services use redundancy, failover, observability and tested recovery procedures to continue essential work during disruption. Clear status communication helps users distinguish a delayed action from a failed one, while continuity plans define how records are reconciled after systems recover.</p>
-<h2>Security, trust and auditability</h2><p>Access controls limit actions to appropriate roles. Encryption protects information in transit and storage, but it works alongside identity management, secure configuration and careful key handling. Logs and audit trails record significant requests, changes and outcomes so an organisation can investigate what occurred. Traceability supports both security and user trust when it is designed to answer a real question without collecting unnecessary personal information.</p>
-<h2>How the full market stack interacts</h2><p>A typical flow moves from data source to ingestion, normalization, analytics, a decision or application layer, transaction or payment processing, and finally reconciliation and audit. Monitoring connects every stage: it detects late feeds, failed calls, unusual volumes or inconsistent records. Feedback from operations can improve validation rules and interfaces, while an audit trail preserves the evidence needed to understand an outcome later.</p>
-<h2>Related ASARK reading</h2><div class="explore-next-grid"><article><h3><a href="journal/market-technology-future.html">Market Technology Journal</a></h3><p>Read the longer ASARK analysis of exchanges, payments, data, resilience and governance.</p></article><article><h3><a href="computing.html">Computing Technology</a></h3><p>Explore cloud, processing and systems choices beneath digital services.</p></article><article><h3><a href="ai-technology.html">AI Systems</a></h3><p>Consider how automation supports work while accountability remains with people.</p></article></div>
-</article></main><footer class="site-footer">&copy; 2026 ASARK &middot; <a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a> &middot; <a href="contact.html">Contact</a> &middot; <a href="about.html">About</a></footer><script src="js/auth-config.js"></script><script src="js/site.js?v=91"></script><script defer src="js/analytics-consent.js?v=1"></script></body></html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <meta name="description" content="Follow financial-market news and explore interactive market charts on ASARK.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0a0a09">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' https://s3.tradingview.com; style-src 'self' 'sha256-JyHF32z4Ou/Ujas95CX3WgBqlTt7Dxzo/fQG5/5oBo8='; img-src 'self' data: https://*.tradingview.com https://www.tradingview-widget.com https://*.google-analytics.com https://www.googletagmanager.com; font-src 'self'; connect-src 'self' http://127.0.0.1:5000 https://*.tradingview.com https://widget-sheriff.tradingview-widget.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; manifest-src 'self'; worker-src 'self'; frame-src https://*.tradingview.com https://www.tradingview-widget.com; form-action 'self'">
+  <link rel="canonical" href="https://asarkworld.com/market-technology.html">
+  <title>Market News &amp; Interactive Charts | ASARK</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/style.css?v=76">
+  <link rel="stylesheet" href="css/market-dashboard.css?v=1">
+  <link rel="stylesheet" href="css/analytics-consent.css?v=1">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ASARK">
+  <meta property="og:title" content="Market News &amp; Interactive Charts | ASARK">
+  <meta property="og:description" content="Follow financial-market news and explore interactive market charts on ASARK.">
+  <meta property="og:url" content="https://asarkworld.com/market-technology.html">
+  <meta property="og:image" content="https://asarkworld.com/assets/images/technology/market-technology-feature.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Market News &amp; Interactive Charts | ASARK">
+  <meta name="twitter:description" content="Follow financial-market news and explore interactive market charts on ASARK.">
+  <meta name="twitter:image" content="https://asarkworld.com/assets/images/technology/market-technology-feature.webp">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://asarkworld.com/#organization","name":"ASARK","url":"https://asarkworld.com/"},{"@type":"WebSite","@id":"https://asarkworld.com/#website","url":"https://asarkworld.com/","name":"ASARK","publisher":{"@id":"https://asarkworld.com/#organization"}},{"@type":"WebPage","@id":"https://asarkworld.com/market-technology.html#webpage","url":"https://asarkworld.com/market-technology.html","name":"Market News & Interactive Charts | ASARK","description":"Follow financial-market news and explore interactive market charts on ASARK.","isPartOf":{"@id":"https://asarkworld.com/#website"},"about":{"@id":"https://asarkworld.com/#organization"}}]}</script>
+  <link rel="stylesheet" href="css/asark-ai-assistant.css?v=4">
+<link rel="stylesheet" href="/css/asark-amazon-widget.css?v=1"><script defer src="/js/amazon-affiliate-products.js?v=12" data-amazon-affiliate-products></script><script defer src="/js/asark-amazon-widget.js?v=1"></script></head>
+<body class="market-dashboard-page">
+  <header class="site-header">
+    <a class="logo" href="index.html" aria-label="ASARK home">ASARK</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation"></nav>
+  </header>
+
+  <main class="market-page">
+
+    <section class="market-hero" aria-labelledby="market-hero-title">
+      <p class="eyebrow">ASARK Market</p>
+      <h1 id="market-hero-title">Market Intelligence</h1>
+      <p class="hero-subtitle">Track financial-market news and explore interactive market charts.</p>
+      <p class="hero-disclaimer">Market information is provided for informational and educational purposes only and is not financial advice.</p>
+    </section>
+
+    <section class="market-section market-news" aria-labelledby="market-news-heading">
+      <header class="market-section-header">
+        <p class="section-eyebrow">ASARK Market</p>
+        <h2 id="market-news-heading">Latest Market News</h2>
+        <p class="section-sub">Top market and financial news stories.</p>
+      </header>
+      <div class="market-widget-wrapper market-widget--news">
+        <div class="market-widget-container market-widget-container--news">
+          <!-- TradingView Top Stories Widget BEGIN -->
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <div class="tradingview-widget-container__link"><a href="https://www.tradingview.com/news/?utm_source=www.tradingview.com&utm_medium=widget_new&utm_campaign=top-stories" rel="noopener nofollow" target="_blank">News by TradingView</a></div>
+            <script type="application/json" class="tradingview-widget-config" data-widget="timeline">{"displayMode":"regular","feedMode":"all_symbols","colorTheme":"dark","isTransparent":false,"width":"100%","height":"100%","locale":"en"}</script>
+          </div>
+          <!-- TradingView Top Stories Widget END -->
+        </div>
+      </div>
+    </section>
+
+    <section class="market-section market-stock-overview" aria-labelledby="market-stock-overview-heading">
+      <header class="market-section-header">
+        <p class="section-eyebrow">Apple Â· NASDAQ:AAPL</p>
+        <h2 id="market-stock-overview-heading">Stock Overview</h2>
+        <p class="section-sub">Apple price and performance, supplied by TradingView.</p>
+      </header>
+      <div class="market-widget-wrapper market-widget-container market-widget-container--stock-overview">
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/NASDAQ-AAPL/" rel="noopener nofollow" target="_blank"><span class="blue-text">Apple stock price</span></a><span class="trademark"> by TradingView</span></div>
+          <script type="application/json" class="tradingview-widget-config" data-widget="symbol-overview">{"symbols":[["Apple","NASDAQ:AAPL|1D"]],"chartOnly":false,"width":"100%","height":"100%","locale":"en","colorTheme":"dark","autosize":true,"changeMode":"price-and-percent","chartType":"area","hideDateRanges":false,"hideMarketStatus":false,"hideSymbolLogo":false}</script>
+        </div>
+      </div>
+    </section>
+
+    <section class="market-section market-chart" aria-labelledby="market-chart-heading">
+      <header class="market-section-header">
+        <p class="section-eyebrow">ASARK Market</p>
+        <h2 id="market-chart-heading">Interactive Market Chart</h2>
+        <p class="section-sub">Start with Apple, use the linked watchlist to switch between major US and Indian shares, or search TradingView for another symbol.</p>
+      </header>
+      <div class="market-widget-wrapper market-widget--chart">
+        <div class="market-widget-container market-widget-container--chart">
+          <!-- TradingView Advanced Chart Widget BEGIN -->
+          <div class="tradingview-widget-container tradingview-widget-container--fill">
+            <div class="tradingview-widget-container__widget tradingview-widget-container__widget--credited"></div>
+            <div class="tradingview-widget-container__link"><a href="https://www.tradingview.com/symbols/NASDAQ-AAPL/?utm_source=www.tradingview.com&utm_medium=widget_new&utm_campaign=advanced-chart" rel="noopener nofollow" target="_blank">AAPL chart by TradingView</a></div>
+            <script type="application/json" class="tradingview-widget-config" data-widget="advanced-chart">{"autosize":true,"symbol":"NASDAQ:AAPL","interval":"D","timezone":"exchange","theme":"dark","style":"1","locale":"en","allow_symbol_change":true,"watchlist":["NASDAQ:AAPL","NASDAQ:MSFT","NASDAQ:NVDA","NASDAQ:GOOGL","NASDAQ:AMZN","NASDAQ:META","NASDAQ:TSLA","NASDAQ:AMD","NSE:RELIANCE","NSE:TCS","NSE:INFY","NSE:HDFCBANK","NSE:ICICIBANK","NSE:SBIN","NSE:BHARTIARTL","NSE:ITC"],"calendar":false,"support_host":"https://www.tradingview.com"}</script>
+          </div>
+          <!-- TradingView Advanced Chart Widget END -->
+        </div>
+      </div>
+    </section>
+
+    <section class="market-section market-resources" aria-labelledby="market-resources-heading">
+      <header class="market-section-header">
+        <p class="section-eyebrow">Explore further</p>
+        <h2 id="market-resources-heading">Market Resources</h2>
+      </header>
+      <p>Additional live-market tools will be added when a reliable, supported data source is available.</p>
+      <p><a href="journal/market-technology-future.html">Explore the Market Journal</a> for perspectives on the technology behind financial markets.</p>
+    </section>
+
+    <section class="market-disclaimer" aria-label="Market data disclaimer">
+      <p>Market data, charts and news are provided for informational and educational purposes only. They do not constitute financial, investment or trading advice. Data may be delayed or supplied by third-party providers.</p>
+      <p>All chart and market content is delivered through official TradingView embeddable widgets.</p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">&copy; 2026 ASARK &middot; <a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a> &middot; <a href="contact.html">Contact</a> &middot; <a href="about.html">About</a></footer>
+
+  <script src="js/auth-config.js"></script>
+  <script src="js/market-tradingview.js?v=1" defer></script>
+  <script src="js/site.js?v=92"></script>
+  <script defer src="js/analytics-consent.js?v=1"></script>
+  <script defer src="js/asark-ai-assistant.js?v=4"></script>
+</body>
+</html>
