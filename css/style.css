@@ -2989,7 +2989,7 @@ body.home-page main > .future-hero .future-readout {
   width: min(100%, 630px);
   margin-top: 34px;
   padding-top: 18px;
-  border-top: 1px solid #dbe5f0;
+  border-top: 0;
   color: #334155 !important;
 }
 body.home-page main > .future-hero .future-readout span { color: #334155 !important; }
