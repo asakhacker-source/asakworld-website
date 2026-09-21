@@ -2986,10 +2986,10 @@ body.home-page main > .future-hero .btn-outline { border-color: #cbd5e1 !importa
 body.home-page main > .future-hero .btn-outline:hover { border-color: #2563eb !important; color: #2563eb !important; }
 body.home-page main > .future-hero .hero-note { margin-top: 28px; color: #64748b !important; }
 body.home-page main > .future-hero .future-readout {
-  width: min(100%, 630px);
+  width: min(100%, 590px);
   margin-top: 34px;
   padding-top: 18px;
-  border-top: 0;
+  border-top: 1px solid rgba(218, 235, 247, .48);
   color: #334155 !important;
 }
 body.home-page main > .future-hero .future-readout span { color: #334155 !important; }
