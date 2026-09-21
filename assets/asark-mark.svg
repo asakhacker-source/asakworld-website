@@ -1,6 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="108" fill="#0a0a09"/>
-  <rect x="25" y="25" width="462" height="462" rx="87" fill="none" stroke="#d9ad32" stroke-width="8"/>
-  <path fill="#d9ad32" d="M125 354 234 143h45l108 211h-55l-23-49H198l-23 49h-54Zm95-93h67l-33-71-34 71Z"/>
-  <path fill="#f5f1e8" d="M142 391h228v14H142z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title>ASARK</title>
+  <defs>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff"/><stop offset=".5" stop-color="#dbe8f5"/><stop offset="1" stop-color="#8ca6bd"/></linearGradient>
+    <linearGradient id="orbit" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#18d7ff"/><stop offset=".5" stop-color="#2b92ff"/><stop offset="1" stop-color="#dff8ff"/></linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="512" height="512" rx="104" fill="#03070e"/>
+  <path d="M112 399 249 91l151 308h-73l-78-177-73 177z" fill="url(#metal)" stroke="#eff9ff" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M153 380 249 184l42 88-38 10-49 98z" fill="#0b68d5"/>
+  <ellipse cx="257" cy="270" rx="192" ry="64" fill="none" stroke="url(#orbit)" stroke-width="17" transform="rotate(-24 257 270)"/>
+  <path d="m413 112 8 24 24 8-24 8-8 24-8-24-24-8 24-8z" fill="#fff" filter="url(#glow)"/>
+  <path d="M85 433h342" stroke="#1ebcff" stroke-width="5" stroke-linecap="round"/>
 </svg>

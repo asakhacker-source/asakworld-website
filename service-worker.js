@@ -1,8 +1,8 @@
-const CACHE_NAME = 'asark-app-v120';
+const CACHE_NAME = 'asark-app-v121';
 const OFFLINE_URL = './offline.html';
 const LOCAL_DEVELOPMENT = ['localhost', '127.0.0.1'].includes(self.location.hostname);
 const APP_SHELL = [
-  './', './index.html', './offline.html', './css/style.css?v=92', './js/site.js?v=92',
+  './', './index.html', './offline.html', './css/style.css?v=93', './js/site.js?v=92',
   './manifest.webmanifest', './assets/asark-mark.svg', './assets/icon-192.png', './assets/icon-512.png',
   './css/asark-amazon-widget.css?v=2', './js/amazon-affiliate-products.js?v=12', './js/asark-amazon-widget.js?v=1'
 ];
