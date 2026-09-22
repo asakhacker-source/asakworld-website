@@ -3129,6 +3129,7 @@ body.home-page main > .future-hero .hero-buttons .btn-outline {
   color: #ffffff !important;
 }
 body.home-page main > .future-hero .hero-buttons .btn-outline:hover { border-color: #ffffff !important; background: #172b49 !important; color: #ffffff !important; }
+.newsletter-section{max-width:1200px;margin:48px auto;padding:32px;border:1px solid #2c4565;border-radius:14px;background:#0b1b30;color:#e6eef8}.newsletter-section h2,.newsletter-section h3{color:#fff}.newsletter-eyebrow{color:#3cccf4;font-weight:700;letter-spacing:.14em}.newsletter-topics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.newsletter-topics article,.newsletter-status,.newsletter-premium-preview{padding:18px;border:1px solid #294866;border-radius:10px;background:#102842}.newsletter-status{margin-top:18px}.newsletter-status button{padding:10px 14px;border:0;border-radius:6px;background:#35506b;color:#d7e3ef;font-weight:700}.newsletter-premium-preview{margin-top:18px;border-left:3px solid #8b5cf6}.newsletter-section a{color:#63d8ff}@media(max-width:700px){.newsletter-section{margin:32px 12px;padding:22px}.newsletter-topics{grid-template-columns:1fr}}
 @media (max-width: 760px) {
   body.home-page main > .future-hero .hero-overlay { background: linear-gradient(180deg, #071225 0%, rgba(7, 18, 37, .97) 48%, rgba(7, 18, 37, .68) 100%) !important; }
 }
