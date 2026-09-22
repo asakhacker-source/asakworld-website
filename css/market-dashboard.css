@@ -253,3 +253,18 @@ body.market-dashboard-page :is(.market-hero, .market-section, .market-disclaimer
 body.market-dashboard-page :is(h1, h2, h3, h4, p, li, small, label, .market-resources p) { color: #111625 !important; }
 body.market-dashboard-page :is(.eyebrow, .section-eyebrow, .market-resources a) { color: #2563eb !important; }
 body.market-dashboard-page .market-widget-wrapper { border: 1px solid #e5e7eb !important; background: #f3f4f6 !important; }
+
+.crypto-platform-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 24px; }
+.crypto-platform-card { display: flex; flex-direction: column; min-width: 0; padding: 24px; border: 1px solid #e5e7eb; border-radius: 12px; background: #fff; }
+.crypto-platform-card h3 { margin: 0 0 12px; color: #0f172a; }
+.crypto-platform-card p { margin: 0; line-height: 1.65; }
+.crypto-platform-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0; padding: 0; list-style: none; }
+.crypto-platform-tags li { padding: 5px 9px; border: 1px solid #dbe4f0; border-radius: 999px; color: #334155; background: #f8fafc; font-size: .82rem; }
+.crypto-platform-pending { display: inline-flex; align-items: center; width: fit-content; margin-top: auto; padding: 10px 14px; border: 1px solid #94a3b8; border-radius: 7px; color: #475569; background: #f8fafc; font-weight: 700; }
+.crypto-referral-code { margin: 0 0 12px !important; color: #334155 !important; font-size: .9rem; }
+.crypto-platform-link { display: inline-flex; align-items: center; width: fit-content; margin-top: auto; padding: 10px 14px; border: 1px solid #2563eb; border-radius: 7px; color: #fff !important; background: #2563eb; font-weight: 700; text-decoration: none; }
+.crypto-platform-link:hover, .crypto-platform-link:focus-visible { border-color: #1d4ed8; background: #1d4ed8; color: #fff !important; }
+.crypto-platform-link:focus-visible { outline: 3px solid #93c5fd; outline-offset: 3px; }
+.crypto-affiliate-disclosure, .crypto-risk-notice { margin: 20px 0 0; padding: 16px 18px; border-left: 3px solid #2563eb; background: #eff6ff; color: #1e3a5f; line-height: 1.65; }
+.crypto-risk-notice { border-left-color: #d97706; background: #fffbeb; color: #78350f; }
+@media (max-width: 860px) { .crypto-platform-grid { grid-template-columns: 1fr; } }
