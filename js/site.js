@@ -5,7 +5,7 @@ const siteRootUrl = manifestLink ? new URL('.', manifestLink.href) : new URL('/'
 const siteHref = (path) => new URL(path, siteRootUrl).href;
 
 const primarySections = [
-  ['index.html', 'Home'], ['market-technology.html', 'Market'], ['blogs.html', 'Journal'], ['about.html', 'About']
+  ['index.html', 'Home'], ['market-technology.html', 'Market'], ['blogs.html', 'Journal'], ['engineering-tools.html', 'Tools'], ['about.html', 'About']
 ];
 const dropdownSections = [
   ['technology.html', 'Technology', [['ai-technology.html', 'AI Technology'], ['semiconductor.html', 'Semiconductor & VLSI'], ['space.html', 'Space Technology'], ['computing.html', 'Computing']]]
